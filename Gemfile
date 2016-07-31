@@ -1,5 +1,8 @@
 source 'https://rubygems.org'
-
+require 'rbconfig'
+if RbConfig::CONFIG['target_os'] =~ /darwin(1[0-3])/i
+  gem 'rb-fsevent', '<= 0.9.4'
+end
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.0.0'
@@ -19,6 +22,9 @@ gem 'puma', '~> 3.0'
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 # gem 'rack-cors'
+
+gem 'httparty'
+gem 'simple_uuid'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

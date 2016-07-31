@@ -17,9 +17,10 @@ ActiveRecord::Schema.define(version: 20160731202234) do
 
   create_table "datasets", force: :cascade do |t|
     t.string   "name"
+    t.string   "internal_name"
     t.integer  "source_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.index ["source_id"], name: "index_datasets_on_source_id", using: :btree
   end
 
@@ -34,8 +35,9 @@ ActiveRecord::Schema.define(version: 20160731202234) do
 
   create_table "sources", force: :cascade do |t|
     t.string   "name"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.string   "internal_name"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
 
 end
