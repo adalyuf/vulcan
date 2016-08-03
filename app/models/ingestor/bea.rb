@@ -1,7 +1,16 @@
 class Ingestor::Bea
   include HTTParty
 
+  LOG_COLUMNS = [
+    :options,
+    :api_response_code,
+    :api_error
+  ]
+
   attr_accessor :dataset, :options, :api_response
+
+  class_attribute :data_logger
+  self.data_logger = DataLog.new('bea.log')
 
   BEA_DIR = Rails.root.join('app', 'data', 'bea')
   ALL_VALUES = {
@@ -36,6 +45,7 @@ class Ingestor::Bea
   def write_to_json
     FileUtils.mkdir_p(series_dir) unless File.exists?(series_dir)
     File.open("#{ series_dir }/#{ SimpleUUID::UUID.new.to_guid }.json", 'wb+') { |f| f.write api_response.to_json }
+    data_logger.log(*log_columns)
   end
 
   def series_dir
@@ -52,5 +62,17 @@ class Ingestor::Bea
 
   def external_tables
     @external_tables ||= Source.where(internal_name: :bea).first.datasets.where(internal_name: dataset).first.external_tables
+  end
+
+  def log_columns
+    LOG_COLUMNS.map { |c| send(c) }
+  end
+
+  def api_response_code
+    api_response.code
+  end
+
+  def api_error
+    api_response["BEAAPI"]["Error"]
   end
 end
