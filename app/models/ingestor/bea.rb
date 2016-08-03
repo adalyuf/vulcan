@@ -26,30 +26,11 @@ class Ingestor::Bea
 
   def initialize(dataset, opts={})
     @dataset = dataset
-    @options =
-      case dataset
-      when :fixed_assets
-        { query: { userid: api_key, method: 'getData', datasetname: DATASET_NAME[dataset], year: ALL_VALUES[:year], resultformat: 'JSON' } }
-      when :nipa
-        { query: { userid: api_key, method: 'getData', datasetname: DATASET_NAME[dataset], fequency: FREQUENCY[:annual], year: ALL_VALUES[:year], resultformat: 'JSON', showmillions: SHOW_MILLIONS[:no] } }
-      end
-    @options[:query].merge!(opts)
+    @options = opts
   end
 
   def parameters
     self.class.get(url, { query: { userid: api_key, method: 'GetParameterList', datasetname: DATASET_NAME[dataset] } })
-  end
-
-  def fetch
-    if options[:query][:tableid]
-      @api_response = self.class.get(url, options)
-      write_to_json
-    else
-      external_tables.each_with_index do |table, index|
-        puts "#{ index }: id: #{ table.id }, external_id: #{ table.external_id }"
-        self.class.new(dataset, year: options[:query][:year], tableid: table.external_id).fetch
-      end
-    end
   end
 
   def write_to_json
@@ -58,7 +39,7 @@ class Ingestor::Bea
   end
 
   def series_dir
-    "#{ BEA_DIR }/#{ dataset }/#{ options[:query][:tableid] }/#{ options[:query][:year] }"
+    "#{ BEA_DIR }/#{ dataset }/#{ options[:tableid] }/#{ options[:year] }"
   end
 
   def url
