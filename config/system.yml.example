@@ -1,0 +1,4 @@
+services:
+  bea:
+    url: bea_url
+    api_key: bea_api_key
