@@ -26,6 +26,7 @@ module Vulcan
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+    config.autoload_paths << Rails.root.join('lib')
     require File.expand_path('../../config/initializers/struct', __FILE__)
     require File.expand_path('../../lib/system_config', __FILE__)
   end

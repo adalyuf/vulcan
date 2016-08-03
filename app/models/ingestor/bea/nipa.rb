@@ -7,7 +7,6 @@ class Ingestor::Bea::Nipa < Ingestor::Bea
     else
       external_tables.each_with_index do |table, index|
         FREQUENCY.values.each do |frequency|
-          puts "#{ index }: id: #{ table.id }, external_id: #{ table.external_id }, frequency: #{frequency}"
           self.class.new(dataset, year: query[:year], tableid: table.external_id, frequency: frequency).fetch
         end
       end

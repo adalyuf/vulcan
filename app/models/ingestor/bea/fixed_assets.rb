@@ -6,7 +6,6 @@ class Ingestor::Bea::FixedAssets < Ingestor::Bea
       write_to_json
     else
       external_tables.each_with_index do |table, index|
-        puts "#{ index }: id: #{ table.id }, external_id: #{ table.external_id }"
         self.class.new(dataset, year: query[:year], tableid: table.external_id).fetch
       end
     end
