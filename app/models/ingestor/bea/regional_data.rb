@@ -36,11 +36,6 @@ class Ingestor::Bea::RegionalData < Ingestor::Bea
     { userid: api_key, method: 'getData', datasetname: DATASET_NAME[dataset], year: ALL_VALUES[:year], keycode: 'keycode', geofips: ALL_VALUES[:geofips], resultformat: 'JSON' }
   end
 
-  # ['Year', 'GeoFips','KeyCode']
-  def parameters_for(parameter_name)
-    self.class.get(url, { query: { userid: api_key, method: 'GetParameterValues', datasetname: DATASET_NAME[dataset], parametername: parameter_name, resultformat: 'json' } })
-  end
-
   def can_fetch?
     !! options[:keycode] && !! options[:geofips]
   end

@@ -99,4 +99,9 @@ class Ingestor::Bea
   def api_error
     api_response["BEAAPI"]["Error"]
   end
+
+  # ['Year', 'GeoFips','KeyCode', 'TableID']
+  def parameters_for(parameter_name)
+    self.class.get(url, { query: { userid: api_key, method: 'GetParameterValues', datasetname: DATASET_NAME[dataset], parametername: parameter_name, resultformat: 'json' } })
+  end
 end
