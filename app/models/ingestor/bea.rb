@@ -1,25 +1,30 @@
 class Ingestor::Bea
   include HTTParty
 
+  class InvalidQueryError < Error; end
+
+  attr_accessor :options, :api_response
+
+  class_attribute :data_logger, :dataset
+
+  self.data_logger = DataLog.new('bea.log')
+
   LOG_COLUMNS = [
     :options,
     :api_response_code,
     :api_error
   ]
 
-  attr_accessor :dataset, :options, :api_response
-
-  class_attribute :data_logger
-  self.data_logger = DataLog.new('bea.log')
-
   BEA_DIR = Rails.root.join('app', 'data', 'bea')
+
   ALL_VALUES = {
     year: 'X'
   }
 
   DATASET_NAME = {
     fixed_assets: 'FixedAssets',
-    nipa: 'NIPA'
+    nipa: 'NIPA',
+    regional_data: 'RegionalData'
   }
 
   FREQUENCY = {
@@ -33,18 +38,37 @@ class Ingestor::Bea
     yes: 'Y'
   }
 
-  def initialize(dataset, opts={})
-    @dataset = dataset
+  def initialize(opts={})
     @options = opts
+  end
+
+  def dataset
+    self.class.dataset
   end
 
   def parameters
     self.class.get(url, { query: { userid: api_key, method: 'GetParameterList', datasetname: DATASET_NAME[dataset] } })
   end
 
+  def query
+    unless defined?(@query)
+      @query = defaults.merge(options)
+    end
+    @query
+  end
+
+  def fetch_all?
+    !! options[:all]
+  end
+
+  def fetch_api_data
+    @api_response = self.class.get(url, query: query)
+    write_to_json
+  end
+
   def write_to_json
     FileUtils.mkdir_p(series_dir) unless File.exists?(series_dir)
-    File.open("#{ series_dir }/#{ SimpleUUID::UUID.new.to_guid }.json", 'wb+') { |f| f.write api_response.to_json }
+    File.open("#{ series_dir }/#{ SimpleUUID::UUID.new.to_guid }.json", 'wb+') { |f| f.write api_response.body }
     data_logger.log(*log_columns)
   end
 
