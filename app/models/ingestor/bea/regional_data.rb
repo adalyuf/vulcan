@@ -43,4 +43,12 @@ class Ingestor::Bea::RegionalData < Ingestor::Bea
   def series_dir
     "#{ BEA_DIR }/#{ dataset }/#{ options[:keycode] }/#{ options[:year] }"
   end
+
+  def external_table_data
+    resp = parameters_for('KeyCode')
+    values =
+      resp["BEAAPI"]["Results"]["ParamValue"].map do |row|
+        { external_id: row["KeyCode"], external_name: row['Description'] }
+      end
+  end
 end
