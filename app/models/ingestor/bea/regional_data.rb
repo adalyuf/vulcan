@@ -36,16 +36,19 @@ class Ingestor::Bea::RegionalData < Ingestor::Bea
     { userid: api_key, method: 'getData', datasetname: DATASET_NAME[dataset], year: ALL_VALUES[:year], keycode: 'keycode', geofips: ALL_VALUES[:geofips], resultformat: 'JSON' }
   end
 
-  # ['Year', 'GeoFips','KeyCode']
-  def parameters_for(parameter_name)
-    self.class.get(url, { query: { userid: api_key, method: 'GetParameterValues', datasetname: DATASET_NAME[dataset], parametername: parameter_name, resultformat: 'json' } })
-  end
-
   def can_fetch?
     !! options[:keycode] && !! options[:geofips]
   end
 
   def series_dir
     "#{ BEA_DIR }/#{ dataset }/#{ options[:keycode] }/#{ options[:year] }"
+  end
+
+  def external_table_data
+    resp = parameters_for('KeyCode')
+    values =
+      resp["BEAAPI"]["Results"]["ParamValue"].map do |row|
+        { external_id: row["KeyCode"], external_name: row['Description'] }
+      end
   end
 end

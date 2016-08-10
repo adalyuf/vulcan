@@ -85,7 +85,7 @@ class Ingestor::Bea
   end
 
   def external_tables
-    @external_tables ||= Source.where(internal_name: :bea).first.datasets.where(internal_name: dataset).first.external_tables
+    @external_tables ||= Source.where(internal_name: :bea).first.datasets.where(internal_name: dataset).first.external_tables.active
   end
 
   def log_columns
@@ -98,5 +98,25 @@ class Ingestor::Bea
 
   def api_error
     api_response["BEAAPI"]["Error"]
+  end
+
+  # ['Year', 'GeoFips','KeyCode', 'TableID']
+  def parameters_for(parameter_name)
+    self.class.get(url, { query: { userid: api_key, method: 'GetParameterValues', datasetname: DATASET_NAME[dataset], parametername: parameter_name, resultformat: 'json' } })
+  end
+
+  def external_table_data
+    resp = parameters_for('TableID')
+    values =
+      resp["BEAAPI"]["Results"]["ParamValue"].map do |row|
+        { external_id: row["TableID"], external_name: row['Description'] }
+      end
+  end
+
+  def update_external_tables
+    data = external_table_data
+    scope = Dataset.where(internal_name: dataset).first
+
+    ExternalTable.batch_update(scope, data)
   end
 end
