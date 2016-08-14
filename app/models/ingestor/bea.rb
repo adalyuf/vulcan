@@ -1,25 +1,30 @@
 class Ingestor::Bea
   include HTTParty
 
+  class InvalidQueryError < Error; end
+
+  attr_accessor :options, :api_response
+
+  class_attribute :data_logger, :dataset
+
+  self.data_logger = DataLog.new('bea.log')
+
   LOG_COLUMNS = [
     :options,
     :api_response_code,
     :api_error
   ]
 
-  attr_accessor :dataset, :options, :api_response
-
-  class_attribute :data_logger
-  self.data_logger = DataLog.new('bea.log')
-
   BEA_DIR = Rails.root.join('app', 'data', 'bea')
+
   ALL_VALUES = {
     year: 'X'
   }
 
   DATASET_NAME = {
     fixed_assets: 'FixedAssets',
-    nipa: 'NIPA'
+    nipa: 'NIPA',
+    regional_data: 'RegionalData'
   }
 
   FREQUENCY = {
@@ -33,18 +38,37 @@ class Ingestor::Bea
     yes: 'Y'
   }
 
-  def initialize(dataset, opts={})
-    @dataset = dataset
+  def initialize(opts={})
     @options = opts
+  end
+
+  def dataset
+    self.class.dataset
   end
 
   def parameters
     self.class.get(url, { query: { userid: api_key, method: 'GetParameterList', datasetname: DATASET_NAME[dataset] } })
   end
 
+  def query
+    unless defined?(@query)
+      @query = defaults.merge(options)
+    end
+    @query
+  end
+
+  def fetch_all?
+    !! options[:all]
+  end
+
+  def fetch_api_data
+    @api_response = self.class.get(url, query: query)
+    write_to_json
+  end
+
   def write_to_json
     FileUtils.mkdir_p(series_dir) unless File.exists?(series_dir)
-    File.open("#{ series_dir }/#{ SimpleUUID::UUID.new.to_guid }.json", 'wb+') { |f| f.write api_response.to_json }
+    File.open("#{ series_dir }/#{ SimpleUUID::UUID.new.to_guid }.json", 'wb+') { |f| f.write api_response.body }
     data_logger.log(*log_columns)
   end
 
@@ -61,7 +85,7 @@ class Ingestor::Bea
   end
 
   def external_tables
-    @external_tables ||= Source.where(internal_name: :bea).first.datasets.where(internal_name: dataset).first.external_tables
+    @external_tables ||= Source.where(internal_name: :bea).first.datasets.where(internal_name: dataset).first.external_tables.active
   end
 
   def log_columns
@@ -74,5 +98,25 @@ class Ingestor::Bea
 
   def api_error
     api_response["BEAAPI"]["Error"]
+  end
+
+  # ['Year', 'GeoFips','KeyCode', 'TableID']
+  def parameters_for(parameter_name)
+    self.class.get(url, { query: { userid: api_key, method: 'GetParameterValues', datasetname: DATASET_NAME[dataset], parametername: parameter_name, resultformat: 'json' } })
+  end
+
+  def external_table_data
+    resp = parameters_for('TableID')
+    values =
+      resp["BEAAPI"]["Results"]["ParamValue"].map do |row|
+        { external_id: row["TableID"], external_name: row['Description'] }
+      end
+  end
+
+  def update_external_tables
+    data = external_table_data
+    scope = Dataset.where(internal_name: dataset).first
+
+    ExternalTable.batch_update(scope, data)
   end
 end

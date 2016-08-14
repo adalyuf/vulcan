@@ -1,30 +1,31 @@
 class Ingestor::Bea::Nipa < Ingestor::Bea
 
+  REQUIRED_OPTIONS = [
+    :year,
+    :tableid,
+    :frequency
+  ]
+
+  self.dataset = :nipa
+
   def fetch
-    if has_options?
-      @api_response = self.class.get(url, query: query)
-      write_to_json
+    if can_fetch?
+      fetch_api_data
     else
+      raise InvalidQueryError, "query options must include: #{ REQUIRED_OPTIONS }" unless fetch_all?
       external_tables.each_with_index do |table, index|
         FREQUENCY.values.each do |frequency|
-          self.class.new(dataset, year: query[:year], tableid: table.external_id, frequency: frequency).fetch
+          self.class.new(year: query[:year], tableid: table.external_id.to_i, frequency: frequency).fetch
         end
       end
     end
   end
 
-  def query
-    unless defined?(@query)
-      @query = defaults.merge(options)
-    end
-    @query
-  end
-
   def defaults
-    { userid: api_key, method: 'getData', datasetname: DATASET_NAME[dataset], frequency: FREQUENCY[:annual], year: ALL_VALUES[:year], resultformat: 'JSON', showmillions: SHOW_MILLIONS[:no] }
+    { userid: api_key, method: 'getData', datasetname: DATASET_NAME[dataset], frequency: FREQUENCY[:annual], year: ALL_VALUES[:year], showmillions: SHOW_MILLIONS[:no], resultformat: 'JSON' }
   end
 
-  def has_options?
-    options[:tableid] && options[:frequency]
+  def can_fetch?
+    !! options[:tableid] && !! options[:frequency]
   end
 end
