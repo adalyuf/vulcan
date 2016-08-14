@@ -2,3 +2,6 @@ services:
   bea:
     url: bea_url
     api_key: bea_api_key
+  bls:
+    url: bls_url
+    storage: path_to_storage
