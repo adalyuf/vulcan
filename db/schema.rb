@@ -34,6 +34,37 @@ ActiveRecord::Schema.define(version: 20160807224027) do
     t.index ["dataset_id"], name: "index_external_tables_on_dataset_id", using: :btree
   end
 
+  create_table "frequencies", force: :cascade do |t|
+    t.text     "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "indicators", force: :cascade do |t|
+    t.text     "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["name"], name: "index_indicators_on_name", unique: true, using: :btree
+  end
+
+  create_table "series", force: :cascade do |t|
+    t.text     "name"
+    t.text     "description"
+    t.integer  "multiplier"
+    t.boolean  "seasonally_adjusted"
+    t.integer  "indicator_id"
+    t.integer  "frequency_id"
+    t.integer  "unit_id"
+    t.datetime "created_at",          null: false
+    t.datetime "updated_at",          null: false
+    t.index ["frequency_id"], name: "index_series_on_frequency_id", using: :btree
+    t.index ["indicator_id"], name: "index_series_on_indicator_id", using: :btree
+    t.index ["name"], name: "index_series_on_name", unique: true, using: :btree
+    t.index ["unit_id"], name: "index_series_on_unit_id", using: :btree
+  end
+
   create_table "sources", force: :cascade do |t|
     t.string   "name"
     t.string   "internal_name"
@@ -41,4 +72,32 @@ ActiveRecord::Schema.define(version: 20160807224027) do
     t.datetime "updated_at",    null: false
   end
 
+  create_table "units", force: :cascade do |t|
+    t.text     "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  create_table "values", force: :cascade do |t|
+    t.text     "raw_name"
+    t.integer  "raw_year"
+    t.text     "raw_period"
+    t.text     "raw_value"
+    t.date     "date"
+    t.float    "value"
+    t.integer  "series_id"
+    t.integer  "indicator_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["indicator_id"], name: "index_values_on_indicator_id", using: :btree
+    t.index ["raw_name", "raw_year", "raw_period", "raw_value"], name: "index_values_on_name_year_period_value", unique: true, using: :btree
+    t.index ["series_id"], name: "index_values_on_series_id", using: :btree
+  end
+
+  add_foreign_key "series", "frequencies"
+  add_foreign_key "series", "indicators"
+  add_foreign_key "series", "units"
+  add_foreign_key "values", "indicators"
+  add_foreign_key "values", "series"
 end
