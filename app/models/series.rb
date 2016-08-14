@@ -5,7 +5,6 @@ class Series < ActiveRecord::Base
   has_many :values
 
   validates :name, presence: true
-  validates :description, presence: true
   validates :multiplier, presence: true
   validates :indicator, presence: true
   validates :frequency, presence: true
