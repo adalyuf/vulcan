@@ -3,16 +3,25 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
   def import_indicators
     parsed_file = Bulkload::Bls::FileManager.new("indicators", "bd", "bd.series").parsed_file
 
-    list = parsed_file.map do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
-      [series_title.strip, series_title.strip]
-    end.uniq
-    persist_indicators(list)
+    uniq_series = Set.new
+
+    # ensure all series titles are unique
+    parsed_file.each do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
+      uniq_series << series_title.strip
+    end
+
+    list = uniq_series.map do |series_title|
+      Indicator::Data.new(name: series_title,
+                          description: series_title
+                          )
+    end
+
+    Indicator.load(list)
   end
 
   def import_series
     parsed_file = Bulkload::Bls::FileManager.new("series", "bd", "bd.series").parsed_file
 
-    now = Time.now
     jobs_unit_id = Unit.find_by( name: "Jobs").id
     percent_unit_id = Unit.find_by( name: "Percent").id
     establishments_unit_id = Unit.find_by( name: "Establishments").id
@@ -43,18 +52,18 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
             quarterly_frequency_id
           end
 
-        indicator_id = indicators_by_name[series_title.strip].id
-        name = series_id.strip
-        description = nil
-        multiplier = 0
-        seasonally_adjusted = SEASONAL[seasonal.strip]
-
-        created_at = now
-        updated_at = now
-
-        [name, description, multiplier, seasonally_adjusted, unit_id, frequency_id, created_at, updated_at, indicator_id, gender_raw, gender_id]
+        Series::Data.new(name: series_id.strip,
+                         description: nil,
+                         multiplier: 0,
+                         seasonally_adjusted: SEASONAL[seasonal.strip],
+                         unit_id: unit_id,
+                         frequency_id: frequency_id,
+                         indicator_id: indicators_by_name[series_title.strip].id,
+                         gender_raw: gender_raw,
+                         gender_id: gender_id
+                         )
     end
-    persist_series(list)
+    Series.load(list)
   end
 
 end
