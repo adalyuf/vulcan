@@ -3,7 +3,6 @@ require 'fileutils'
 require 'csv'
 
 class Bulkload::Bls::ImportValues
-# I'm on update_series branch
 
   SOURCE = "BLS"
   QUARTER_TO_MONTH = {
