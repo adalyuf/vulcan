@@ -1,7 +1,7 @@
 class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
 
   def import_indicators
-    parsed_file = parse_file("indicators", "bd", "bd.series")
+    parsed_file = Bulkload::Bls::FileManager.new("indicators", "bd", "bd.series").parsed_file
 
     list = parsed_file.map do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
       [series_title.strip, series_title.strip]
@@ -10,7 +10,7 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
   end
 
   def import_series
-    parsed_file = parse_file("series", "bd", "bd.series")
+    parsed_file = Bulkload::Bls::FileManager.new("series", "bd", "bd.series").parsed_file
 
     now = Time.now
     jobs_unit_id = Unit.find_by( name: "Jobs").id

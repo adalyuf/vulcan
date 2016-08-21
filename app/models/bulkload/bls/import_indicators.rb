@@ -39,23 +39,6 @@ class Bulkload::Bls::ImportIndicators
     self.class.setup_values_partitions
   end
 
-  def parse_file(obj, dept, filename)
-    path = download_file(obj, dept, filename)
-    parsed_file = CSV.read(path, { :col_sep => "\t" })
-    parsed_file.shift
-    parsed_file
-  end
-
-  def download_file(obj, dept, filename)
-    FileUtils.mkdir_p("#{ storage }/#{ SOURCE }/#{ obj }/#{ dept }")
-    path = "#{ storage }/#{ SOURCE }/#{ obj }/#{ dept }/#{ filename }.txt"
-    file = File.new(path, "w")
-    download = open(url+'/'+dept+'/'+filename)
-    IO.copy_stream(download, file)
-    file.close
-    return path
-  end
-
   def indicators_by_name
     @indicators_by_name ||= Hash[Indicator.all.map { |i| [i.name, i] }]
   end
