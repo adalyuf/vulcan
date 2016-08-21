@@ -1,7 +1,7 @@
 class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
 
   def import_indicators
-    parsed_file = parse_file("indicators", "ap", "ap.item")
+    parsed_file = Bulkload::Bls::FileManager.new("indicators", "ap", "ap.item").parsed_file
 
     list = parsed_file.map do |code, description|
       [code.strip, description.strip]
@@ -10,7 +10,7 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
   end
 
   def import_series
-    parsed_file = parse_file("series", "ap", "ap.series")
+    parsed_file = Bulkload::Bls::FileManager.new("series", "ap", "ap.series").parsed_file
 
     now = Time.now
     unit_id = Unit.find_by(name: "Nominal US Dollars").id
