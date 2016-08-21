@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 20160821152224) do
     t.integer  "unit_id",             null: false
     t.datetime "created_at",          null: false
     t.datetime "updated_at",          null: false
-    t.text     "raw_gender",          null: false
+    t.text     "gender_raw",          null: false
     t.integer  "gender_id",           null: false
     t.index ["frequency_id"], name: "index_series_on_frequency_id", using: :btree
     t.index ["gender_id"], name: "index_series_on_gender_id", using: :btree
