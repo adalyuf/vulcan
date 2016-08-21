@@ -21,3 +21,4 @@
 
 # Ignore all data files
 /app/data/*
+.DS_Store
