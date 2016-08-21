@@ -21,14 +21,6 @@ class Bulkload::Bls::ImportIndicators
     create_value_partitions
   end
 
-  def url
-    @url ||= SystemConfig.instance.services.bls.url
-  end
-
-  def storage
-    @storage ||= SystemConfig.instance.services.bls.storage
-  end
-
   def import_all
     IMPORTERS.each do |klass|
       importer = klass.new

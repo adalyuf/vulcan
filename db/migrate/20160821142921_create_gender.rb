@@ -6,7 +6,8 @@ class CreateGender < ActiveRecord::Migration[5.0]
       t.timestamps
     end
 
-    Gender.where(name: "All genders", description: "Both male and female or not specified").first_or_create
+    Gender.where(name: "Not specified", description: "Gender not specified or not applicable to this series").first_or_create
+    Gender.where(name: "All genders", description: "Both male and female genders included in this series").first_or_create
     Gender.where(name: "Male", description: "Male").first_or_create
     Gender.where(name: "Female", description: "Female").first_or_create
 

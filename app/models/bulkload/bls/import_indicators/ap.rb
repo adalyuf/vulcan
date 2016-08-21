@@ -15,8 +15,8 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
     now = Time.now
     unit_id = Unit.find_by(name: "Nominal US Dollars").id
     frequency_id = Frequency.find_by(name: "Monthly").id
-    gender_raw = "Not applicable"
-    gender_id = Gender.find_by(name: "All genders").id
+    gender_raw = "No gender specified for this series"
+    gender_id = Gender.find_by(name: "Not specified").id
 
     list = parsed_file.map do |series_id, area_code, item_code, footnote_codes, begin_year, begin_period, end_year, end_period|
       name = series_id.strip
