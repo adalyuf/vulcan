@@ -27,8 +27,11 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
     establishments_unit_id = Unit.find_by( name: "Establishments").id
     annual_frequency_id = Frequency.find_by(name: "Annual").id
     quarterly_frequency_id = Frequency.find_by(name: "Quarterly").id
-    gender_raw = "No gender specified for this series"
+
+    gender_raw = nil
     gender_id = Gender.find_by(name: "Not specified").id
+    race_raw = nil
+    race_id = Race.find_by(name: "Not specified").id
 
     list = parsed_file.map do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
       unit_id =
@@ -60,7 +63,9 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
                          frequency_id: frequency_id,
                          indicator_id: indicators_by_name[series_title.strip].id,
                          gender_raw: gender_raw,
-                         gender_id: gender_id
+                         gender_id: gender_id,
+                         race_raw: race_raw,
+                         race_id: race_id
                          )
     end
     Series.load(list)
