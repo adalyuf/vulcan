@@ -84,14 +84,14 @@ class Bulkload::Bls::ImportIndicators
 
   def persist_series(list)
     if list.size > 0
-      sql_start = "INSERT INTO series (name, description, multiplier, seasonally_adjusted, unit_id, frequency_id, created_at, updated_at, indicator_id) VALUES "
+      sql_start = "INSERT INTO series (name, description, multiplier, seasonally_adjusted, unit_id, frequency_id, created_at, updated_at, indicator_id, raw_gender, gender_id) VALUES "
       sql_end = " ON CONFLICT DO NOTHING"
       now = Time.now
       sql_values = sql_start
 
       list.in_groups_of(1000, false) do |group|
         group.each do |row|
-          row_values = ActiveRecord::Base.send :sanitize_sql_array, ['(?, ?, ?, ?, ?, ?, ?, ?, ?)', row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8] ]
+          row_values = ActiveRecord::Base.send :sanitize_sql_array, ['(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10] ]
           row_values << ','
           sql_values << row_values
         end
