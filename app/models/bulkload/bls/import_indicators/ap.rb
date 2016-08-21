@@ -15,7 +15,7 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
     now = Time.now
     unit_id = Unit.find_by(name: "Nominal US Dollars").id
     frequency_id = Frequency.find_by(name: "Monthly").id
-    raw_gender = "Not applicable"
+    gender_raw = "Not applicable"
     gender_id = Gender.find_by(name: "All genders").id
 
     list = parsed_file.map do |series_id, area_code, item_code, footnote_codes, begin_year, begin_period, end_year, end_period|
@@ -28,7 +28,7 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
       updated_at = now
       indicator_id = indicators_by_name[item_code.strip].id
 
-      [name, description, multiplier, seasonally_adjusted, unit_id, frequency_id, created_at, updated_at, indicator_id, raw_gender, gender_id]
+      [name, description, multiplier, seasonally_adjusted, unit_id, frequency_id, created_at, updated_at, indicator_id, gender_raw, gender_id]
     end
     persist_series(list)
   end

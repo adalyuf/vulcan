@@ -84,7 +84,7 @@ class Bulkload::Bls::ImportIndicators
 
   def persist_series(list)
     if list.size > 0
-      sql_start = "INSERT INTO series (name, description, multiplier, seasonally_adjusted, unit_id, frequency_id, created_at, updated_at, indicator_id, raw_gender, gender_id) VALUES "
+      sql_start = "INSERT INTO series (name, description, multiplier, seasonally_adjusted, unit_id, frequency_id, created_at, updated_at, indicator_id, gender_raw, gender_id) VALUES "
       sql_end = " ON CONFLICT DO NOTHING"
       now = Time.now
       sql_values = sql_start
