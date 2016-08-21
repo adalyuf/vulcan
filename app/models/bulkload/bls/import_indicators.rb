@@ -135,7 +135,7 @@ class Bulkload::Bls::ImportIndicators
     list = parsed_file.map do |series_id, area_code, item_code, footnote_codes, begin_year, begin_period, end_year, end_period|
       name = series_id.strip
       description = footnote_codes.strip
-      multiplier = 1
+      multiplier = 0
       seasonally_adjusted = false
 
       created_at = now
@@ -182,7 +182,7 @@ class Bulkload::Bls::ImportIndicators
         indicator_id = indicators_by_name[series_title.strip].id
         name = series_id.strip
         description = nil
-        multiplier = 1
+        multiplier = 0
         seasonally_adjusted = SEASONAL[seasonal.strip]
 
         created_at = now

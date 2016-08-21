@@ -42,7 +42,7 @@ class Bulkload::Bls::ImportValues
       date = parse_bls_date(raw_year, raw_period)
 
       series = series_by_name[raw_name]
-      value = value.strip.to_f * series.multiplier
+      value = value.strip.to_f * (10**series.multiplier)
       series_id = series.id
       indicator_id = series.indicator_id
 
