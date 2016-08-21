@@ -17,8 +17,6 @@ class Series < ActiveRecord::Base
                   :seasonally_adjusted,
                   :unit_id,
                   :frequency_id,
-                  :created_at,
-                  :updated_at,
                   :indicator_id,
                   :gender_raw,
                   :gender_id,
