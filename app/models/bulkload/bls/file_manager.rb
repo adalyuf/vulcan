@@ -13,8 +13,16 @@ class Bulkload::Bls::FileManager
     @filename = filename
   end
 
+  def url
+    @url ||= SystemConfig.instance.services.bls.url
+  end
+
+  def storage
+    @storage ||= SystemConfig.instance.services.bls.storage
+  end
+
   def parsed_file
-    @parsed_file ||= parsed_file
+    @parsed_file ||= parse_file
   end
 
   def parse_file
