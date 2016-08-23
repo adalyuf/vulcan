@@ -23,12 +23,14 @@ class Series < ActiveRecord::Base
                   :race_raw,
                   :race_id,
                   :marital_raw,
-                  :marital_id
+                  :marital_id,
+                  :age_raw,
+                  :age_id
   end
 
   def self.load(data)
     if data.size > 0
-      sql_start = "INSERT INTO series (name, description, multiplier, seasonally_adjusted, unit_id, frequency_id, created_at, updated_at, indicator_id, gender_raw, gender_id, race_raw, race_id, marital_raw, marital_id) VALUES "
+      sql_start = "INSERT INTO series (name, description, multiplier, seasonally_adjusted, unit_id, frequency_id, created_at, updated_at, indicator_id, gender_raw, gender_id, race_raw, race_id, marital_raw, marital_id, age_raw, age_id) VALUES "
       sql_end = " ON CONFLICT DO NOTHING"
       now = Time.now
       sql_values = sql_start
@@ -36,7 +38,7 @@ class Series < ActiveRecord::Base
       data.in_groups_of(1000, false) do |group|
         group.each do |row|
           row_values =
-            ActiveRecord::Base.send :sanitize_sql_array, ['(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', row.name, row.description, row.multiplier, row.seasonally_adjusted, row.unit_id, row.frequency_id, now, now, row.indicator_id, row.gender_raw, row.gender_id, row.race_raw, row.race_id, row.marital_raw, row.marital_id]
+            ActiveRecord::Base.send :sanitize_sql_array, ['(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)', row.name, row.description, row.multiplier, row.seasonally_adjusted, row.unit_id, row.frequency_id, now, now, row.indicator_id, row.gender_raw, row.gender_id, row.race_raw, row.race_id, row.marital_raw, row.marital_id, row.age_raw, row.age_id]
           row_values << ','
           sql_values << row_values
         end

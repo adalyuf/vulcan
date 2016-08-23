@@ -31,6 +31,7 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
     gender_id = Gender.find_by(name: "Not specified").id
     race_id = Race.find_by(name: "Not specified").id
     marital_id = Marital.find_by(name: "Not specified").id
+    age_id = Age.find_by(name: "Not specified").id
 
     list = parsed_file.map do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
       unit_id =
@@ -63,7 +64,8 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
                          indicator_id: indicators_by_name[series_title.strip].id,
                          gender_id: gender_id,
                          race_id: race_id,
-                         marital_id: marital_id
+                         marital_id: marital_id,
+                         age_id: age_id
                          )
     end
     Series.load(list)
