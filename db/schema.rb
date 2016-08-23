@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160821200522) do
+ActiveRecord::Schema.define(version: 20160822234823) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,14 @@ ActiveRecord::Schema.define(version: 20160821200522) do
     t.index ["name"], name: "index_indicators_on_name", unique: true, using: :btree
   end
 
+  create_table "maritals", force: :cascade do |t|
+    t.text     "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["name"], name: "index_maritals_on_name", unique: true, using: :btree
+  end
+
   create_table "races", force: :cascade do |t|
     t.text     "name"
     t.text     "description"
@@ -79,9 +87,12 @@ ActiveRecord::Schema.define(version: 20160821200522) do
     t.integer  "gender_id",           null: false
     t.text     "race_raw"
     t.integer  "race_id",             null: false
+    t.text     "marital_raw"
+    t.integer  "marital_id",          null: false
     t.index ["frequency_id"], name: "index_series_on_frequency_id", using: :btree
     t.index ["gender_id"], name: "index_series_on_gender_id", using: :btree
     t.index ["indicator_id"], name: "index_series_on_indicator_id", using: :btree
+    t.index ["marital_id"], name: "index_series_on_marital_id", using: :btree
     t.index ["name"], name: "index_series_on_name", unique: true, using: :btree
     t.index ["race_id"], name: "index_series_on_race_id", using: :btree
     t.index ["unit_id"], name: "index_series_on_unit_id", using: :btree
@@ -120,6 +131,7 @@ ActiveRecord::Schema.define(version: 20160821200522) do
   add_foreign_key "series", "frequencies"
   add_foreign_key "series", "genders"
   add_foreign_key "series", "indicators"
+  add_foreign_key "series", "maritals"
   add_foreign_key "series", "races"
   add_foreign_key "series", "units"
   add_foreign_key "values", "indicators"
