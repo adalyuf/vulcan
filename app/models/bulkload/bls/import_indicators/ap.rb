@@ -21,6 +21,8 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
     race_id = Race.find_by(name: "Not specified").id
     marital_id = Marital.find_by(name: "Not specified").id
     age_id = Age.find_by(name: "Not specified").id
+    employment_id = Employment.find_by(name: "Not specified").id
+
 
     list = parsed_file.map do |series_id, area_code, item_code, footnote_codes, begin_year, begin_period, end_year, end_period|
       Series::Data.new(name: series_id.strip,
@@ -33,7 +35,8 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
                        gender_id: gender_id,
                        race_id: race_id,
                        marital_id: marital_id,
-                       age_id: age_id
+                       age_id: age_id,
+                       employment_id: employment_id
                        )
     end
     Series.load(list)

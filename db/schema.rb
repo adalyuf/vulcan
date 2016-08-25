@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160823215903) do
+ActiveRecord::Schema.define(version: 20160825215151) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,14 @@ ActiveRecord::Schema.define(version: 20160823215903) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["source_id"], name: "index_datasets_on_source_id", using: :btree
+  end
+
+  create_table "employments", force: :cascade do |t|
+    t.text     "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["name"], name: "index_employments_on_name", unique: true, using: :btree
   end
 
   create_table "external_tables", force: :cascade do |t|
@@ -99,7 +107,10 @@ ActiveRecord::Schema.define(version: 20160823215903) do
     t.integer  "marital_id",          null: false
     t.text     "age_raw"
     t.integer  "age_id",              null: false
+    t.text     "employment_raw"
+    t.integer  "employment_id",       null: false
     t.index ["age_id"], name: "index_series_on_age_id", using: :btree
+    t.index ["employment_id"], name: "index_series_on_employment_id", using: :btree
     t.index ["frequency_id"], name: "index_series_on_frequency_id", using: :btree
     t.index ["gender_id"], name: "index_series_on_gender_id", using: :btree
     t.index ["indicator_id"], name: "index_series_on_indicator_id", using: :btree
@@ -140,6 +151,7 @@ ActiveRecord::Schema.define(version: 20160823215903) do
   end
 
   add_foreign_key "series", "ages"
+  add_foreign_key "series", "employments"
   add_foreign_key "series", "frequencies"
   add_foreign_key "series", "genders"
   add_foreign_key "series", "indicators"
