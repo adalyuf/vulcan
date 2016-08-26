@@ -34,6 +34,8 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
     age_id = Age.find_by(name: "Not specified").id
     employment_id = Employment.find_by(name: "Not specified").id
     education_level_id = EducationLevel.find_by(name: "Not specified").id
+    child_status_id = ChildStatus.find_by(name: "Not specified").id
+
 
 
 
@@ -71,7 +73,8 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
                          marital_id: marital_id,
                          age_id: age_id,
                          employment_id: employment_id,
-                         education_level_id: education_level_id
+                         education_level_id: education_level_id,
+                         child_status_id: child_status_id
                          )
     end
     Series.load(list)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160826001854) do
+ActiveRecord::Schema.define(version: 20160826005000) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,14 @@ ActiveRecord::Schema.define(version: 20160826001854) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["name"], name: "index_ages_on_name", unique: true, using: :btree
+  end
+
+  create_table "child_statuses", force: :cascade do |t|
+    t.text     "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["name"], name: "index_child_statuses_on_name", unique: true, using: :btree
   end
 
   create_table "datasets", force: :cascade do |t|
@@ -119,7 +127,10 @@ ActiveRecord::Schema.define(version: 20160826001854) do
     t.integer  "employment_id",       null: false
     t.text     "education_level_raw"
     t.integer  "education_level_id",  null: false
+    t.text     "child_status_raw"
+    t.integer  "child_status_id",     null: false
     t.index ["age_id"], name: "index_series_on_age_id", using: :btree
+    t.index ["child_status_id"], name: "index_series_on_child_status_id", using: :btree
     t.index ["education_level_id"], name: "index_series_on_education_level_id", using: :btree
     t.index ["employment_id"], name: "index_series_on_employment_id", using: :btree
     t.index ["frequency_id"], name: "index_series_on_frequency_id", using: :btree
@@ -162,6 +173,7 @@ ActiveRecord::Schema.define(version: 20160826001854) do
   end
 
   add_foreign_key "series", "ages"
+  add_foreign_key "series", "child_statuses"
   add_foreign_key "series", "education_levels"
   add_foreign_key "series", "employments"
   add_foreign_key "series", "frequencies"
