@@ -33,6 +33,8 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
     marital_id = Marital.find_by(name: "Not specified").id
     age_id = Age.find_by(name: "Not specified").id
     employment_id = Employment.find_by(name: "Not specified").id
+    education_level_id = EducationLevel.find_by(name: "Not specified").id
+
 
 
     list = parsed_file.map do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
@@ -68,7 +70,8 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
                          race_id: race_id,
                          marital_id: marital_id,
                          age_id: age_id,
-                         employment_id: employment_id
+                         employment_id: employment_id,
+                         education_level_id: education_level_id
                          )
     end
     Series.load(list)
