@@ -11,6 +11,7 @@ class Series < ActiveRecord::Base
   belongs_to :employment
   belongs_to :education_level
   belongs_to :child_status
+  belongs_to :income_level
 
   validates :name, presence: true
 
@@ -25,6 +26,7 @@ class Series < ActiveRecord::Base
   validates :employment, presence: true
   validates :education_level, presence: true
   validates :child_status, presence: true
+  validates :income_level, presence: true
 
   class Data < HashModel
     attr_accessor :name,
@@ -47,12 +49,14 @@ class Series < ActiveRecord::Base
                   :education_level_raw,
                   :education_level_id,
                   :child_status_raw,
-                  :child_status_id
+                  :child_status_id,
+                  :income_level_raw,
+                  :income_level_id
   end
 
   def self.load(data)
     if data.size > 0
-      sql_start = "INSERT INTO series (name, description, multiplier, seasonally_adjusted, unit_id, frequency_id, created_at, updated_at, indicator_id, gender_raw, gender_id, race_raw, race_id, marital_raw, marital_id, age_raw, age_id, employment_raw, employment_id, education_level_raw, education_level_id, child_status_raw, child_status_id) VALUES "
+      sql_start = "INSERT INTO series (name, description, multiplier, seasonally_adjusted, unit_id, frequency_id, created_at, updated_at, indicator_id, gender_raw, gender_id, race_raw, race_id, marital_raw, marital_id, age_raw, age_id, employment_raw, employment_id, education_level_raw, education_level_id, child_status_raw, child_status_id, income_level_raw, income_level_id) VALUES "
       sql_end = " ON CONFLICT DO NOTHING"
       now = Time.now
       sql_values = sql_start
@@ -60,8 +64,8 @@ class Series < ActiveRecord::Base
       data.in_groups_of(1000, false) do |group|
         group.each do |row|
           row_values =
-            ActiveRecord::Base.send :sanitize_sql_array, ['(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-             row.name, row.description, row.multiplier, row.seasonally_adjusted, row.unit_id, row.frequency_id, now, now, row.indicator_id, row.gender_raw, row.gender_id, row.race_raw, row.race_id, row.marital_raw, row.marital_id, row.age_raw, row.age_id, row.employment_raw, row.employment_id, row.education_level_raw, row.education_level_id, row.child_status_raw, row.child_status_id]
+            ActiveRecord::Base.send :sanitize_sql_array, ['(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+             row.name, row.description, row.multiplier, row.seasonally_adjusted, row.unit_id, row.frequency_id, now, now, row.indicator_id, row.gender_raw, row.gender_id, row.race_raw, row.race_id, row.marital_raw, row.marital_id, row.age_raw, row.age_id, row.employment_raw, row.employment_id, row.education_level_raw, row.education_level_id, row.child_status_raw, row.child_status_id, row.income_level_raw, row.income_level_id]
           row_values << ','
           sql_values << row_values
         end
