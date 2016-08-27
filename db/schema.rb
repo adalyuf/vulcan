@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160827124542) do
+ActiveRecord::Schema.define(version: 20160827125736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -79,6 +79,14 @@ ActiveRecord::Schema.define(version: 20160827124542) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["name"], name: "index_genders_on_name", unique: true, using: :btree
+  end
+
+  create_table "geo_codes", force: :cascade do |t|
+    t.text     "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["name"], name: "index_geo_codes_on_name", unique: true, using: :btree
   end
 
   create_table "income_levels", force: :cascade do |t|
@@ -159,12 +167,15 @@ ActiveRecord::Schema.define(version: 20160827124542) do
     t.integer  "industry_code_id",    null: false
     t.text     "occupation_raw"
     t.integer  "occupation_id",       null: false
+    t.text     "geo_code_raw"
+    t.integer  "geo_code_id",         null: false
     t.index ["age_id"], name: "index_series_on_age_id", using: :btree
     t.index ["child_status_id"], name: "index_series_on_child_status_id", using: :btree
     t.index ["education_level_id"], name: "index_series_on_education_level_id", using: :btree
     t.index ["employment_id"], name: "index_series_on_employment_id", using: :btree
     t.index ["frequency_id"], name: "index_series_on_frequency_id", using: :btree
     t.index ["gender_id"], name: "index_series_on_gender_id", using: :btree
+    t.index ["geo_code_id"], name: "index_series_on_geo_code_id", using: :btree
     t.index ["income_level_id"], name: "index_series_on_income_level_id", using: :btree
     t.index ["indicator_id"], name: "index_series_on_indicator_id", using: :btree
     t.index ["industry_code_id"], name: "index_series_on_industry_code_id", using: :btree
@@ -211,6 +222,7 @@ ActiveRecord::Schema.define(version: 20160827124542) do
   add_foreign_key "series", "employments"
   add_foreign_key "series", "frequencies"
   add_foreign_key "series", "genders"
+  add_foreign_key "series", "geo_codes"
   add_foreign_key "series", "income_levels"
   add_foreign_key "series", "indicators"
   add_foreign_key "series", "industry_codes"

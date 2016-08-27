@@ -38,6 +38,8 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
     income_level_id = IncomeLevel.find_by(name: "Not specified").id
     industry_code_id = IndustryCode.find_by(name: "Not specified").id #SERIES HAS INDUSTRY, ONLY FOR DEVELOPMENT, FIX ASAP
     occupation_id = Occupation.find_by(name: "Not specified").id
+    geo_code_id = GeoCode.find_by(name: "Not specified").id #FOR DEVELOPMENT ONLY, SERIES HAS GEOGRAPHIC ATTRIBUTES, FIX ASAP
+
 
 
     list = parsed_file.map do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
@@ -78,7 +80,8 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
                          child_status_id: child_status_id,
                          income_level_id: income_level_id,
                          industry_code_id: industry_code_id,
-                         occupation_id: occupation_id
+                         occupation_id: occupation_id,
+                         geo_code_id: geo_code_id
                          )
     end
     Series.load(list)

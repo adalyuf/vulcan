@@ -27,6 +27,7 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
     income_level_id = IncomeLevel.find_by(name: "Not specified").id
     industry_code_id = IndustryCode.find_by(name: "Not specified").id
     occupation_id = Occupation.find_by(name: "Not specified").id
+    geo_code_id = GeoCode.find_by(name: "Not specified").id #FOR DEVELOPMENT ONLY, SERIES HAS GEOGRAPHIC ATTRIBUTES, FIX ASAP
 
 
     list = parsed_file.map do |series_id, area_code, item_code, footnote_codes, begin_year, begin_period, end_year, end_period|
@@ -46,7 +47,8 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
                        child_status_id: child_status_id,
                        income_level_id: income_level_id,
                        industry_code_id: industry_code_id,
-                       occupation_id: occupation_id
+                       occupation_id: occupation_id,
+                       geo_code_id: geo_code_id
                        )
     end
     Series.load(list)
