@@ -1,4 +1,4 @@
-class Age < ActiveRecord::Base
+class OccupationCode < ActiveRecord::Base
   has_many :series
 
   validates :name, presence: true

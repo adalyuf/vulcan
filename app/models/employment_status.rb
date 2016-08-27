@@ -1,4 +1,4 @@
-class Employment < ActiveRecord::Base
+class EmploymentStatus < ActiveRecord::Base
   has_many :series
 
   validates :name, presence: true

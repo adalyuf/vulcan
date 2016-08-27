@@ -30,14 +30,14 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
 
     gender_id = Gender.find_by(name: "Not specified").id
     race_id = Race.find_by(name: "Not specified").id
-    marital_id = Marital.find_by(name: "Not specified").id
-    age_id = Age.find_by(name: "Not specified").id
-    employment_id = Employment.find_by(name: "Not specified").id
+    marital_status_id = MaritalStatus.find_by(name: "Not specified").id
+    age_bracket_id = AgeBracket.find_by(name: "Not specified").id
+    employment_status_id = EmploymentStatus.find_by(name: "Not specified").id
     education_level_id = EducationLevel.find_by(name: "Not specified").id
     child_status_id = ChildStatus.find_by(name: "Not specified").id
     income_level_id = IncomeLevel.find_by(name: "Not specified").id
     industry_code_id = IndustryCode.find_by(name: "Not specified").id #SERIES HAS INDUSTRY, ONLY FOR DEVELOPMENT, FIX ASAP
-    occupation_id = Occupation.find_by(name: "Not specified").id
+    occupation_code_id = OccupationCode.find_by(name: "Not specified").id
     geo_code_id = GeoCode.find_by(name: "Not specified").id #FOR DEVELOPMENT ONLY, SERIES HAS GEOGRAPHIC ATTRIBUTES, FIX ASAP
 
 
@@ -73,14 +73,14 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
                          indicator_id: indicators_by_name[series_title.strip].id,
                          gender_id: gender_id,
                          race_id: race_id,
-                         marital_id: marital_id,
-                         age_id: age_id,
-                         employment_id: employment_id,
+                         marital_status_id: marital_status_id,
+                         age_bracket_id: age_bracket_id,
+                         employment_status_id: employment_status_id,
                          education_level_id: education_level_id,
                          child_status_id: child_status_id,
                          income_level_id: income_level_id,
                          industry_code_id: industry_code_id,
-                         occupation_id: occupation_id,
+                         occupation_code_id: occupation_code_id,
                          geo_code_id: geo_code_id
                          )
     end

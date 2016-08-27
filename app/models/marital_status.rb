@@ -1,4 +1,4 @@
-class Marital < ActiveRecord::Base
+class MaritalStatus < ActiveRecord::Base
   has_many :series
 
   validates :name, presence: true

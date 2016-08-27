@@ -1,4 +1,4 @@
-class Occupation < ActiveRecord::Base
+class AgeBracket < ActiveRecord::Base
   has_many :series
 
   validates :name, presence: true
