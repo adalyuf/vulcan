@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160827122244) do
+ActiveRecord::Schema.define(version: 20160827124542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -113,6 +113,14 @@ ActiveRecord::Schema.define(version: 20160827122244) do
     t.index ["name"], name: "index_maritals_on_name", unique: true, using: :btree
   end
 
+  create_table "occupations", force: :cascade do |t|
+    t.text     "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["name"], name: "index_occupations_on_name", unique: true, using: :btree
+  end
+
   create_table "races", force: :cascade do |t|
     t.text     "name"
     t.text     "description"
@@ -149,6 +157,8 @@ ActiveRecord::Schema.define(version: 20160827122244) do
     t.integer  "income_level_id",     null: false
     t.text     "industry_code_raw"
     t.integer  "industry_code_id",    null: false
+    t.text     "occupation_raw"
+    t.integer  "occupation_id",       null: false
     t.index ["age_id"], name: "index_series_on_age_id", using: :btree
     t.index ["child_status_id"], name: "index_series_on_child_status_id", using: :btree
     t.index ["education_level_id"], name: "index_series_on_education_level_id", using: :btree
@@ -160,6 +170,7 @@ ActiveRecord::Schema.define(version: 20160827122244) do
     t.index ["industry_code_id"], name: "index_series_on_industry_code_id", using: :btree
     t.index ["marital_id"], name: "index_series_on_marital_id", using: :btree
     t.index ["name"], name: "index_series_on_name", unique: true, using: :btree
+    t.index ["occupation_id"], name: "index_series_on_occupation_id", using: :btree
     t.index ["race_id"], name: "index_series_on_race_id", using: :btree
     t.index ["unit_id"], name: "index_series_on_unit_id", using: :btree
   end
@@ -204,6 +215,7 @@ ActiveRecord::Schema.define(version: 20160827122244) do
   add_foreign_key "series", "indicators"
   add_foreign_key "series", "industry_codes"
   add_foreign_key "series", "maritals"
+  add_foreign_key "series", "occupations"
   add_foreign_key "series", "races"
   add_foreign_key "series", "units"
   add_foreign_key "values", "indicators"

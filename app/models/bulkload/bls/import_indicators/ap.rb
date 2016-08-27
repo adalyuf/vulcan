@@ -26,6 +26,8 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
     child_status_id = ChildStatus.find_by(name: "Not specified").id
     income_level_id = IncomeLevel.find_by(name: "Not specified").id
     industry_code_id = IndustryCode.find_by(name: "Not specified").id
+    occupation_id = Occupation.find_by(name: "Not specified").id
+
 
     list = parsed_file.map do |series_id, area_code, item_code, footnote_codes, begin_year, begin_period, end_year, end_period|
       Series::Data.new(name: series_id.strip,
@@ -43,7 +45,8 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
                        education_level_id: education_level_id,
                        child_status_id: child_status_id,
                        income_level_id: income_level_id,
-                       industry_code_id: industry_code_id
+                       industry_code_id: industry_code_id,
+                       occupation_id: occupation_id
                        )
     end
     Series.load(list)
