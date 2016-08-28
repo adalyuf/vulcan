@@ -5,8 +5,6 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
     source_id = Source.find_by(internal_name: "bls").id
     # These indicators reflect the average price of goods in various cities. Classifying this as Business
     category_id = Category.find_by(name: "Business").id
-
-    Dataset.where(name: "Average Prices", internal_name: "bls_ap", source_id: source_id, description: "Average prices for goods and services in various cities").first_or_create
     dataset_id = Dataset.find_by(internal_name: "bls_ap").id
 
     list = parsed_file.map do |code, description|

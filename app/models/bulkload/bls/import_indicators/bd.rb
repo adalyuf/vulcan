@@ -13,7 +13,6 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
     source_id = Source.find_by(internal_name: "bls").id
     #These indicators reflect job creation and business establishments. Classifying this as Business
     category_id = Category.find_by(name: "Business").id
-    Dataset.where(name: "Business Employment Dynamics", internal_name: "bls_bd", source_id: source_id, description: "Track changes in employment at the establishment level").first_or_create
     dataset_id = Dataset.find_by(internal_name: "bls_bd").id
 
     list = uniq_series.map do |series_title|

@@ -21,6 +21,12 @@ namespace :defaults do
     Source.where(name: "Bureau of Labor Statistics (BLS)", internal_name: "bls").first_or_create
   end
 
+  desc "create dataset records"
+  task :dataset => :environment do
+    Dataset.where(name: "Average Prices", internal_name: :bls_ap, source_id: Source.find_by(internal_name: "bls").id, description: "Average prices for goods and services in various cities").first_or_create
+    Dataset.where(name: "Business Employment Dynamics", internal_name: :bls_bd, source_id: Source.find_by(internal_name: "bls").id , description: "Track changes in employment at the establishment level").first_or_create
+  end
+
   desc "create frequency records"
   task :frequency => :environment do
     Frequency.where(name: "Annual", description: "Annual").first_or_create
