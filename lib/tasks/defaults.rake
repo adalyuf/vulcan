@@ -1,7 +1,31 @@
 namespace :defaults do
 
   desc "crate defaults"
-  task :create => [:frequency, :unit, :gender, :race, :age_bracket, :marital_status, :employment_status, :education_level, :child_status, :income_level, :industry_code, :occupation_code, :geo_code]
+  task :create => [:category, :source, :frequency, :unit, :gender, :race, :age_bracket, :marital_status, :employment_status, :education_level, :child_status, :income_level, :industry_code, :occupation_code, :geo_code]
+
+  desc "create category records"
+  task :category => :environment do
+    Category.where(name: "Business", description: "Includes agriculture, manufacturing, finance, energy, and trade").first_or_create
+    Category.where(name: "Environment", description: "Includes climate, ecosystems, and ocean statistics").first_or_create
+    Category.where(name: "Education", description: "Education statistics").first_or_create
+    Category.where(name: "Health", description: "Health statistics").first_or_create
+    Category.where(name: "Government", description: "Government statistics").first_or_create
+    Category.where(name: "Science", description: "Science statistics").first_or_create
+    Category.where(name: "Safety", description: "Safety statistics, includes crime and disasters").first_or_create
+    Category.where(name: "People", description: "Includes population, family, housing, and income statistics").first_or_create
+  end
+
+  desc "create source records"
+  task :source => :environment do
+    Source.where(name: "Bureau of Economic Analysis (BEA)", internal_name: "bea").first_or_create
+    Source.where(name: "Bureau of Labor Statistics (BLS)", internal_name: "bls").first_or_create
+  end
+
+  desc "create dataset records"
+  task :dataset => :environment do
+    Dataset.where(name: "Average Prices", internal_name: :bls_ap, source_id: Source.find_by(internal_name: "bls").id, description: "Average prices for goods and services in various cities").first_or_create
+    Dataset.where(name: "Business Employment Dynamics", internal_name: :bls_bd, source_id: Source.find_by(internal_name: "bls").id , description: "Track changes in employment at the establishment level").first_or_create
+  end
 
   desc "create frequency records"
   task :frequency => :environment do
