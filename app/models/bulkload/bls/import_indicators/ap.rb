@@ -3,14 +3,18 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
   def import_indicators
     parsed_file = Bulkload::Bls::FileManager.new("indicators", "ap", "ap.item").parsed_file
     source_id = Source.find_by(internal_name: "bls").id
-    category_id = Category.find_by(name: "Business").id
     # These indicators reflect the average price of goods in various cities. Classifying this as Business
+    category_id = Category.find_by(name: "Business").id
+
+    Dataset.where(name: "Average Prices", internal_name: "bls_ap", source_id: source_id, description: "Average prices for goods and services in various cities").first_or_create
+    dataset_id = Dataset.find_by(internal_name: "bls_ap").id
 
     list = parsed_file.map do |code, description|
       Indicator::Data.new(name: code.strip,
                           description: description.strip,
                           source_id: source_id,
-                          category_id: category_id
+                          category_id: category_id,
+                          dataset_id: dataset_id
                           )
     end
     Indicator.load(list)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160828145549) do
+ActiveRecord::Schema.define(version: 20160828194738) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,11 +40,14 @@ ActiveRecord::Schema.define(version: 20160828145549) do
   end
 
   create_table "datasets", force: :cascade do |t|
-    t.string   "name"
-    t.string   "internal_name"
+    t.text     "name"
+    t.text     "internal_name"
     t.integer  "source_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.text     "description"
+    t.index ["internal_name"], name: "index_datasets_on_internal_name", unique: true, using: :btree
+    t.index ["name"], name: "index_datasets_on_name", unique: true, using: :btree
     t.index ["source_id"], name: "index_datasets_on_source_id", using: :btree
   end
 
@@ -112,7 +115,9 @@ ActiveRecord::Schema.define(version: 20160828145549) do
     t.datetime "updated_at",  null: false
     t.integer  "source_id",   null: false
     t.integer  "category_id", null: false
+    t.integer  "dataset_id",  null: false
     t.index ["category_id"], name: "index_indicators_on_category_id", using: :btree
+    t.index ["dataset_id"], name: "index_indicators_on_dataset_id", using: :btree
     t.index ["name"], name: "index_indicators_on_name", unique: true, using: :btree
     t.index ["source_id"], name: "index_indicators_on_source_id", using: :btree
   end
@@ -231,6 +236,7 @@ ActiveRecord::Schema.define(version: 20160828145549) do
   end
 
   add_foreign_key "indicators", "categories"
+  add_foreign_key "indicators", "datasets"
   add_foreign_key "indicators", "sources"
   add_foreign_key "series", "age_brackets"
   add_foreign_key "series", "child_statuses"
