@@ -1,7 +1,19 @@
 namespace :defaults do
 
   desc "crate defaults"
-  task :create => [:source, :frequency, :unit, :gender, :race, :age_bracket, :marital_status, :employment_status, :education_level, :child_status, :income_level, :industry_code, :occupation_code, :geo_code]
+  task :create => [:category, :source, :frequency, :unit, :gender, :race, :age_bracket, :marital_status, :employment_status, :education_level, :child_status, :income_level, :industry_code, :occupation_code, :geo_code]
+
+  desc "create category records"
+  task :category => :environment do
+    Category.where(name: "Business", description: "Includes agriculture, manufacturing, finance, energy, and trade").first_or_create
+    Category.where(name: "Environment", description: "Includes climate, ecosystems, and ocean statistics").first_or_create
+    Category.where(name: "Education", description: "Education statistics").first_or_create
+    Category.where(name: "Health", description: "Health statistics").first_or_create
+    Category.where(name: "Government", description: "Government statistics").first_or_create
+    Category.where(name: "Science", description: "Science statistics").first_or_create
+    Category.where(name: "Safety", description: "Safety statistics, includes crime and disasters").first_or_create
+    Category.where(name: "People", description: "Includes population, family, housing, and income statistics").first_or_create
+  end
 
   desc "create source records"
   task :source => :environment do
