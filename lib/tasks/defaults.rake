@@ -1,7 +1,13 @@
 namespace :defaults do
 
   desc "crate defaults"
-  task :create => [:frequency, :unit, :gender, :race, :age_bracket, :marital_status, :employment_status, :education_level, :child_status, :income_level, :industry_code, :occupation_code, :geo_code]
+  task :create => [:source, :frequency, :unit, :gender, :race, :age_bracket, :marital_status, :employment_status, :education_level, :child_status, :income_level, :industry_code, :occupation_code, :geo_code]
+
+  desc "create source records"
+  task :source => :environment do
+    Source.where(name: "Bureau of Economic Analysis (BEA)", internal_name: "bea").first_or_create
+    Source.where(name: "Bureau of Labor Statistics (BLS)", internal_name: "bls").first_or_create
+  end
 
   desc "create frequency records"
   task :frequency => :environment do

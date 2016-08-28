@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160827125736) do
+ActiveRecord::Schema.define(version: 20160828001346) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,7 +102,9 @@ ActiveRecord::Schema.define(version: 20160827125736) do
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "source_id",   null: false
     t.index ["name"], name: "index_indicators_on_name", unique: true, using: :btree
+    t.index ["source_id"], name: "index_indicators_on_source_id", using: :btree
   end
 
   create_table "industry_codes", force: :cascade do |t|
@@ -187,10 +189,12 @@ ActiveRecord::Schema.define(version: 20160827125736) do
   end
 
   create_table "sources", force: :cascade do |t|
-    t.string   "name"
-    t.string   "internal_name"
+    t.text     "name"
+    t.text     "internal_name"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
+    t.index ["internal_name"], name: "index_sources_on_internal_name", unique: true, using: :btree
+    t.index ["name"], name: "index_sources_on_name", unique: true, using: :btree
   end
 
   create_table "units", force: :cascade do |t|
@@ -216,6 +220,7 @@ ActiveRecord::Schema.define(version: 20160827125736) do
     t.index ["series_id"], name: "index_values_on_series_id", using: :btree
   end
 
+  add_foreign_key "indicators", "sources"
   add_foreign_key "series", "age_brackets"
   add_foreign_key "series", "child_statuses"
   add_foreign_key "series", "education_levels"

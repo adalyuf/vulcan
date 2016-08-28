@@ -2,10 +2,12 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
 
   def import_indicators
     parsed_file = Bulkload::Bls::FileManager.new("indicators", "ap", "ap.item").parsed_file
+    source_id = Source.find_by(internal_name: "bls").id
 
     list = parsed_file.map do |code, description|
       Indicator::Data.new(name: code.strip,
-                          description: description.strip
+                          description: description.strip,
+                          source_id: source_id
                           )
     end
     Indicator.load(list)

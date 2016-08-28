@@ -10,9 +10,12 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
       uniq_series << series_title.strip
     end
 
+    source_id = Source.find_by(internal_name: "bls").id
+
     list = uniq_series.map do |series_title|
       Indicator::Data.new(name: series_title,
-                          description: series_title
+                          description: series_title,
+                          source_id: source_id
                           )
     end
 
