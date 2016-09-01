@@ -2,10 +2,10 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
 
   def import_indicators
     parsed_file = Bulkload::Bls::FileManager.new("indicators", "ap", "ap.item").parsed_file
-    source_id = Source.find_by(internal_name: "bls").id
+    source_id = Source.find_by(internal_name: :"bureau-labor-statistics").id
     # These indicators reflect the average price of goods in various cities. Classifying this as Business
-    category_id = Category.find_by(name: "Business").id
-    dataset_id = Dataset.find_by(internal_name: "bls_ap").id
+    category_id = Category.find_by(internal_name: :business).id
+    dataset_id = Dataset.find_by(internal_name: :"bls-average-prices").id
 
     list = parsed_file.map do |code, description|
       Indicator::Data.new(name: code.strip,
@@ -21,20 +21,20 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
   def import_series
     parsed_file = Bulkload::Bls::FileManager.new("series", "ap", "ap.series").parsed_file
 
-    unit_id = Unit.find_by(name: "Nominal US Dollars").id
-    frequency_id = Frequency.find_by(name: "Monthly").id
+    unit_id = Unit.find_by(internal_name: :"nominal-us-dollars").id
+    frequency_id = Frequency.find_by(internal_name: :"monthly").id
 
-    gender_id = Gender.find_by(name: "Not specified").id
-    race_id = Race.find_by(name: "Not specified").id
-    marital_status_id = MaritalStatus.find_by(name: "Not specified").id
-    age_bracket_id = AgeBracket.find_by(name: "Not specified").id
-    employment_status_id = EmploymentStatus.find_by(name: "Not specified").id
-    education_level_id = EducationLevel.find_by(name: "Not specified").id
-    child_status_id = ChildStatus.find_by(name: "Not specified").id
-    income_level_id = IncomeLevel.find_by(name: "Not specified").id
-    industry_code_id = IndustryCode.find_by(name: "Not specified").id
-    occupation_code_id = OccupationCode.find_by(name: "Not specified").id
-    geo_code_id = GeoCode.find_by(name: "Not specified").id #FOR DEVELOPMENT ONLY, SERIES HAS GEOGRAPHIC ATTRIBUTES, FIX ASAP
+    gender_id = Gender.find_by(internal_name: :"not-specified").id
+    race_id = Race.find_by(internal_name: :"not-specified").id
+    marital_status_id = MaritalStatus.find_by(internal_name: :"not-specified").id
+    age_bracket_id = AgeBracket.find_by(internal_name: :"not-specified").id
+    employment_status_id = EmploymentStatus.find_by(internal_name: :"not-specified").id
+    education_level_id = EducationLevel.find_by(internal_name: :"not-specified").id
+    child_status_id = ChildStatus.find_by(internal_name: :"not-specified").id
+    income_level_id = IncomeLevel.find_by(internal_name: :"not-specified").id
+    industry_code_id = IndustryCode.find_by(internal_name: :"not-specified").id
+    occupation_code_id = OccupationCode.find_by(internal_name: :"not-specified").id
+    geo_code_id = GeoCode.find_by(internal_name: :"not-specified").id #FOR DEVELOPMENT ONLY, SERIES HAS GEOGRAPHIC ATTRIBUTES, FIX ASAP
 
 
     list = parsed_file.map do |series_id, area_code, item_code, footnote_codes, begin_year, begin_period, end_year, end_period|
