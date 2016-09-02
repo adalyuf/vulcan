@@ -5,6 +5,7 @@ namespace :defaults do
 
   desc "destroy defaults"
   task :destroy => :environment do
+    Dataset.destroy_all
     Category.destroy_all
     Frequency.destroy_all
     Unit.destroy_all

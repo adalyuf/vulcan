@@ -16,8 +16,22 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
     dataset_id = Dataset.find_by(internal_name: :"bls-business-employment-dynamics").id
 
     list = uniq_series.map do |series_title|
-      Indicator::Data.new(name: series_title,
-                          description: series_title,
+      description = series_title.strip
+      name = description.sub /\s*\(.+\)/, ''
+      name = name.strip
+      internal_name = name
+      internal_name = internal_name.gsub(",", '')
+      internal_name = internal_name.gsub(".", '')
+      internal_name = internal_name.sub /\s*\(.+\)/, ''
+      internal_name = internal_name.gsub(" ", "-")
+      internal_name = internal_name.downcase
+
+      source_identifier = series_title.strip
+
+      Indicator::Data.new(name: name,
+                          internal_name: internal_name,
+                          source_identifier: source_identifier,
+                          description: description,
                           source_id: source_id,
                           category_id: category_id,
                           dataset_id: dataset_id
@@ -72,13 +86,19 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
             quarterly_frequency_id
           end
 
-        Series::Data.new(name: series_id.strip,
+        name = series_id.strip
+        internal_name = name
+        source_identifier = name
+
+        Series::Data.new(name: name,
                          description: nil,
+                         internal_name: internal_name,
+                         source_identifier: source_identifier,
                          multiplier: 0,
                          seasonally_adjusted: SEASONAL[seasonal.strip],
                          unit_id: unit_id,
                          frequency_id: frequency_id,
-                         indicator_id: indicators_by_name[series_title.strip].id,
+                         indicator_id: indicators_by_source_identifier[series_title.strip].id,
                          gender_id: gender_id,
                          race_id: race_id,
                          marital_status_id: marital_status_id,

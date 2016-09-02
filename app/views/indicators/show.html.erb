@@ -1,0 +1,11 @@
+<h1>
+  <%= @indicator.name %> series
+</h1>
+
+<ul>
+  <% @series.each do |series| %>
+    <li>
+      <%= series.name %>
+    </li>
+  <% end %>
+</ul>

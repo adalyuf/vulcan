@@ -8,8 +8,22 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
     dataset_id = Dataset.find_by(internal_name: :"bls-average-prices").id
 
     list = parsed_file.map do |code, description|
-      Indicator::Data.new(name: code.strip,
-                          description: description.strip,
+      description = description.strip
+      name = description.sub /\s*\(.+\)/, ''
+      name = name.strip
+
+      internal_name = description.gsub(",", '')
+      internal_name = internal_name.gsub(".", '')
+      internal_name = internal_name.sub /\s*\(.+\)/, ''
+      internal_name = internal_name.gsub(" ", "-")
+      internal_name = internal_name.downcase
+
+      source_identifier = code.strip
+
+      Indicator::Data.new(name: name,
+                          description: description,
+                          internal_name: internal_name,
+                          source_identifier: source_identifier,
                           source_id: source_id,
                           category_id: category_id,
                           dataset_id: dataset_id
@@ -38,13 +52,22 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
 
 
     list = parsed_file.map do |series_id, area_code, item_code, footnote_codes, begin_year, begin_period, end_year, end_period|
-      Series::Data.new(name: series_id.strip,
-                       description: footnote_codes.strip.length > 0 ? footnote_codes.strip : nil,
+      description = footnote_codes.strip.length > 0 ? footnote_codes.strip : nil
+
+      name = series_id.strip
+      internal_name = name
+      source_identifier = name
+
+
+      Series::Data.new(name: name,
+                       description: description,
+                       internal_name: internal_name,
+                       source_identifier: source_identifier,
                        multiplier: 0,
                        seasonally_adjusted: false,
                        unit_id: unit_id,
                        frequency_id: frequency_id,
-                       indicator_id: indicators_by_name[item_code.strip].id,
+                       indicator_id: indicators_by_source_identifier[item_code.strip].id,
                        gender_id: gender_id,
                        race_id: race_id,
                        marital_status_id: marital_status_id,

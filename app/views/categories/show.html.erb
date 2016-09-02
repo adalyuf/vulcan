@@ -1,0 +1,11 @@
+<h1>
+  <%= @category.name %> datasets
+</h1>
+
+<ul>
+  <% @datasets.each do |dataset| %>
+    <li>
+    <%= link_to dataset.name, dataset_path(dataset.internal_name) %>
+    </li>
+  <% end %>
+</ul>

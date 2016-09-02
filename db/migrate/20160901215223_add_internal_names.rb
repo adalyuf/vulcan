@@ -16,5 +16,10 @@ class AddInternalNames < ActiveRecord::Migration[5.0]
     add_column :industry_codes, :internal_name, :text, null:false
     add_column :occupation_codes, :internal_name, :text, null:false
     add_column :geo_codes, :internal_name, :text, null:false
+    add_column :indicators, :internal_name, :text, null:false
+    add_column :series, :internal_name, :text, null:false
+
+    add_column :indicators, :source_identifier, :text, null:false
+    add_column :series, :source_identifier, :text, null:false
   end
 end

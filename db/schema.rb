@@ -122,11 +122,13 @@ ActiveRecord::Schema.define(version: 20160901215223) do
   create_table "indicators", force: :cascade do |t|
     t.text     "name"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "source_id",   null: false
-    t.integer  "category_id", null: false
-    t.integer  "dataset_id",  null: false
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.integer  "source_id",         null: false
+    t.integer  "category_id",       null: false
+    t.integer  "dataset_id",        null: false
+    t.text     "internal_name",     null: false
+    t.text     "source_identifier", null: false
     t.index ["category_id"], name: "index_indicators_on_category_id", using: :btree
     t.index ["dataset_id"], name: "index_indicators_on_dataset_id", using: :btree
     t.index ["name"], name: "index_indicators_on_name", unique: true, using: :btree
@@ -201,6 +203,8 @@ ActiveRecord::Schema.define(version: 20160901215223) do
     t.integer  "occupation_code_id",    null: false
     t.text     "geo_code_raw"
     t.integer  "geo_code_id",           null: false
+    t.text     "internal_name",         null: false
+    t.text     "source_identifier",     null: false
     t.index ["age_bracket_id"], name: "index_series_on_age_bracket_id", using: :btree
     t.index ["child_status_id"], name: "index_series_on_child_status_id", using: :btree
     t.index ["education_level_id"], name: "index_series_on_education_level_id", using: :btree

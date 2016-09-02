@@ -1,0 +1,11 @@
+<h1>
+  <%= @dataset.name %> indicators
+</h1>
+
+<ul>
+  <% @indicators.each do |indicator| %>
+    <li>
+      <%= link_to indicator.name, indicator_path(@dataset.internal_name,indicator.internal_name) %>
+    </li>
+  <% end %>
+</ul>

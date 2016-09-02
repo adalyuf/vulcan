@@ -34,4 +34,9 @@ class Bulkload::Bls::ImportIndicators
   def indicators_by_name
     @indicators_by_name ||= Hash[Indicator.all.map { |i| [i.name, i] }]
   end
+
+  def indicators_by_source_identifier
+    @indicators_by_source_identifier ||= Hash[Indicator.all.map { |i| [i.source_identifier, i] }]
+  end
+
 end
