@@ -2,6 +2,12 @@
   <%= @category.name %> datasets
 </h1>
 
+<h4>
+  <%= link_to "Categories", categories_path %>
+   >
+  <%= @category.name %>
+</h4>
+
 <ul>
   <% @datasets.each do |dataset| %>
     <li>
