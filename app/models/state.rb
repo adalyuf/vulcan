@@ -1,0 +1,2 @@
+class State < GeoCode
+end

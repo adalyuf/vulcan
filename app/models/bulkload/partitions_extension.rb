@@ -57,11 +57,16 @@ module Bulkload::PartitionsExtension
       # Cascade option forcefully truncates all objects that have relationships with indicators (series, values)
     end
 
+    def truncate_series
+      ActiveRecord::Base.connection.execute("TRUNCATE TABLE series CASCADE;")
+    end
+
     def reset
       drop_value_partitions
       drop_schemas
       drop_triggers
       truncate_indicators
+      truncate_series
     end
   end
 end

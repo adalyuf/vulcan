@@ -60,9 +60,6 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
     income_level_id = IncomeLevel.find_by(internal_name: :"not-specified").id
     industry_code_id = IndustryCode.find_by(internal_name: :"not-specified").id #SERIES HAS INDUSTRY, ONLY FOR DEVELOPMENT, FIX ASAP
     occupation_code_id = OccupationCode.find_by(internal_name: :"not-specified").id
-    geo_code_id = GeoCode.find_by(internal_name: :"not-specified").id #FOR DEVELOPMENT ONLY, SERIES HAS GEOGRAPHIC ATTRIBUTES, FIX ASAP
-
-
 
     list = parsed_file.map do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
       unit_id =
@@ -89,6 +86,14 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
         name = series_id.strip
         internal_name = name
         source_identifier = name
+        geo_code_raw = state_code
+        indicator_id = indicators_by_source_identifier[series_title.strip].id
+        if state_code.to_i == 0
+          geo_code_id = geo_by_internal_name['united-states'].id
+        else
+          state = geo_by_fips_code[state_code.to_i]
+          geo_code_id = state ? state.id : geo_by_internal_name['not-elsewhere-classified'].id
+        end
 
         Series::Data.new(name: name,
                          description: nil,
@@ -98,7 +103,7 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
                          seasonally_adjusted: SEASONAL[seasonal.strip],
                          unit_id: unit_id,
                          frequency_id: frequency_id,
-                         indicator_id: indicators_by_source_identifier[series_title.strip].id,
+                         indicator_id: indicator_id,
                          gender_id: gender_id,
                          race_id: race_id,
                          marital_status_id: marital_status_id,
@@ -109,6 +114,7 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
                          income_level_id: income_level_id,
                          industry_code_id: industry_code_id,
                          occupation_code_id: occupation_code_id,
+                         geo_code_raw: geo_code_raw,
                          geo_code_id: geo_code_id
                          )
     end

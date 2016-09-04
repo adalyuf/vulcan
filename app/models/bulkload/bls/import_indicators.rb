@@ -39,4 +39,12 @@ class Bulkload::Bls::ImportIndicators
     @indicators_by_source_identifier ||= Hash[Indicator.all.map { |i| [i.source_identifier, i] }]
   end
 
+  def geo_by_internal_name
+    @geo_by_internal_name ||= Hash[ GeoCode.all.map { |g| [g.internal_name, g] } ]
+  end
+
+  def geo_by_fips_code
+    @geo_by_fips_code ||= Hash[ GeoCode.all.map { |g| [g.fips_code, g] } ]
+  end
+
 end
