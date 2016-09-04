@@ -3,9 +3,9 @@
 </h1>
 
 <h4>
-  <%= link_to "Categories", categories_path %>
+  <%= link_to("Categories", categories_path)%>
    >
-  <%= link_to @category.name, category_path(@category.internal_name) %>
+  <%= link_to(@category.name, category_path(@category.internal_name))%>
    >
   <%= @dataset.name %>
 </h4>
@@ -13,7 +13,7 @@
 <ul>
   <% @indicators.each do |indicator| %>
     <li>
-      <%= link_to indicator.name, indicator_path(@dataset.internal_name,indicator.internal_name) %>
+      <%= link_to(indicator.name, indicator_path(@dataset.internal_name,indicator.internal_name))%>
     </li>
   <% end %>
 </ul>

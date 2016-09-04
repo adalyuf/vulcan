@@ -3,7 +3,7 @@
 </h1>
 
 <h4>
-  <%= link_to "Categories", categories_path %>
+  <%= link_to("Categories", categories_path)%>
    >
   <%= @category.name %>
 </h4>
@@ -11,7 +11,7 @@
 <ul>
   <% @datasets.each do |dataset| %>
     <li>
-    <%= link_to dataset.name, dataset_path(dataset.internal_name) %>
+    <%= link_to(dataset.name, dataset_path(dataset.internal_name))%>
     </li>
   <% end %>
 </ul>

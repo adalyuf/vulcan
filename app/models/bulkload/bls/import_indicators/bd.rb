@@ -17,15 +17,8 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
 
     list = uniq_series.map do |series_title|
       description = series_title.strip
-      name = description.sub /\s*\(.+\)/, ''
-      name = name.strip
-      internal_name = name
-      internal_name = internal_name.gsub(",", '')
-      internal_name = internal_name.gsub(".", '')
-      internal_name = internal_name.sub /\s*\(.+\)/, ''
-      internal_name = internal_name.gsub(" ", "-")
-      internal_name = internal_name.downcase
-
+      name = normalize_name(description)
+      internal_name = normalize_internal_name(description)
       source_identifier = series_title.strip
 
       Indicator::Data.new(name: name,
@@ -50,16 +43,16 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
     annual_frequency_id = Frequency.find_by(internal_name: :annual).id
     quarterly_frequency_id = Frequency.find_by(internal_name: :quarterly).id
 
-    gender_id = Gender.find_by(internal_name: :"not-specified").id
-    race_id = Race.find_by(internal_name: :"not-specified").id
-    marital_status_id = MaritalStatus.find_by(internal_name: :"not-specified").id
-    age_bracket_id = AgeBracket.find_by(internal_name: :"not-specified").id
-    employment_status_id = EmploymentStatus.find_by(internal_name: :"not-specified").id
-    education_level_id = EducationLevel.find_by(internal_name: :"not-specified").id
-    child_status_id = ChildStatus.find_by(internal_name: :"not-specified").id
-    income_level_id = IncomeLevel.find_by(internal_name: :"not-specified").id
-    industry_code_id = IndustryCode.find_by(internal_name: :"not-specified").id #SERIES HAS INDUSTRY, ONLY FOR DEVELOPMENT, FIX ASAP
-    occupation_code_id = OccupationCode.find_by(internal_name: :"not-specified").id
+    gender_id = Gender.find_by(internal_name: "not-specified").id
+    race_id = Race.find_by(internal_name: "not-specified").id
+    marital_status_id = MaritalStatus.find_by(internal_name: "not-specified").id
+    age_bracket_id = AgeBracket.find_by(internal_name: "not-specified").id
+    employment_status_id = EmploymentStatus.find_by(internal_name: "not-specified").id
+    education_level_id = EducationLevel.find_by(internal_name: "not-specified").id
+    child_status_id = ChildStatus.find_by(internal_name: "not-specified").id
+    income_level_id = IncomeLevel.find_by(internal_name: "not-specified").id
+    industry_code_id = IndustryCode.find_by(internal_name: "not-specified").id #SERIES HAS INDUSTRY, ONLY FOR DEVELOPMENT, FIX ASAP
+    occupation_code_id = OccupationCode.find_by(internal_name: "not-specified").id
 
     list = parsed_file.map do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
       unit_id =
@@ -88,11 +81,11 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
         source_identifier = name
         geo_code_raw = state_code
         indicator_id = indicators_by_source_identifier[series_title.strip].id
-        if state_code.to_i == 0
+        state_code = state_code.to_i
+        if state_code == 0
           geo_code_id = geo_by_internal_name['united-states'].id
         else
-          state = geo_by_fips_code[state_code.to_i]
-          geo_code_id = state ? state.id : geo_by_internal_name['not-elsewhere-classified'].id
+          geo_code_id = geo_by_fips_code[state_code].try(:id) || geo_by_internal_name['not-elsewhere-classified'].id
         end
 
         Series::Data.new(name: name,

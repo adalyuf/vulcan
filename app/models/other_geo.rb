@@ -1,2 +1,0 @@
-class OtherGeo < GeoCode
-end
