@@ -17,6 +17,8 @@ class Indicator < ActiveRecord::Base
   class Data < HashModel
     attr_accessor :name,
                   :description,
+                  :internal_name,
+                  :source_identifier,
                   :source_id,
                   :category_id,
                   :dataset_id
@@ -24,14 +26,14 @@ class Indicator < ActiveRecord::Base
 
   def self.load(data)
     if data.size > 0
-      sql_start = "INSERT INTO indicators (name, description, created_at, updated_at, source_id, category_id, dataset_id) VALUES "
+      sql_start = "INSERT INTO indicators (name, description, created_at, updated_at, source_id, category_id, dataset_id, internal_name, source_identifier) VALUES "
       sql_end = " ON CONFLICT DO NOTHING"
       now = Time.now
       sql_values = sql_start
 
       data.in_groups_of(1000, false) do |group|
         group.each do |row|
-          row_values = ActiveRecord::Base.send :sanitize_sql_array, ['(?, ?, ?, ?, ?, ?, ?)', row.name, row.description, now, now, row.source_id, row.category_id, row.dataset_id]
+          row_values = ActiveRecord::Base.send :sanitize_sql_array, ['(?, ?, ?, ?, ?, ?, ?, ?, ?)', row.name, row.description, now, now, row.source_id, row.category_id, row.dataset_id, row.internal_name, row.source_identifier]
           row_values << ','
           sql_values << row_values
         end

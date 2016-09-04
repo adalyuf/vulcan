@@ -1,0 +1,49 @@
+<h1>
+  <%= @indicator.name %>
+</h1>
+
+<h4>
+  <%= link_to("Categories", categories_path)%>
+   >
+  <%= link_to(@category.name, category_path(@category.internal_name))%>
+   >
+  <%= link_to(@dataset.name, dataset_path(@dataset.internal_name))%>
+</h4>
+
+<%= line_chart @data %>
+
+<ul>
+  <li>
+    Name |
+    Seasonal |
+    Frequency |
+    Unit |
+    Gender |
+    Race |
+    Age Bracket |
+    Employment |
+    Education |
+    Children |
+    Income |
+    Occuption |
+    Location
+  </li>
+  <% @series.each do |series| %>
+    <li>
+      <%= series.name %> |
+      <%= series.seasonally_adjusted %> |
+      <%= series.frequency.name %> |
+      <%= series.unit.name %> |
+      <%= series.gender.name %> |
+      <%= series.race.name %> |
+      <%= series.marital_status.name %> |
+      <%= series.age_bracket.name %> |
+      <%= series.employment_status.name %> |
+      <%= series.education_level.name %> |
+      <%= series.child_status.name %> |
+      <%= series.income_level.name %> |
+      <%= series.occupation_code.name %> |
+      <%= series.geo_code.name %>
+    </li>
+  <% end %>
+</ul>

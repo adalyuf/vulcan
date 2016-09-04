@@ -31,7 +31,33 @@ class Bulkload::Bls::ImportIndicators
     self.class.setup_values_partitions
   end
 
+  def normalize_name(name)
+    name = name.gsub(/\s*\(.+\)/, '')
+    name = name.strip
+  end
+
+  def normalize_internal_name(internal_name)
+    internal_name = internal_name.gsub(/\s*\(.+\)/, '')
+    internal_name = internal_name.strip
+    internal_name = internal_name.gsub(" ", "-")
+    internal_name = internal_name.gsub(/\W/,'')
+    internal_name = internal_name.downcase
+  end
+
   def indicators_by_name
     @indicators_by_name ||= Hash[Indicator.all.map { |i| [i.name, i] }]
   end
+
+  def indicators_by_source_identifier
+    @indicators_by_source_identifier ||= Hash[Indicator.all.map { |i| [i.source_identifier, i] }]
+  end
+
+  def geo_by_internal_name
+    @geo_by_internal_name ||= Hash[ GeoCode.all.map { |g| [g.internal_name, g] } ]
+  end
+
+  def geo_by_fips_code
+    @geo_by_fips_code ||= Hash[ GeoCode.all.map { |g| [g.fips_code, g] } ]
+  end
+
 end
