@@ -25,13 +25,21 @@ namespace :defaults do
 
   desc "get indicators and series"
   task :setup => :environment do
+    start = Time.now
     Bulkload::Bls::ImportIndicators.new.import_all
+        Rails.logger.error("Time to import indicators and series: #{ Time.now - start } seconds")
   end
 
   desc "get values"
   task :import_values => :environment do
+    start = Time.now
+    Rails.logger.error("We have begun importing values, as of: #{start}")
     Bulkload::Bls::ImportValues.new.import_values("ap")
     Bulkload::Bls::ImportValues.new.import_values("bd")
+      elapsed = Time.now - start
+      minutes = elapsed.to_i/60
+      seconds = elapsed%60
+      Rails.logger.error("Time to import values: #{ elapsed } seconds, aka #{minutes} minutes and #{seconds} seconds")
   end
 
   desc "create defaults"

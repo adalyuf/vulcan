@@ -40,7 +40,7 @@ class Bulkload::Bls::ImportIndicators
     internal_name = internal_name.gsub(/\s*\(.+\)/, '')
     internal_name = internal_name.strip
     internal_name = internal_name.gsub(" ", "-")
-    internal_name = internal_name.gsub(/\W/,'')
+    internal_name = internal_name.gsub(/[^a-zA-Z\d-]/,'')
     internal_name = internal_name.downcase
   end
 
