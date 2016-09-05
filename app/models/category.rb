@@ -3,4 +3,6 @@ class Category < ActiveRecord::Base
 
   validates :name, presence: true
   validates :name, uniqueness: true
+  validates :internal_name, presence: true
+  validates :internal_name, uniqueness: true
 end

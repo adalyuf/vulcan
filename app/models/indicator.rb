@@ -12,7 +12,8 @@ class Indicator < ActiveRecord::Base
   validates :dataset, presence: true
 
   validates :name, presence: true
-  validates :description, presence: true
+  validates :internal_name, presence: true
+  validates :internal_name, uniqueness: true
 
   class Data < HashModel
     attr_accessor :name,
