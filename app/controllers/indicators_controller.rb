@@ -1,5 +1,9 @@
 class IndicatorsController < ApplicationController
 
+  def index
+    @indicators = Indicator.search(search_params[:query])
+  end
+
   def show
     start = Time.now
     @dataset = Dataset.find_by(internal_name: params[:dataset_internal_name])
@@ -19,7 +23,6 @@ class IndicatorsController < ApplicationController
     @industry_codes = IndustryCode.all
 
     @filters = filters.reject { |_,f| f.blank? }
-    # binding.pry
     if @filters.any?
       @series = Series.where(indicator_id: @indicator.id).where(@filters)
     else
@@ -44,6 +47,10 @@ class IndicatorsController < ApplicationController
 
   def filters
     params.fetch(:filter, {}).permit(:geo_code_id, :frequency_id, :unit_id, :gender_id, :race_id, :age_bracket_id, :employment_status_id, :education_level_id, :child_status_id, :income_level_id, :occupation_code_id, :industry_code_id)
+  end
+
+  def search_params
+    params.fetch(:search, {}).permit(:query)
   end
 
 end

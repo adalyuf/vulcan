@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160904120943) do
+ActiveRecord::Schema.define(version: 20160905232405) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -133,10 +133,12 @@ ActiveRecord::Schema.define(version: 20160904120943) do
     t.integer  "dataset_id",        null: false
     t.text     "internal_name",     null: false
     t.text     "source_identifier", null: false
+    t.tsvector "tsv"
     t.index ["category_id"], name: "index_indicators_on_category_id", using: :btree
     t.index ["dataset_id"], name: "index_indicators_on_dataset_id", using: :btree
     t.index ["name"], name: "index_indicators_on_name", unique: true, using: :btree
     t.index ["source_id"], name: "index_indicators_on_source_id", using: :btree
+    t.index ["tsv"], name: "index_indicators_on_tsv", using: :gin
   end
 
   create_table "industry_codes", force: :cascade do |t|

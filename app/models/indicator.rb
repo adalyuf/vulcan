@@ -1,4 +1,20 @@
 class Indicator < ActiveRecord::Base
+  include PgSearch
+
+  pg_search_scope(
+    :search,
+    against: %i(
+      name
+      description
+    ),
+    using: {
+      tsearch: {
+        tsvector_column: "tsv",
+        dictionary: "english"
+      }
+    }
+  )
+
   has_many :series
   has_many :values
 
