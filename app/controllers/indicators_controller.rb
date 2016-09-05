@@ -1,6 +1,7 @@
 class IndicatorsController < ApplicationController
 
   def show
+    start = Time.now
     @dataset = Dataset.find_by(internal_name: params[:dataset_internal_name])
     @indicator = Indicator.find_by(dataset_id: @dataset.id, internal_name: params[:internal_name])
     @category = Category.find(@dataset.category_id)
@@ -15,6 +16,8 @@ class IndicatorsController < ApplicationController
         :data => Hash[grouped_values[serie.id].map{ |value| [value.date, value.value] }]
       }
     end
+
+    Rails.logger.info("time to render show: #{ Time.now - start }")
   end
 
 end
