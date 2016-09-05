@@ -4,4 +4,6 @@ class Dataset < ActiveRecord::Base
   has_many :indicators
 
   accepts_nested_attributes_for :external_tables
+  validates :internal_name, presence: true
+  validates :internal_name, uniqueness: true
 end

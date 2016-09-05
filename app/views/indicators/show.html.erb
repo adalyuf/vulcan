@@ -10,40 +10,21 @@
   <%= link_to(@dataset.name, dataset_path(@dataset.internal_name))%>
 </h4>
 
-<%= line_chart @data %>
+<%= simple_form_for :filter,  url: indicator_path , :method => :get do |f| %>
+    <%= f.select :geo_code_id, @geo_codes.map { |gc| [gc.name, gc.id] }, selected: @filters[:geo_code_id], include_blank: true %>
+    <%= f.select :frequency_id, @frequencies.map { |fr| [fr.name, fr.id] }, selected: @filters[:frequency_id], include_blank: true %>
+    <%= f.select :unit_id, @units.map { |unit| [unit.name, unit.id] }, selected: @filters[:unit_id], include_blank: true %>
+    <%= f.select :gender_id, @genders.map { |gender| [gender.name, gender.id] }, selected: @filters[:gender_id], include_blank: true %>
+    <%= f.select :race_id, @races.map { |race| [race.name, race.id] }, selected: @filters[:race_id], include_blank: true %>
+    <%= f.select :age_bracket_id, @age_brackets.map { |ab| [ab.name, ab.id] }, selected: @filters[:age_bracket_id], include_blank: true, input_html: { multiple: true } %>
+    <%= f.select :employment_status_id, @employment_statuses.map { |es| [es.name, es.id] }, selected: @filters[:employment_status_id], include_blank: true %>
+    <%= f.select :education_level_id, @education_levels.map { |edu| [edu.name, edu.id] }, selected: @filters[:education_level_id], include_blank: true %>
+    <%= f.select :child_status_id, @child_statuses.map { |child| [child.name, child.id] }, selected: @filters[:child_status_id], include_blank: true %>
+    <%= f.select :income_level_id, @income_levels.map { |income| [income.name, income.id] }, selected: @filters[:income_level_id], include_blank: true %>
+    <%= f.select :occuption_code_id, @occupation_codes.map { |occ| [occ.name, occ.id] }, selected: @filters[:occupation_code_id], include_blank: true %>
+    <%= f.select :industry_code_id, @industry_codes.map { |ind| [ind.name, ind.id] }, selected: @filters[:industry_code_id], include_blank: true %>
 
-<ul>
-  <li>
-    Name |
-    Seasonal |
-    Frequency |
-    Unit |
-    Gender |
-    Race |
-    Age Bracket |
-    Employment |
-    Education |
-    Children |
-    Income |
-    Occuption |
-    Location
-  </li>
-  <% @series.each do |series| %>
-    <li>
-      <%= series.name %> |
-      <%= series.seasonally_adjusted %> |
-      <%= series.frequency.name %> |
-      <%= series.unit.name %> |
-      <%= series.gender.name %> |
-      <%= series.race.name %> |
-      <%= series.marital_status.name %> |
-      <%= series.age_bracket.name %> |
-      <%= series.employment_status.name %> |
-      <%= series.education_level.name %> |
-      <%= series.child_status.name %> |
-      <%= series.income_level.name %> |
-      <%= series.occupation_code.name %> |
-      <%= series.geo_code.name %>
-    </li>
-  <% end %>
-</ul>
+    <%= f.submit "Filter" %>
+<% end %>
+
+<%= line_chart @data %>

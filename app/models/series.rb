@@ -6,17 +6,19 @@ class Series < ActiveRecord::Base
   belongs_to :unit
   belongs_to :gender
   belongs_to :race
-  belongs_to :marital_status #marital_status
-  belongs_to :age_bracket #age_bracket
-  belongs_to :employment_status #employment_status
+  belongs_to :marital_status
+  belongs_to :age_bracket
+  belongs_to :employment_status
   belongs_to :education_level
   belongs_to :child_status
   belongs_to :income_level
   belongs_to :industry_code
-  belongs_to :occupation_code #occupation_code
+  belongs_to :occupation_code
   belongs_to :geo_code
 
   validates :name, presence: true
+  validates :internal_name, presence: true
+  validates :internal_name, uniqueness: true
 
   validates :indicator, presence: true
   validates :multiplier, presence: true
@@ -92,4 +94,22 @@ class Series < ActiveRecord::Base
       end
     end
   end
+
+  def display_name
+    [
+      geo_code,
+      frequency,
+      gender,
+      race,
+      marital_status,
+      age_bracket,
+      employment_status,
+      education_level,
+      child_status,
+      income_level,
+      industry_code,
+      occupation_code
+    ].map(&:display_name).compact.join(',') + ( seasonally_adjusted ? ",SA" : '' )
+  end
+
 end

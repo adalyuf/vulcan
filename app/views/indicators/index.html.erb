@@ -1,11 +1,9 @@
 <h1>
-  <%= @category.name %> datasets
+Search for indicators
 </h1>
 
 <h4>
   <%= link_to("Categories", categories_path)%>
-   >
-  <%= @category.name %>
 </h4>
 
 <%= simple_form_for :search,  url: indicators_path , :method => :get do |f| %>
@@ -13,10 +11,14 @@
     <%= f.submit "Search" %>
 <% end %>
 
+
+<h3>
+  <%= @indicators ? "Results:" : nil %>
+</h3>
 <ul>
-  <% @datasets.each do |dataset| %>
+  <% @indicators.each do |indicator| %>
     <li>
-    <%= link_to(dataset.name, dataset_path(dataset.internal_name))%>
+      <%= link_to(indicator.name, indicator_path(indicator.dataset.internal_name,indicator.internal_name))%>
     </li>
   <% end %>
 </ul>
