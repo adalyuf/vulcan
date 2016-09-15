@@ -11,6 +11,9 @@ class Indicator < ActiveRecord::Base
       tsearch: {
         tsvector_column: "tsv",
         dictionary: "english"
+      },
+      trigram: {
+        threshold: 0.1
       }
     }
   )
