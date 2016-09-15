@@ -6,5 +6,7 @@ Rails.application.routes.draw do
   get 'datasets/:internal_name', to: 'datasets#show', as: :dataset
   get 'indicators/:dataset_internal_name/:internal_name', to: 'indicators#show', as: :indicator
   get 'indicators', to: 'indicators#index', as: :indicators
+  get 'series/:id', to: 'series#show', as: :series
+
 
 end

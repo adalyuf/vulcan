@@ -1,7 +1,9 @@
 class IndicatorsController < ApplicationController
 
   def index
+    start = Time.now
     @indicators = Indicator.search(search_params[:query])
+    Rails.logger.error("Time to search for #{search_params[:query]}: #{ Time.now - start }")
   end
 
   def show
