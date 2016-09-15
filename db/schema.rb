@@ -10,10 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160905232405) do
+ActiveRecord::Schema.define(version: 20160907221524) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "pg_trgm"
+  enable_extension "fuzzystrmatch"
 
   create_table "age_brackets", force: :cascade do |t|
     t.text     "name"
@@ -21,6 +23,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "internal_name", null: false
+    t.index ["internal_name"], name: "index_age_brackets_on_internal_name", unique: true, using: :btree
     t.index ["name"], name: "index_age_brackets_on_name", unique: true, using: :btree
   end
 
@@ -30,6 +33,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "internal_name", null: false
+    t.index ["internal_name"], name: "index_categories_on_internal_name", unique: true, using: :btree
     t.index ["name"], name: "index_categories_on_name", unique: true, using: :btree
   end
 
@@ -39,6 +43,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "internal_name", null: false
+    t.index ["internal_name"], name: "index_child_statuses_on_internal_name", unique: true, using: :btree
     t.index ["name"], name: "index_child_statuses_on_name", unique: true, using: :btree
   end
 
@@ -62,6 +67,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "internal_name", null: false
+    t.index ["internal_name"], name: "index_education_levels_on_internal_name", unique: true, using: :btree
     t.index ["name"], name: "index_education_levels_on_name", unique: true, using: :btree
   end
 
@@ -71,6 +77,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "internal_name", null: false
+    t.index ["internal_name"], name: "index_employment_statuses_on_internal_name", unique: true, using: :btree
     t.index ["name"], name: "index_employment_statuses_on_name", unique: true, using: :btree
   end
 
@@ -90,6 +97,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "internal_name", null: false
+    t.index ["internal_name"], name: "index_frequencies_on_internal_name", unique: true, using: :btree
   end
 
   create_table "genders", force: :cascade do |t|
@@ -98,6 +106,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "internal_name", null: false
+    t.index ["internal_name"], name: "index_genders_on_internal_name", unique: true, using: :btree
     t.index ["name"], name: "index_genders_on_name", unique: true, using: :btree
   end
 
@@ -111,6 +120,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.integer  "fips_code"
     t.text     "short_name"
     t.integer  "gnis_code"
+    t.index ["internal_name"], name: "index_geo_codes_on_internal_name", unique: true, using: :btree
     t.index ["type", "internal_name"], name: "index_geo_codes_on_type_and_internal_name", unique: true, using: :btree
   end
 
@@ -120,6 +130,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "internal_name", null: false
+    t.index ["internal_name"], name: "index_income_levels_on_internal_name", unique: true, using: :btree
     t.index ["name"], name: "index_income_levels_on_name", unique: true, using: :btree
   end
 
@@ -136,6 +147,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.tsvector "tsv"
     t.index ["category_id"], name: "index_indicators_on_category_id", using: :btree
     t.index ["dataset_id"], name: "index_indicators_on_dataset_id", using: :btree
+    t.index ["internal_name"], name: "index_indicators_on_internal_name", unique: true, using: :btree
     t.index ["name"], name: "index_indicators_on_name", unique: true, using: :btree
     t.index ["source_id"], name: "index_indicators_on_source_id", using: :btree
     t.index ["tsv"], name: "index_indicators_on_tsv", using: :gin
@@ -147,6 +159,9 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "internal_name", null: false
+    t.text     "industry_type"
+    t.integer  "naics_code"
+    t.index ["internal_name"], name: "index_industry_codes_on_internal_name", unique: true, using: :btree
     t.index ["name"], name: "index_industry_codes_on_name", unique: true, using: :btree
   end
 
@@ -156,6 +171,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "internal_name", null: false
+    t.index ["internal_name"], name: "index_marital_statuses_on_internal_name", unique: true, using: :btree
     t.index ["name"], name: "index_marital_statuses_on_name", unique: true, using: :btree
   end
 
@@ -165,6 +181,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "internal_name", null: false
+    t.index ["internal_name"], name: "index_occupation_codes_on_internal_name", unique: true, using: :btree
     t.index ["name"], name: "index_occupation_codes_on_name", unique: true, using: :btree
   end
 
@@ -174,6 +191,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "internal_name", null: false
+    t.index ["internal_name"], name: "index_races_on_internal_name", unique: true, using: :btree
     t.index ["name"], name: "index_races_on_name", unique: true, using: :btree
   end
 
@@ -221,6 +239,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.index ["income_level_id"], name: "index_series_on_income_level_id", using: :btree
     t.index ["indicator_id"], name: "index_series_on_indicator_id", using: :btree
     t.index ["industry_code_id"], name: "index_series_on_industry_code_id", using: :btree
+    t.index ["internal_name"], name: "index_series_on_internal_name", unique: true, using: :btree
     t.index ["marital_status_id"], name: "index_series_on_marital_status_id", using: :btree
     t.index ["name"], name: "index_series_on_name", unique: true, using: :btree
     t.index ["occupation_code_id"], name: "index_series_on_occupation_code_id", using: :btree
@@ -243,6 +262,7 @@ ActiveRecord::Schema.define(version: 20160905232405) do
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.text     "internal_name", null: false
+    t.index ["internal_name"], name: "index_units_on_internal_name", unique: true, using: :btree
   end
 
   create_table "values", force: :cascade do |t|
