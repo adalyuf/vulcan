@@ -112,4 +112,14 @@ class Series < ActiveRecord::Base
     ].map(&:display_name).compact.join(',') + ( seasonally_adjusted ? ",SA" : '' )
   end
 
+  def display_data
+    values = Value.where(indicator_id: self.indicator_id, series_id: self.id)
+
+    data =
+      [{
+        :name => display_name,
+        :data => Hash[values.map{ |value| [value.date, value.value] }]
+      }]
+  end
+
 end

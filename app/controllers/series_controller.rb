@@ -12,6 +12,7 @@ class SeriesController < ApplicationController
         :name => @series.display_name,
         :data => Hash[grouped_values[@series.id].map{ |value| [value.date, value.value] }]
       }]
+    @series_related_by_geo = Series.where(geo_code_id: @series.geo_code_id ).limit(12)
   end
 
 end

@@ -12,4 +12,15 @@
   <%= link_to(@indicator.name, indicator_path(@dataset.internal_name, @indicator.internal_name))%>
 </h4>
 
-<%= line_chart @data %>
+<%= line_chart @series.display_data %>
+
+<h4>
+  Other Series in <%= @series.geo_code.name %>
+</h4>
+<ul>
+<% @series_related_by_geo.each do |series| %>
+  <li class="related">
+    <%= line_chart series.display_data, width: "300px", xtitle: series.indicator.name %>
+  </li>
+<% end %>
+</ul>
