@@ -1837,6 +1837,162 @@ namespace :defaults do
     GeoCode::State.where(name: 'U.S. Minor Outlying Islands', fips_code: 74, gnis_code: 1878752, short_name: 'UM', internal_name: :'us-minor-outlying-islands').first_or_create
     GeoCode::State.where(name: 'U.S. Virgin Islands', fips_code: 78, gnis_code: 1802710, short_name: 'VI', internal_name: :'us-virgin-islands').first_or_create
 
+    #Combined Statistical Areas (CSA)
+GeoCode::Csa.where(name: 'Cleveland-Akron-Canton, OH', short_name: 'Cleveland, OH', internal_name: 'cleveland-akron-canton-oh').first_or_create
+GeoCode::Csa.where(name: 'Portland-Vancouver-Salem, OR-WA', short_name: 'Portland, OR', internal_name: 'portland-vancouver-salem-or-wa').first_or_create
+GeoCode::Csa.where(name: 'Albany-Schenectady, NY', short_name: 'Albany, NY', internal_name: 'albany-schenectady-ny').first_or_create
+GeoCode::Csa.where(name: 'Albuquerque-Santa Fe-Las Vegas, NM', short_name: 'Albuquerque, NM', internal_name: 'albuquerque-santa-fe-las-vegas-nm').first_or_create
+GeoCode::Csa.where(name: 'New York-Newark, NY-NJ-CT-PA', short_name: 'New York, NY', internal_name: 'new-york-newark-ny-nj-ct-pa').first_or_create
+GeoCode::Csa.where(name: 'Amarillo-Borger, TX', short_name: 'Amarillo, TX', internal_name: 'amarillo-borger-tx').first_or_create
+GeoCode::Csa.where(name: 'Des Moines-Ames-West Des Moines, IA', short_name: 'Des Moines, IA', internal_name: 'des-moines-ames-west-des-moines-ia').first_or_create
+GeoCode::Csa.where(name: 'Detroit-Warren-Ann Arbor, MI', short_name: 'Detroit, MI', internal_name: 'detroit-warren-ann-arbor-mi').first_or_create
+GeoCode::Csa.where(name: 'Appleton-Oshkosh-Neenah, WI', short_name: 'Appleton, WI', internal_name: 'appleton-oshkosh-neenah-wi').first_or_create
+GeoCode::Csa.where(name: 'San Juan-Carolina, PR', short_name: 'San Juan, PR', internal_name: 'san-juan-carolina-pr').first_or_create
+GeoCode::Csa.where(name: 'Asheville-Brevard, NC', short_name: 'Asheville, NC', internal_name: 'asheville-brevard-nc').first_or_create
+GeoCode::Csa.where(name: 'Atlanta--Athens-Clarke County--Sandy Springs, GA', short_name: 'Atlanta, GA', internal_name: 'atlanta--athens-clarke-county--sandy-springs-ga').first_or_create
+GeoCode::Csa.where(name: 'Philadelphia-Reading-Camden, PA-NJ-DE-MD', short_name: 'Philadelphia, PA', internal_name: 'philadelphia-reading-camden-pa-nj-de-md').first_or_create
+GeoCode::Csa.where(name: 'Columbus-Auburn-Opelika, GA-AL', short_name: 'Columbus, GA', internal_name: 'columbus-auburn-opelika-ga-al').first_or_create
+GeoCode::Csa.where(name: 'Washington-Baltimore-Arlington, DC-MD-VA-WV-PA', short_name: 'Washington, DC', internal_name: 'washington-baltimore-arlington-dc-md-va-wv-pa').first_or_create
+GeoCode::Csa.where(name: 'Boston-Worcester-Providence, MA-RI-NH-CT', short_name: 'Boston, MA', internal_name: 'boston-worcester-providence-ma-ri-nh-ct').first_or_create
+GeoCode::Csa.where(name: 'Kalamazoo-Battle Creek-Portage, MI', short_name: 'Kalamazoo, MI', internal_name: 'kalamazoo-battle-creek-portage-mi').first_or_create
+GeoCode::Csa.where(name: 'Saginaw-Midland-Bay City, MI', short_name: 'Saginaw, MI', internal_name: 'saginaw-midland-bay-city-mi').first_or_create
+GeoCode::Csa.where(name: 'Bend-Redmond-Prineville, OR', short_name: 'Bend, OR', internal_name: 'bend-redmond-prineville-or').first_or_create
+GeoCode::Csa.where(name: 'Birmingham-Hoover-Talladega, AL', short_name: 'Birmingham, AL', internal_name: 'birmingham-hoover-talladega-al').first_or_create
+GeoCode::Csa.where(name: 'Bloomington-Pontiac, IL', short_name: 'Bloomington, IL', internal_name: 'bloomington-pontiac-il').first_or_create
+GeoCode::Csa.where(name: 'Bloomington-Bedford, IN', short_name: 'Bloomington, IN', internal_name: 'bloomington-bedford-in').first_or_create
+GeoCode::Csa.where(name: 'Bloomsburg-Berwick-Sunbury, PA', short_name: 'Bloomsburg, PA', internal_name: 'bloomsburg-berwick-sunbury-pa').first_or_create
+GeoCode::Csa.where(name: 'Boise City-Mountain Home-Ontario, ID-OR', short_name: 'Boise City, ID', internal_name: 'boise-city-mountain-home-ontario-id-or').first_or_create
+GeoCode::Csa.where(name: 'Denver-Aurora, CO', short_name: 'Denver, CO', internal_name: 'denver-aurora-co').first_or_create
+GeoCode::Csa.where(name: 'Bowling Green-Glasgow, KY', short_name: 'Bowling Green, KY', internal_name: 'bowling-green-glasgow-ky').first_or_create
+GeoCode::Csa.where(name: 'Seattle-Tacoma, WA', short_name: 'Seattle, WA', internal_name: 'seattle-tacoma-wa').first_or_create
+GeoCode::Csa.where(name: 'Brownsville-Harlingen-Raymondville, TX', short_name: 'Brownsville, TX', internal_name: 'brownsville-harlingen-raymondville-tx').first_or_create
+GeoCode::Csa.where(name: 'Buffalo-Cheektowaga, NY', short_name: 'Buffalo, NY', internal_name: 'buffalo-cheektowaga-ny').first_or_create
+GeoCode::Csa.where(name: 'Greensboro--Winston-Salem--High Point, NC', short_name: 'Greensboro, NC', internal_name: 'greensboro--winston-salem--high-point-nc').first_or_create
+GeoCode::Csa.where(name: 'Cape Coral-Fort Myers-Naples, FL', short_name: 'Cape Coral, FL', internal_name: 'cape-coral-fort-myers-naples-fl').first_or_create
+GeoCode::Csa.where(name: 'Cape Girardeau-Sikeston, MO-IL', short_name: 'Cape Girardeau, MO', internal_name: 'cape-girardeau-sikeston-mo-il').first_or_create
+GeoCode::Csa.where(name: 'Reno-Carson City-Fernley, NV', short_name: 'Reno, NV', internal_name: 'reno-carson-city-fernley-nv').first_or_create
+GeoCode::Csa.where(name: 'Cedar Rapids-Iowa City, IA', short_name: 'Cedar Rapids, IA', internal_name: 'cedar-rapids-iowa-city-ia').first_or_create
+GeoCode::Csa.where(name: 'Charleston-Huntington-Ashland, WV-OH-KY', short_name: 'Charleston, WV', internal_name: 'charleston-huntington-ashland-wv-oh-ky').first_or_create
+GeoCode::Csa.where(name: 'Charlotte-Concord, NC-SC', short_name: 'Charlotte, NC', internal_name: 'charlotte-concord-nc-sc').first_or_create
+GeoCode::Csa.where(name: 'Chattanooga-Cleveland-Dalton, TN-GA-AL', short_name: 'Chattanooga, TN', internal_name: 'chattanooga-cleveland-dalton-tn-ga-al').first_or_create
+GeoCode::Csa.where(name: 'Chicago-Naperville, IL-IN-WI', short_name: 'Chicago, IL', internal_name: 'chicago-naperville-il-in-wi').first_or_create
+GeoCode::Csa.where(name: 'Cincinnati-Wilmington-Maysville, OH-KY-IN', short_name: 'Cincinnati, OH', internal_name: 'cincinnati-wilmington-maysville-oh-ky-in').first_or_create
+GeoCode::Csa.where(name: 'Spokane-Spokane Valley-Coeur dAlene, WA-ID', short_name: 'Spokane, WA', internal_name: 'spokane-spokane-valley-coeur-dalene-wa-id').first_or_create
+GeoCode::Csa.where(name: 'Columbia-Moberly-Mexico, MO', short_name: 'Columbia, MO', internal_name: 'columbia-moberly-mexico-mo').first_or_create
+GeoCode::Csa.where(name: 'Columbia-Orangeburg-Newberry, SC', short_name: 'Columbia, SC', internal_name: 'columbia-orangeburg-newberry-sc').first_or_create
+GeoCode::Csa.where(name: 'Indianapolis-Carmel-Muncie, IN', short_name: 'Indianapolis, IN', internal_name: 'indianapolis-carmel-muncie-in').first_or_create
+GeoCode::Csa.where(name: 'Columbus-Marion-Zanesville, OH', short_name: 'Columbus, OH', internal_name: 'columbus-marion-zanesville-oh').first_or_create
+GeoCode::Csa.where(name: 'Corpus Christi-Kingsville-Alice, TX', short_name: 'Corpus Christi, TX', internal_name: 'corpus-christi-kingsville-alice-tx').first_or_create
+GeoCode::Csa.where(name: 'Dallas-Fort Worth, TX-OK', short_name: 'Dallas, TX', internal_name: 'dallas-fort-worth-tx-ok').first_or_create
+GeoCode::Csa.where(name: 'Mobile-Daphne-Fairhope, AL', short_name: 'Mobile, AL', internal_name: 'mobile-daphne-fairhope-al').first_or_create
+GeoCode::Csa.where(name: 'Davenport-Moline, IA-IL', short_name: 'Davenport, IA', internal_name: 'davenport-moline-ia-il').first_or_create
+GeoCode::Csa.where(name: 'Dayton-Springfield-Sidney, OH', short_name: 'Dayton, OH', internal_name: 'dayton-springfield-sidney-oh').first_or_create
+GeoCode::Csa.where(name: 'Huntsville-Decatur-Albertville, AL', short_name: 'Huntsville, AL', internal_name: 'huntsville-decatur-albertville-al').first_or_create
+GeoCode::Csa.where(name: 'Orlando-Deltona-Daytona Beach, FL', short_name: 'Orlando, FL', internal_name: 'orlando-deltona-daytona-beach-fl').first_or_create
+GeoCode::Csa.where(name: 'Dothan-Enterprise-Ozark, AL', short_name: 'Dothan, AL', internal_name: 'dothan-enterprise-ozark-al').first_or_create
+GeoCode::Csa.where(name: 'Raleigh-Durham-Chapel Hill, NC', short_name: 'Raleigh, NC', internal_name: 'raleigh-durham-chapel-hill-nc').first_or_create
+GeoCode::Csa.where(name: 'Eau Claire-Menomonie, WI', short_name: 'Eau Claire, WI', internal_name: 'eau-claire-menomonie-wi').first_or_create
+GeoCode::Csa.where(name: 'Louisville-Jefferson County--Elizabethtown--Madison, KY-IN', short_name: 'Louisville, KY', internal_name: 'louisville-jefferson-county--elizabethtown--madison-ky-in').first_or_create
+GeoCode::Csa.where(name: 'South Bend-Elkhart-Mishawaka, IN-MI', short_name: 'South Bend, IN', internal_name: 'south-bend-elkhart-mishawaka-in-mi').first_or_create
+GeoCode::Csa.where(name: 'Elmira-Corning, NY', short_name: 'Elmira, NY', internal_name: 'elmira-corning-ny').first_or_create
+GeoCode::Csa.where(name: 'El Paso-Las Cruces, TX-NM', short_name: 'El Paso, TX', internal_name: 'el-paso-las-cruces-tx-nm').first_or_create
+GeoCode::Csa.where(name: 'Erie-Meadville, PA', short_name: 'Erie, PA', internal_name: 'erie-meadville-pa').first_or_create
+GeoCode::Csa.where(name: 'Fargo-Wahpeton, ND-MN', short_name: 'Fargo, ND', internal_name: 'fargo-wahpeton-nd-mn').first_or_create
+GeoCode::Csa.where(name: 'Fayetteville-Lumberton-Laurinburg, NC', short_name: 'Fayetteville, NC', internal_name: 'fayetteville-lumberton-laurinburg-nc').first_or_create
+GeoCode::Csa.where(name: 'Fort Wayne-Huntington-Auburn, IN', short_name: 'Fort Wayne, IN', internal_name: 'fort-wayne-huntington-auburn-in').first_or_create
+GeoCode::Csa.where(name: 'Fresno-Madera, CA', short_name: 'Fresno, CA', internal_name: 'fresno-madera-ca').first_or_create
+GeoCode::Csa.where(name: 'Gainesville-Lake City, FL', short_name: 'Gainesville, FL', internal_name: 'gainesville-lake-city-fl').first_or_create
+GeoCode::Csa.where(name: 'Harrisburg-York-Lebanon, PA', short_name: 'Harrisburg, PA', internal_name: 'harrisburg-york-lebanon-pa').first_or_create
+GeoCode::Csa.where(name: 'Grand Rapids-Wyoming-Muskegon, MI', short_name: 'Grand Rapids, MI', internal_name: 'grand-rapids-wyoming-muskegon-mi').first_or_create
+GeoCode::Csa.where(name: 'Medford-Grants Pass, OR', short_name: 'Medford, OR', internal_name: 'medford-grants-pass-or').first_or_create
+GeoCode::Csa.where(name: 'Green Bay-Shawano, WI', short_name: 'Green Bay, WI', internal_name: 'green-bay-shawano-wi').first_or_create
+GeoCode::Csa.where(name: 'Greenville-Washington, NC', short_name: 'Greenville, NC', internal_name: 'greenville-washington-nc').first_or_create
+GeoCode::Csa.where(name: 'Greenville-Spartanburg-Anderson, SC', short_name: 'Greenville, SC', internal_name: 'greenville-spartanburg-anderson-sc').first_or_create
+GeoCode::Csa.where(name: 'New Orleans-Metairie-Hammond, LA-MS', short_name: 'New Orleans, LA', internal_name: 'new-orleans-metairie-hammond-la-ms').first_or_create
+GeoCode::Csa.where(name: 'Visalia-Porterville-Hanford, CA', short_name: 'Visalia, CA', internal_name: 'visalia-porterville-hanford-ca').first_or_create
+GeoCode::Csa.where(name: 'Harrisonburg-Staunton-Waynesboro, VA', short_name: 'Harrisonburg, VA', internal_name: 'harrisonburg-staunton-waynesboro-va').first_or_create
+GeoCode::Csa.where(name: 'Hartford-West Hartford, CT', short_name: 'Hartford, CT', internal_name: 'hartford-west-hartford-ct').first_or_create
+GeoCode::Csa.where(name: 'Hickory-Lenoir, NC', short_name: 'Hickory, NC', internal_name: 'hickory-lenoir-nc').first_or_create
+GeoCode::Csa.where(name: 'Savannah-Hinesville-Statesboro, GA', short_name: 'Savannah, GA', internal_name: 'savannah-hinesville-statesboro-ga').first_or_create
+GeoCode::Csa.where(name: 'Hot Springs-Malvern, AR', short_name: 'Hot Springs, AR', internal_name: 'hot-springs-malvern-ar').first_or_create
+GeoCode::Csa.where(name: 'Houston-The Woodlands, TX', short_name: 'Houston, TX', internal_name: 'houston-the-woodlands-tx').first_or_create
+GeoCode::Csa.where(name: 'Idaho Falls-Rexburg-Blackfoot, ID', short_name: 'Idaho Falls, ID', internal_name: 'idaho-falls-rexburg-blackfoot-id').first_or_create
+GeoCode::Csa.where(name: 'Ithaca-Cortland, NY', short_name: 'Ithaca, NY', internal_name: 'ithaca-cortland-ny').first_or_create
+GeoCode::Csa.where(name: 'Jackson-Vicksburg-Brookhaven, MS', short_name: 'Jackson, MS', internal_name: 'jackson-vicksburg-brookhaven-ms').first_or_create
+GeoCode::Csa.where(name: 'Jacksonville-St. Marys-Palatka, FL-GA', short_name: 'Jacksonville, FL', internal_name: 'jacksonville-st-marys-palatka-fl-ga').first_or_create
+GeoCode::Csa.where(name: 'Madison-Janesville-Beloit, WI', short_name: 'Madison, WI', internal_name: 'madison-janesville-beloit-wi').first_or_create
+GeoCode::Csa.where(name: 'Johnson City-Kingsport-Bristol, TN-VA', short_name: 'Johnson City, TN', internal_name: 'johnson-city-kingsport-bristol-tn-va').first_or_create
+GeoCode::Csa.where(name: 'Johnstown-Somerset, PA', short_name: 'Johnstown, PA', internal_name: 'johnstown-somerset-pa').first_or_create
+GeoCode::Csa.where(name: 'Jonesboro-Paragould, AR', short_name: 'Jonesboro, AR', internal_name: 'jonesboro-paragould-ar').first_or_create
+GeoCode::Csa.where(name: 'Joplin-Miami, MO-OK', short_name: 'Joplin, MO', internal_name: 'joplin-miami-mo-ok').first_or_create
+GeoCode::Csa.where(name: 'Kansas City-Overland Park-Kansas City, MO-KS', short_name: 'Kansas City, MO', internal_name: 'kansas-city-overland-park-kansas-city-mo-ks').first_or_create
+GeoCode::Csa.where(name: 'Knoxville-Morristown-Sevierville, TN', short_name: 'Knoxville, TN', internal_name: 'knoxville-morristown-sevierville-tn').first_or_create
+GeoCode::Csa.where(name: 'Kokomo-Peru, IN', short_name: 'Kokomo, IN', internal_name: 'kokomo-peru-in').first_or_create
+GeoCode::Csa.where(name: 'Lafayette-Opelousas-Morgan City, LA', short_name: 'Lafayette, LA', internal_name: 'lafayette-opelousas-morgan-city-la').first_or_create
+GeoCode::Csa.where(name: 'Lafayette-West Lafayette-Frankfort, IN', short_name: 'Lafayette, IN', internal_name: 'lafayette-west-lafayette-frankfort-in').first_or_create
+GeoCode::Csa.where(name: 'Las Vegas-Henderson, NV-AZ', short_name: 'Las Vegas, NV', internal_name: 'las-vegas-henderson-nv-az').first_or_create
+GeoCode::Csa.where(name: 'Lansing-East Lansing-Owosso, MI', short_name: 'Lansing, MI', internal_name: 'lansing-east-lansing-owosso-mi').first_or_create
+GeoCode::Csa.where(name: 'Portland-Lewiston-South Portland, ME', short_name: 'Portland, ME', internal_name: 'portland-lewiston-south-portland-me').first_or_create
+GeoCode::Csa.where(name: 'Lexington-Fayette--Richmond--Frankfort, KY', short_name: 'Lexington, KY', internal_name: 'lexington-fayette--richmond--frankfort-ky').first_or_create
+GeoCode::Csa.where(name: 'Lima-Van Wert-Celina, OH', short_name: 'Lima, OH', internal_name: 'lima-van-wert-celina-oh').first_or_create
+GeoCode::Csa.where(name: 'Lincoln-Beatrice, NE', short_name: 'Lincoln, NE', internal_name: 'lincoln-beatrice-ne').first_or_create
+GeoCode::Csa.where(name: 'Little Rock-North Little Rock, AR', short_name: 'Little Rock, AR', internal_name: 'little-rock-north-little-rock-ar').first_or_create
+GeoCode::Csa.where(name: 'Longview-Marshall, TX', short_name: 'Longview, TX', internal_name: 'longview-marshall-tx').first_or_create
+GeoCode::Csa.where(name: 'Los Angeles-Long Beach, CA', short_name: 'Los Angeles, CA', internal_name: 'los-angeles-long-beach-ca').first_or_create
+GeoCode::Csa.where(name: 'Lubbock-Levelland, TX', short_name: 'Lubbock, TX', internal_name: 'lubbock-levelland-tx').first_or_create
+GeoCode::Csa.where(name: 'Macon-Warner Robins, GA', short_name: 'Macon, GA', internal_name: 'macon-warner-robins-ga').first_or_create
+GeoCode::Csa.where(name: 'Manhattan-Junction City, KS', short_name: 'Manhattan, KS', internal_name: 'manhattan-junction-city-ks').first_or_create
+GeoCode::Csa.where(name: 'Mankato-New Ulm-North Mankato, MN', short_name: 'Mankato, MN', internal_name: 'mankato-new-ulm-north-mankato-mn').first_or_create
+GeoCode::Csa.where(name: 'Mansfield-Ashland-Bucyrus, OH', short_name: 'Mansfield, OH', internal_name: 'mansfield-ashland-bucyrus-oh').first_or_create
+GeoCode::Csa.where(name: 'Mayagüez-San Germán, PR', short_name: 'Mayaguez, PR', internal_name: 'mayaguez-san-german-pr').first_or_create
+GeoCode::Csa.where(name: 'McAllen-Edinburg, TX', short_name: 'McAllen, TX', internal_name: 'mcallen-edinburg-tx').first_or_create
+GeoCode::Csa.where(name: 'Memphis-Forrest City, TN-MS-AR', short_name: 'Memphis, TN', internal_name: 'memphis-forrest-city-tn-ms-ar').first_or_create
+GeoCode::Csa.where(name: 'Modesto-Merced, CA', short_name: 'Modesto, CA', internal_name: 'modesto-merced-ca').first_or_create
+GeoCode::Csa.where(name: 'Miami-Fort Lauderdale-Port St. Lucie, FL', short_name: 'Miami, FL', internal_name: 'miami-fort-lauderdale-port-st-lucie-fl').first_or_create
+GeoCode::Csa.where(name: 'Midland-Odessa, TX', short_name: 'Midland, TX', internal_name: 'midland-odessa-tx').first_or_create
+GeoCode::Csa.where(name: 'Milwaukee-Racine-Waukesha, WI', short_name: 'Milwaukee, WI', internal_name: 'milwaukee-racine-waukesha-wi').first_or_create
+GeoCode::Csa.where(name: 'Minneapolis-St. Paul, MN-WI', short_name: 'Minneapolis, MN', internal_name: 'minneapolis-st-paul-mn-wi').first_or_create
+GeoCode::Csa.where(name: 'Monroe-Ruston-Bastrop, LA', short_name: 'Monroe, LA', internal_name: 'monroe-ruston-bastrop-la').first_or_create
+GeoCode::Csa.where(name: 'Morgantown-Fairmont, WV', short_name: 'Morgantown, WV', internal_name: 'morgantown-fairmont-wv').first_or_create
+GeoCode::Csa.where(name: 'Myrtle Beach-Conway, SC-NC', short_name: 'Myrtle Beach, SC', internal_name: 'myrtle-beach-conway-sc-nc').first_or_create
+GeoCode::Csa.where(name: 'San Jose-San Francisco-Oakland, CA', short_name: 'San Francisco, CA', internal_name: 'san-jose-san-francisco-oakland-ca').first_or_create
+GeoCode::Csa.where(name: 'Nashville-Davidson--Murfreesboro, TN', short_name: 'Nashville, TN', internal_name: 'nashville-davidson--murfreesboro-tn').first_or_create
+GeoCode::Csa.where(name: 'New Bern-Morehead City, NC', short_name: 'New Bern, NC', internal_name: 'new-bern-morehead-city-nc').first_or_create
+GeoCode::Csa.where(name: 'North Port-Sarasota, FL', short_name: 'North Port, FL', internal_name: 'north-port-sarasota-fl').first_or_create
+GeoCode::Csa.where(name: 'Salt Lake City-Provo-Orem, UT', short_name: 'Salt Lake City, UT', internal_name: 'salt-lake-city-provo-orem-ut').first_or_create
+GeoCode::Csa.where(name: 'Oklahoma City-Shawnee, OK', short_name: 'Oklahoma City, OK', internal_name: 'oklahoma-city-shawnee-ok').first_or_create
+GeoCode::Csa.where(name: 'Omaha-Council Bluffs-Fremont, NE-IA', short_name: 'Omaha, NE', internal_name: 'omaha-council-bluffs-fremont-ne-ia').first_or_create
+GeoCode::Csa.where(name: 'Parkersburg-Marietta-Vienna, WV-OH', short_name: 'Parkersburg, WV', internal_name: 'parkersburg-marietta-vienna-wv-oh').first_or_create
+GeoCode::Csa.where(name: 'Peoria-Canton, IL', short_name: 'Peoria, IL', internal_name: 'peoria-canton-il').first_or_create
+GeoCode::Csa.where(name: 'Pittsburgh-New Castle-Weirton, PA-OH-WV', short_name: 'Pittsburgh, PA', internal_name: 'pittsburgh-new-castle-weirton-pa-oh-wv').first_or_create
+GeoCode::Csa.where(name: 'Ponce-Coamo-Santa Isabel, PR', short_name: 'Ponce, PR', internal_name: 'ponce-coamo-santa-isabel-pr').first_or_create
+GeoCode::Csa.where(name: 'Pueblo-Cañon City, CO', short_name: 'Pueblo, CO', internal_name: 'pueblo-canon-city-co').first_or_create
+GeoCode::Csa.where(name: 'Rapid City-Spearfish, SD', short_name: 'Rapid City, SD', internal_name: 'rapid-city-spearfish-sd').first_or_create
+GeoCode::Csa.where(name: 'Redding-Red Bluff, CA', short_name: 'Redding, CA', internal_name: 'redding-red-bluff-ca').first_or_create
+GeoCode::Csa.where(name: 'Rochester-Austin, MN', short_name: 'Rochester, MN', internal_name: 'rochester-austin-mn').first_or_create
+GeoCode::Csa.where(name: 'Rochester-Batavia-Seneca Falls, NY', short_name: 'Rochester, NY', internal_name: 'rochester-batavia-seneca-falls-ny').first_or_create
+GeoCode::Csa.where(name: 'Rockford-Freeport-Rochelle, IL', short_name: 'Rockford, IL', internal_name: 'rockford-freeport-rochelle-il').first_or_create
+GeoCode::Csa.where(name: 'Rocky Mount-Wilson-Roanoke Rapids, NC', short_name: 'Rocky Mount, NC', internal_name: 'rocky-mount-wilson-roanoke-rapids-nc').first_or_create
+GeoCode::Csa.where(name: 'Rome-Summerville, GA', short_name: 'Rome, GA', internal_name: 'rome-summerville-ga').first_or_create
+GeoCode::Csa.where(name: 'Sacramento-Roseville, CA', short_name: 'Sacramento, CA', internal_name: 'sacramento-roseville-ca').first_or_create
+GeoCode::Csa.where(name: 'St. Louis-St. Charles-Farmington, MO-IL', short_name: 'St. Louis, MO', internal_name: 'st-louis-st-charles-farmington-mo-il').first_or_create
+GeoCode::Csa.where(name: 'Sioux City-Vermillion, IA-SD-NE', short_name: 'Sioux City, IA', internal_name: 'sioux-city-vermillion-ia-sd-ne').first_or_create
+GeoCode::Csa.where(name: 'Springfield-Jacksonville-Lincoln, IL', short_name: 'Springfield, IL', internal_name: 'springfield-jacksonville-lincoln-il').first_or_create
+GeoCode::Csa.where(name: 'Springfield-Greenfield Town, MA', short_name: 'Springfield, MA', internal_name: 'springfield-greenfield-town-ma').first_or_create
+GeoCode::Csa.where(name: 'Springfield-Branson, MO', short_name: 'Springfield, MO', internal_name: 'springfield-branson-mo').first_or_create
+GeoCode::Csa.where(name: 'State College-DuBois, PA', short_name: 'State College, PA', internal_name: 'state-college-dubois-pa').first_or_create
+GeoCode::Csa.where(name: 'Syracuse-Auburn, NY', short_name: 'Syracuse, NY', internal_name: 'syracuse-auburn-ny').first_or_create
+GeoCode::Csa.where(name: 'Tallahassee-Bainbridge, FL-GA', short_name: 'Tallahassee, FL', internal_name: 'tallahassee-bainbridge-fl-ga').first_or_create
+GeoCode::Csa.where(name: 'Toledo-Port Clinton, OH', short_name: 'Toledo, OH', internal_name: 'toledo-port-clinton-oh').first_or_create
+GeoCode::Csa.where(name: 'Tucson-Nogales, AZ', short_name: 'Tucson, AZ', internal_name: 'tucson-nogales-az').first_or_create
+GeoCode::Csa.where(name: 'Tulsa-Muskogee-Bartlesville, OK', short_name: 'Tulsa, OK', internal_name: 'tulsa-muskogee-bartlesville-ok').first_or_create
+GeoCode::Csa.where(name: 'Tyler-Jacksonville, TX', short_name: 'Tyler, TX', internal_name: 'tyler-jacksonville-tx').first_or_create
+GeoCode::Csa.where(name: 'Victoria-Port Lavaca, TX', short_name: 'Victoria, TX', internal_name: 'victoria-port-lavaca-tx').first_or_create
+GeoCode::Csa.where(name: 'Virginia Beach-Norfolk, VA-NC', short_name: 'Virginia Beach, VA', internal_name: 'virginia-beach-norfolk-va-nc').first_or_create
+GeoCode::Csa.where(name: 'Wausau-Stevens Point-Wisconsin Rapids, WI', short_name: 'Wausau, WI', internal_name: 'wausau-stevens-point-wisconsin-rapids-wi').first_or_create
+GeoCode::Csa.where(name: 'Wichita-Arkansas City-Winfield, KS', short_name: 'Wichita, KS', internal_name: 'wichita-arkansas-city-winfield-ks').first_or_create
+GeoCode::Csa.where(name: 'Williamsport-Lock Haven, PA', short_name: 'Williamsport, PA', internal_name: 'williamsport-lock-haven-pa').first_or_create
+GeoCode::Csa.where(name: 'Youngstown-Warren, OH-PA', short_name: 'Youngstown, OH', internal_name: 'youngstown-warren-oh-pa').first_or_create
   end
 
 end

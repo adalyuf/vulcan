@@ -64,8 +64,10 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
 
   def region(area_code)
     case area_code
+
     when "0000"
       geo_by_internal_name['united-states'].id
+
     when "0100"
       geo_by_internal_name['northeast'].id
     when "0200"
@@ -74,6 +76,57 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
       geo_by_internal_name['southeast'].id
     when "0400"
       geo_by_internal_name['westcoast'].id
+    when 'A101'
+      csa_by_short_name['New York, NY'].id
+    when 'A102'
+      csa_by_short_name['Philadelphia, PA'].id
+    when 'A103'
+      csa_by_short_name['Boston, MA'].id
+    when 'A104'
+      csa_by_short_name['Pittsburgh, PA'].id
+    when 'A105'
+      csa_by_short_name['Buffalo, NY'].id
+    when 'A207'
+      csa_by_short_name['Chicago, IL'].id
+    when 'A208'
+      csa_by_short_name['Detroit, MI'].id
+    when 'A209'
+      csa_by_short_name['St. Louis, MO'].id
+    when 'A210'
+      csa_by_short_name['Cleveland, OH'].id
+    when 'A211'
+      csa_by_short_name['Minneapolis, MN'].id
+    when 'A212'
+      csa_by_short_name['Milwaukee, WI'].id
+    when 'A213'
+      csa_by_short_name['Cincinnati, OH'].id
+    when 'A214'
+      csa_by_short_name['Kansas City, MO'].id
+    when 'A311'
+      csa_by_short_name['Washington, DC'].id
+    when 'A315'
+      csa_by_short_name['Washington, DC'].id
+    when 'A316'
+      csa_by_short_name['Dallas, TX'].id
+    when 'A317'
+      csa_by_short_name['Washington, DC'].id
+    when 'A318'
+      csa_by_short_name['Houston, TX'].id
+    when 'A319'
+      csa_by_short_name['Atlanta, GA'].id
+    when 'A320'
+      csa_by_short_name['Miami, FL'].id
+    when 'A421'
+      csa_by_short_name['Los Angeles, CA'].id
+    when 'A422'
+      csa_by_short_name['San Francisco, CA'].id
+    when 'A423'
+      csa_by_short_name['Seattle, WA'].id
+    when 'A425'
+      csa_by_short_name['Portland, OR'].id
+    when 'A433'
+      csa_by_short_name['Denver, CO'].id
+
     else
       geo_by_internal_name['not-elsewhere-classified'].id
     end
