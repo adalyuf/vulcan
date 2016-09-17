@@ -64,10 +64,8 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
 
   def region(area_code)
     case area_code
-
     when "0000"
       geo_by_internal_name['united-states'].id
-
     when "0100"
       geo_by_internal_name['northeast'].id
     when "0200"
@@ -126,7 +124,6 @@ class Bulkload::Bls::ImportIndicators::Ap < Bulkload::Bls::ImportIndicators
       csa_by_short_name['Portland, OR'].id
     when 'A433'
       csa_by_short_name['Denver, CO'].id
-
     else
       geo_by_internal_name['not-elsewhere-classified'].id
     end
