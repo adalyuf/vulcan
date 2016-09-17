@@ -1,0 +1,9 @@
+<div>
+  <% if user_signed_in? %>
+    <span> <%= link_to "Logout", destroy_user_session_path, method: :delete %></span>
+    <span><%= current_user.email %></span>
+  <% else %>
+    <!-- link to login template if the app permits access to views without login -->
+    <!-- <span><%= link_to "Login", new_user_session_path %></span> -->
+  <% end %>
+</div>
