@@ -28,3 +28,12 @@
 <% end %>
 
 <%= line_chart @data %>
+
+<h3>Explore a series in depth:</h3>
+<ul>
+<% @series.each do |series| %>
+  <li>
+    <%= link_to(series.display_name, series_path(series.id)) %>
+  </li>
+<% end %>
+</ul>

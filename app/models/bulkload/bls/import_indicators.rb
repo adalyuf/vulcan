@@ -56,6 +56,10 @@ class Bulkload::Bls::ImportIndicators
     @geo_by_internal_name ||= Hash[ GeoCode.all.map { |g| [g.internal_name, g] } ]
   end
 
+  def csa_by_short_name
+    @csa_by_short_name ||= Hash[ GeoCode::Csa.all.map { |g| [g.short_name, g] } ]
+  end
+
   def geo_by_fips_code
     @geo_by_fips_code ||= Hash[ GeoCode.all.map { |g| [g.fips_code, g] } ]
   end

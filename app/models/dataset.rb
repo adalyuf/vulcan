@@ -1,5 +1,7 @@
 class Dataset < ActiveRecord::Base
   belongs_to :source, inverse_of: :datasets
+  belongs_to :category, inverse_of: :datasets
+
   has_many :external_tables, inverse_of: :dataset, dependent: :destroy
   has_many :indicators
 

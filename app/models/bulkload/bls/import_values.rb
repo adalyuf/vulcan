@@ -18,11 +18,19 @@ class Bulkload::Bls::ImportValues
   end
 
   def import_values(dept)
+    start = Time.now
+    Rails.logger.error("We have begun importing values for #{dept} as of: #{start}")
+
     Dir["#{ storage }/#{ SOURCE }/values/#{ dept }/*"].each_with_index do |file, index| #For example: /Users/alexdaly/Documents/file_downloads/BLS/values/ap/*
       parsed_file = CSV.read(file, { :col_sep => "\t" })
       parsed_file.shift
       list = prepare_values(parsed_file)
       persist_values(list)
+
+    elapsed = Time.now - start
+    minutes = elapsed.to_i/60
+    seconds = elapsed%60
+    Rails.logger.error("Time to import values for #{dept}: #{ elapsed } seconds, aka #{minutes} minutes and #{seconds} seconds")
     end
   end
 
