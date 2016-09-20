@@ -1,16 +1,16 @@
 <h1>
-Browse by Category
+  Browse by Category
 </h1>
 
 <%= simple_form_for :search,  url: indicators_path , :method => :get do |f| %>
-    <%= f.input :query, placeholder: 'Search for indicators' %>
-    <%= f.submit "Search" %>
+  <%= f.input :query, placeholder: 'Search for indicators' %>
+  <%= f.submit "Search" %>
 <% end %>
 
 <ul>
   <% @categories.each do |category| %>
     <li>
-    <%= link_to(category.name, category_path(category.internal_name)) %>
+      <%= link_to(category.name, category_path(category.internal_name)) %>
     </li>
   <% end %>
 </ul>

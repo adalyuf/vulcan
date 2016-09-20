@@ -2,7 +2,8 @@
 
 <ul>
   <% @dashboards.each do |dashboard| %>
-  <li> <%= link_to(dashboard.name, dashboard_path(dashboard.id)) %>
-  </li>
+    <li>
+      <%= link_to(dashboard.name, dashboard_path(dashboard.id)) %>
+    </li>
   <% end %>
 </ul>

@@ -9,14 +9,14 @@
 </h4>
 
 <%= simple_form_for :search,  url: indicators_path , :method => :get do |f| %>
-    <%= f.input :query, placeholder: 'Search for indicators' %>
-    <%= f.submit "Search" %>
+  <%= f.input :query, placeholder: 'Search for indicators' %>
+  <%= f.submit "Search" %>
 <% end %>
 
 <ul>
   <% @datasets.each do |dataset| %>
     <li>
-    <%= link_to(dataset.name, dataset_path(dataset.internal_name))%>
+      <%= link_to(dataset.name, dataset_path(dataset.internal_name))%>
     </li>
   <% end %>
 </ul>

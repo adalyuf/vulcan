@@ -1,5 +1,5 @@
 <h1>
-Search for indicators
+  Search for indicators
 </h1>
 
 <h4>
@@ -7,14 +7,15 @@ Search for indicators
 </h4>
 
 <%= simple_form_for :search,  url: indicators_path , :method => :get do |f| %>
-    <%= f.input :query, placeholder: 'Search for indicators' %>
-    <%= f.submit "Search" %>
+  <%= f.input :query, placeholder: 'Search for indicators' %>
+  <%= f.submit "Search" %>
 <% end %>
 
 
 <h3>
   <%= @indicators ? "Results:" : nil %>
 </h3>
+
 <ul>
   <% @indicators.each do |indicator| %>
     <li>

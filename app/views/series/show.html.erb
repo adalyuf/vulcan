@@ -10,7 +10,7 @@
 <% end %>
 
 <h4>
-<%= link_to("Your Dashboards", dashboards_path) %>
+  <%= link_to("Your Dashboards", dashboards_path) %>
 </h4>
 
 <h4>
@@ -28,10 +28,11 @@
 <h4>
   Other Series in <%= @series.geo_code.name %>
 </h4>
+
 <ul>
-<% @series_related_by_geo.each do |series| %>
-  <li class="related">
-    <%= line_chart series.display_data, width: "300px", library: {title: {text: series.indicator.name} } %>
-  </li>
-<% end %>
+  <% @series_related_by_geo.each do |series| %>
+    <li class="related">
+      <%= line_chart series.display_data, width: "300px", library: {title: {text: series.indicator.name} } %>
+    </li>
+  <% end %>
 </ul>
