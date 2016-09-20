@@ -1,3 +1,5 @@
+<% breadcrumb :series, @series %>
+
 <h1>
   <%= @series.display_name %>
 </h1>
@@ -8,20 +10,6 @@
   <%= f.input :series_id, as: :hidden %>
   <%= f.button :submit %>
 <% end %>
-
-<h4>
-  <%= link_to("Your Dashboards", dashboards_path) %>
-</h4>
-
-<h4>
-  <%= link_to("Categories", categories_path)%>
-   >
-  <%= link_to(@category.name, category_path(@category.internal_name))%>
-   >
-  <%= link_to(@dataset.name, dataset_path(@dataset.internal_name))%>
-   >
-  <%= link_to(@indicator.name, indicator_path(@dataset.internal_name, @indicator.internal_name))%>
-</h4>
 
 <%= line_chart @series.display_data, library: {title: {text: @series.indicator.name} } %>
 
