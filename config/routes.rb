@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   get 'indicators/:dataset_internal_name/:internal_name', to: 'indicators#show', as: :indicator
   get 'indicators', to: 'indicators#index', as: :indicators
   get 'series/:id', to: 'series#show', as: :series
-
+  resources :dashboards
+  resources :dashboard_items
 
 end

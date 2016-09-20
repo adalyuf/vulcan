@@ -2,12 +2,22 @@
   <%= @indicator.name %>
 </h1>
 
+<%= simple_form_for @dashboard_item do |f| %>
+  <%= f.association :dashboard %>
+  <%= f.input :indicator_id, as: :hidden %>
+  <%= f.button :submit %>
+<% end %>
+
 <h4>
   <%= link_to("Categories", categories_path)%>
    >
   <%= link_to(@category.name, category_path(@category.internal_name))%>
    >
   <%= link_to(@dataset.name, dataset_path(@dataset.internal_name))%>
+</h4>
+
+<h4>
+<%= link_to("Your Dashboards", dashboards_path) %>
 </h4>
 
 <%= simple_form_for :filter,  url: indicator_path , :method => :get do |f| %>

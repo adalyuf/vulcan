@@ -1,5 +1,6 @@
 class Series < ActiveRecord::Base
   has_many :values
+  has_many :dashboard_items
 
   belongs_to :indicator
   belongs_to :frequency

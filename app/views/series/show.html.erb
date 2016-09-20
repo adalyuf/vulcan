@@ -2,6 +2,17 @@
   <%= @series.display_name %>
 </h1>
 
+<%= simple_form_for @dashboard_item do |f| %>
+  <%= f.association :dashboard %>
+  <%= f.input :indicator_id, as: :hidden %>
+  <%= f.input :series_id, as: :hidden %>
+  <%= f.button :submit %>
+<% end %>
+
+<h4>
+<%= link_to("Your Dashboards", dashboards_path) %>
+</h4>
+
 <h4>
   <%= link_to("Categories", categories_path)%>
    >

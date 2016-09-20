@@ -23,6 +23,8 @@ class IndicatorsController < ApplicationController
     @income_levels = IncomeLevel.all
     @occupation_codes = OccupationCode.all
     @industry_codes = IndustryCode.all
+    @dashboards = Dashboard.where(user_id: current_user.id)
+    @dashboard_item = DashboardItem.new(indicator_id: @indicator.id)
 
     @filters = filters.reject { |_,f| f.blank? }
     if @filters.any?
