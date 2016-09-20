@@ -6,12 +6,6 @@
   <%= link_to("Categories", categories_path)%>
 </h4>
 
-<%= simple_form_for :search,  url: indicators_path , :method => :get do |f| %>
-  <%= f.input :query, placeholder: 'Search for indicators' %>
-  <%= f.submit "Search" %>
-<% end %>
-
-
 <h3>
   <%= @indicators ? "Results:" : nil %>
 </h3>

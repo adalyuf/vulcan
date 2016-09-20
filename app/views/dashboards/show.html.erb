@@ -6,11 +6,7 @@
   <%= link_to("Categories", categories_path)%>
 </h4>
 
-<%= simple_form_for :search,  url: indicators_path , :method => :get do |f| %>
-  <%= f.input :query, placeholder: 'Search for indicators' %>
-  <%= f.submit "Search" %>
-<% end %>
-
+<h4>Indicators</h4>
 <%= render partial: "items", locals: { items: @indicators } %>
 <h4>Series</h4>
 <%= render partial: "items", locals: { items: @series } %>

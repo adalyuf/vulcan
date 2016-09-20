@@ -1,9 +1,59 @@
-<div>
-  <% if user_signed_in? %>
-    <span> <%= link_to "Logout", destroy_user_session_path, method: :delete %></span>
-    <span><%= current_user.email %></span>
-  <% else %>
-    <!-- link to login template if the app permits access to views without login -->
-    <!-- <span><%= link_to "Login", new_user_session_path %></span> -->
-  <% end %>
-</div>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/">Stattice</a>
+    </div>
+
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Categories <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <% Category.all.each do |category| %>
+              <li>
+                <%= link_to(category.name, category_path(category.internal_name)) %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+      </ul>
+
+      <form class="navbar-form navbar-left" action=<%= indicators_path %> >
+        <%= simple_form_for :search, :method => :get do |f| %>
+          <%= f.input :query, label: false, placeholder: 'Search for indicators' %>
+          <%= f.submit "Search" %>
+        <% end %>
+      </form>
+
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Dashboards <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <% Dashboard.where(user_id: current_user.id).each do |dashboard| %>
+              <li>
+                <%= link_to(dashboard.name, dashboard_path(dashboard.id)) %>
+              </li>
+            <% end %>
+          </ul>
+        </li>
+          <% if user_signed_in? %>
+            <span class="navbar-text"><%= current_user.email %>
+               (<a href=<%=destroy_user_session_path%> data-method="delete" class="navbar-link">Logout</a>)
+            </span>
+          <% else %>
+            <!-- link to login template if the app permits access to views without login -->
+            <!-- <span><%= link_to "Login", new_user_session_path %></span> -->
+          <% end %>
+      </ul>
+
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>

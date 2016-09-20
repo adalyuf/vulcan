@@ -8,11 +8,6 @@
   <%= @category.name %>
 </h4>
 
-<%= simple_form_for :search,  url: indicators_path , :method => :get do |f| %>
-  <%= f.input :query, placeholder: 'Search for indicators' %>
-  <%= f.submit "Search" %>
-<% end %>
-
 <ul>
   <% @datasets.each do |dataset| %>
     <li>
