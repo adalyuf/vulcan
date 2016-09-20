@@ -45,12 +45,15 @@
                 <% end %>
               </ul>
             </li>
-            <span class="navbar-text"><%= current_user.email %>
+            <span class="navbar-text">
+              <%= current_user.email %>
                (<a href=<%=destroy_user_session_path%> data-method="delete" class="navbar-link">Logout</a>)
             </span>
           <% else %>
-            <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-            <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
+            <span class="navbar-text">
+              <%= link_to "Sign up", new_user_registration_path, class: 'btn btn-primary'  %> |
+              <%= link_to "Login", new_user_session_path, class: 'navbar-link'  %>
+            </span>
           <% end %>
       </ul>
 

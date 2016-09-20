@@ -2,16 +2,20 @@
 
 <h1>
   <%= @indicator.name %>
-  <span class="add-dashboard-item dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Add to Dashboard<span class="caret"></span></a>
-    <ul class="dropdown-menu">
-      <%= simple_form_for @dashboard_item do |f| %>
-        <%= f.association :dashboard %>
-        <%= f.input :indicator_id, as: :hidden %>
-        <%= f.button :submit %>
-      <% end %>
-    </ul>
-  </span>
+  <% if current_user %>
+    <span class="add-dashboard-item dropdown">
+      <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Add to Dashboard<span class="caret"></span></a>
+      <ul class="dropdown-menu">
+        <%= simple_form_for @dashboard_item do |f| %>
+          <%= f.association :dashboard %>
+          <%= f.input :indicator_id, as: :hidden %>
+          <%= f.button :submit %>
+        <% end %>
+      </ul>
+    </span>
+  <% else %>
+    <%= link_to "Sign up to add this to your dashboard", new_user_registration_path, :class => 'add-dashboard-item'  %>
+  <% end %>
 </h1>
 
 <h4>Filter Series</h4>
@@ -34,7 +38,20 @@
 <% end %>
 </div>
 
-<%= line_chart @data, library: {title: {text: @indicator.name} } %>
+<% unless @values.empty? %>
+  <%= line_chart @data, library: {title: {text: @indicator.name} } %>
+<% else %>
+  <h4>No data before 2000 for this indicator.</h4>
+<% end %>
+
+<% unless current_user %>
+  <h4>
+    <span class="label label-default">
+    Trial users are limited to data before 2000. </span>
+  </h4>
+  <%= link_to "Get Started", new_user_registration_path, class: 'btn btn-primary' %>
+<% end %>
+
 
 <h3>Explore a series in depth:</h3>
 

@@ -113,8 +113,12 @@ class Series < ActiveRecord::Base
     ].map(&:display_name).compact.join(',') + ( seasonally_adjusted ? ",SA" : '' )
   end
 
-  def display_data
+  def display_data(current_user)
     values = Value.where(indicator_id: self.indicator_id, series_id: self.id)
+    if current_user.blank?
+      values = values.where(" date < '1/1/2000' ")
+    end
+
 
     data =
       [{

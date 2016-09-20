@@ -6,10 +6,13 @@ class SeriesController < ApplicationController
     @dataset = @indicator.dataset
     @category = @dataset.category
 
-    @series_related_by_geo = Series.where(geo_code_id: @series.geo_code_id ).limit(12)
-
-    @dashboards = Dashboard.where(user_id: current_user.id)
-    @dashboard_item = DashboardItem.new(indicator_id: @indicator.id, series_id: @series.id)
+    if current_user
+      @dashboards = Dashboard.where(user_id: current_user.id)
+      @dashboard_item = DashboardItem.new(indicator_id: @indicator.id, series_id: @series.id)
+      @series_related_by_geo = Series.where(geo_code_id: @series.geo_code_id ).limit(12)
+    else
+      @series_related_by_geo = Series.where(geo_code_id: @series.geo_code_id ).limit(4)
+    end
   end
 
 end
