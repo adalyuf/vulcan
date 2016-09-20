@@ -10,8 +10,7 @@
 
   <body>
     <%= render 'layouts/header' %>
-    <%= breadcrumbs pretext: "You are here: ",
-                separator: " &rsaquo; " %>
+    <%= breadcrumbs semantic: true, separator: " &rsaquo; " %>
     <% flash.each do |name, msg| %>
       <%= content_tag :div, msg, class: name %>
     <% end %>

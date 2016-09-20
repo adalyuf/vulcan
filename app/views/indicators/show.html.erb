@@ -2,14 +2,20 @@
 
 <h1>
   <%= @indicator.name %>
+  <span class="add-dashboard-item dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Add to Dashboard<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <%= simple_form_for @dashboard_item do |f| %>
+        <%= f.association :dashboard %>
+        <%= f.input :indicator_id, as: :hidden %>
+        <%= f.button :submit %>
+      <% end %>
+    </ul>
+  </span>
 </h1>
 
-<%= simple_form_for @dashboard_item do |f| %>
-  <%= f.association :dashboard %>
-  <%= f.input :indicator_id, as: :hidden %>
-  <%= f.button :submit %>
-<% end %>
-
+<h4>Filter Series</h4>
+<div>
 <%= simple_form_for :filter,  url: indicator_path , :method => :get do |f| %>
   <%= f.select :geo_code_id, @geo_codes.map { |gc| [gc.name, gc.id] }, selected: @filters[:geo_code_id], include_blank: true %>
   <%= f.select :frequency_id, @frequencies.map { |fr| [fr.name, fr.id] }, selected: @filters[:frequency_id], include_blank: true %>
@@ -26,8 +32,9 @@
 
   <%= f.submit "Filter" %>
 <% end %>
+</div>
 
-<%= line_chart @data %>
+<%= line_chart @data, library: {title: {text: @indicator.name} } %>
 
 <h3>Explore a series in depth:</h3>
 

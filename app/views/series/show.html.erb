@@ -2,14 +2,18 @@
 
 <h1>
   <%= @series.display_name %>
+  <span class="add-dashboard-item dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Add to Dashboard<span class="caret"></span></a>
+    <ul class="dropdown-menu">
+      <%= simple_form_for @dashboard_item do |f| %>
+        <%= f.association :dashboard %>
+        <%= f.input :indicator_id, as: :hidden %>
+        <%= f.input :series_id, as: :hidden %>
+        <%= f.button :submit %>
+      <% end %>
+    </ul>
+  </span>
 </h1>
-
-<%= simple_form_for @dashboard_item do |f| %>
-  <%= f.association :dashboard %>
-  <%= f.input :indicator_id, as: :hidden %>
-  <%= f.input :series_id, as: :hidden %>
-  <%= f.button :submit %>
-<% end %>
 
 <%= line_chart @series.display_data, library: {title: {text: @series.indicator.name} } %>
 

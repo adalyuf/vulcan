@@ -34,23 +34,23 @@
       </form>
 
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Dashboards <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <% Dashboard.where(user_id: current_user.id).each do |dashboard| %>
-              <li>
-                <%= link_to(dashboard.name, dashboard_path(dashboard.id)) %>
-              </li>
-            <% end %>
-          </ul>
-        </li>
           <% if user_signed_in? %>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">My Dashboards <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <% Dashboard.where(user_id: current_user.id).each do |dashboard| %>
+                  <li>
+                    <%= link_to(dashboard.name, dashboard_path(dashboard.id)) %>
+                  </li>
+                <% end %>
+              </ul>
+            </li>
             <span class="navbar-text"><%= current_user.email %>
                (<a href=<%=destroy_user_session_path%> data-method="delete" class="navbar-link">Logout</a>)
             </span>
           <% else %>
-            <!-- link to login template if the app permits access to views without login -->
-            <!-- <span><%= link_to "Login", new_user_session_path %></span> -->
+            <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
+            <%= link_to "Login", new_user_session_path, :class => 'navbar-link'  %>
           <% end %>
       </ul>
 
