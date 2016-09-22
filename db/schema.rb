@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919005644) do
+ActiveRecord::Schema.define(version: 20160922013407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -250,6 +250,8 @@ ActiveRecord::Schema.define(version: 20160919005644) do
     t.integer  "geo_code_id",           null: false
     t.text     "internal_name",         null: false
     t.text     "source_identifier",     null: false
+    t.date     "min_date"
+    t.date     "max_date"
     t.index ["age_bracket_id"], name: "index_series_on_age_bracket_id", using: :btree
     t.index ["child_status_id"], name: "index_series_on_child_status_id", using: :btree
     t.index ["education_level_id"], name: "index_series_on_education_level_id", using: :btree
