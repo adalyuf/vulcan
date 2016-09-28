@@ -1,0 +1,5 @@
+<%= simple_form_for @dashboard do |f| %>
+  Current User: <%= current_user.id %>
+  <%= f.input :name, placeholder: 'Enter name for dashboard' %>
+  <%= f.button :submit %>
+<% end %>

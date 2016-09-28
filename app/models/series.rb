@@ -1,5 +1,6 @@
 class Series < ActiveRecord::Base
   has_many :values
+  has_many :dashboard_items
 
   belongs_to :indicator
   belongs_to :frequency
@@ -112,14 +113,15 @@ class Series < ActiveRecord::Base
     ].map(&:display_name).compact.join(',') + ( seasonally_adjusted ? ",SA" : '' )
   end
 
-  def display_data
+  def display_data(user)
     values = Value.where(indicator_id: self.indicator_id, series_id: self.id)
+    values = values.where('date < ?', SystemConfig.instance.trial.scope_end) unless user
 
     data =
-      [{
+      {
         :name => display_name,
         :data => Hash[values.map{ |value| [value.date, value.value] }]
-      }]
+      }
   end
 
 end

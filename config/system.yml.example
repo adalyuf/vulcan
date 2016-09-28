@@ -5,3 +5,8 @@ services:
   bls:
     url: bls_url
     storage: path_to_storage
+mailer:
+  password: mailer_password
+trial:
+  scope_end: only_values_before_this_date
+

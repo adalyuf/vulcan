@@ -1,3 +1,14 @@
 .related {
-  float: left;
+  display: inline-block;
+  width: 300px;
+  height: 300px;
+}
+
+.add-dashboard-item {
+  font-size: 12px;
+}
+
+.navbar-right .btn {
+  margin-top: -8px;
+  margin-bottom: -8px;
 }

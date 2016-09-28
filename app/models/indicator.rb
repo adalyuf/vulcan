@@ -20,6 +20,7 @@ class Indicator < ActiveRecord::Base
 
   has_many :series
   has_many :values
+  has_many :dashboard_items
 
   belongs_to :source
   validates :source, presence: true

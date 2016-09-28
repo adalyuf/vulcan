@@ -79,6 +79,8 @@ GEM
     ffi (1.9.14)
     globalid (0.3.7)
       activesupport (>= 4.1.0)
+    gretel (3.0.9)
+      rails (>= 3.1.0)
     hashdiff (0.3.0)
     httparty (0.14.0)
       multi_xml (>= 0.5.2)
@@ -237,6 +239,7 @@ DEPENDENCIES
   database_cleaner
   devise
   factory_girl_rails
+  gretel
   httparty
   jbuilder (~> 2.5)
   jquery-rails

@@ -1,22 +1,13 @@
+<% breadcrumb :category, @category %>
+
 <h1>
   <%= @category.name %> datasets
 </h1>
 
-<h4>
-  <%= link_to("Categories", categories_path)%>
-   >
-  <%= @category.name %>
-</h4>
-
-<%= simple_form_for :search,  url: indicators_path , :method => :get do |f| %>
-    <%= f.input :query, placeholder: 'Search for indicators' %>
-    <%= f.submit "Search" %>
-<% end %>
-
 <ul>
   <% @datasets.each do |dataset| %>
     <li>
-    <%= link_to(dataset.name, dataset_path(dataset.internal_name))%>
+      <%= link_to(dataset.name, dataset_path(dataset.internal_name))%>
     </li>
   <% end %>
 </ul>

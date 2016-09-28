@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160917185901) do
+ActiveRecord::Schema.define(version: 20160922013407) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,6 +45,27 @@ ActiveRecord::Schema.define(version: 20160917185901) do
     t.text     "internal_name", null: false
     t.index ["internal_name"], name: "index_child_statuses_on_internal_name", unique: true, using: :btree
     t.index ["name"], name: "index_child_statuses_on_name", unique: true, using: :btree
+  end
+
+  create_table "dashboard_items", force: :cascade do |t|
+    t.integer "dashboard_id", null: false
+    t.integer "user_id",      null: false
+    t.integer "indicator_id", null: false
+    t.integer "series_id"
+    t.integer "sort_order"
+    t.index ["dashboard_id"], name: "index_dashboard_items_on_dashboard_id", using: :btree
+    t.index ["indicator_id"], name: "index_dashboard_items_on_indicator_id", using: :btree
+    t.index ["series_id"], name: "index_dashboard_items_on_series_id", using: :btree
+    t.index ["user_id"], name: "index_dashboard_items_on_user_id", using: :btree
+  end
+
+  create_table "dashboards", force: :cascade do |t|
+    t.text     "name"
+    t.text     "description"
+    t.integer  "user_id",     null: false
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["user_id"], name: "index_dashboards_on_user_id", using: :btree
   end
 
   create_table "datasets", force: :cascade do |t|
@@ -229,6 +250,8 @@ ActiveRecord::Schema.define(version: 20160917185901) do
     t.integer  "geo_code_id",           null: false
     t.text     "internal_name",         null: false
     t.text     "source_identifier",     null: false
+    t.date     "min_date"
+    t.date     "max_date"
     t.index ["age_bracket_id"], name: "index_series_on_age_bracket_id", using: :btree
     t.index ["child_status_id"], name: "index_series_on_child_status_id", using: :btree
     t.index ["education_level_id"], name: "index_series_on_education_level_id", using: :btree

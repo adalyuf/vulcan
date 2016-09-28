@@ -6,7 +6,15 @@ class SeriesController < ApplicationController
     @dataset = @indicator.dataset
     @category = @dataset.category
 
-    @series_related_by_geo = Series.where(geo_code_id: @series.geo_code_id ).limit(12)
+    if current_user
+      @dashboards = Dashboard.where(user_id: current_user.id)
+      @dashboard_item = DashboardItem.new(indicator_id: @indicator.id, series_id: @series.id)
+      @series_related_by_geo = Series.where(geo_code_id: @series.geo_code_id ).limit(12)
+    else
+      @series_related_by_geo = Series.where(geo_code_id: @series.geo_code_id ).where('min_date < ?','1/1/2000').limit(4)
+    end
+
+    @data = [@series.display_data(current_user)]
   end
 
 end

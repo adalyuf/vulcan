@@ -1,0 +1,12 @@
+<h1>
+  <%= @dashboard.name %>
+</h1>
+
+<h4>
+  <%= link_to("Categories", categories_path)%>
+</h4>
+
+<h4>Indicators</h4>
+<%= render partial: "items", locals: { items: @indicators } %>
+<h4>Series</h4>
+<%= render partial: "items", locals: { items: @series } %>
