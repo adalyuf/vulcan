@@ -113,18 +113,15 @@ class Series < ActiveRecord::Base
     ].map(&:display_name).compact.join(',') + ( seasonally_adjusted ? ",SA" : '' )
   end
 
-  def display_data(current_user)
+  def display_data(user)
     values = Value.where(indicator_id: self.indicator_id, series_id: self.id)
-    if current_user.blank?
-      values = values.where(" date < '1/1/2000' ")
-    end
-
+    values = values.where('date < ?', SystemConfig.instance.trial.scope_end) unless user
 
     data =
-      [{
+      {
         :name => display_name,
         :data => Hash[values.map{ |value| [value.date, value.value] }]
-      }]
+      }
   end
 
 end

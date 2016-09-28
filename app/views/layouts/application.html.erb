@@ -11,9 +11,7 @@
   <body>
     <%= render 'layouts/header' %>
     <%= breadcrumbs semantic: true, separator: " &rsaquo; " %>
-    <% flash.each do |name, msg| %>
-      <%= content_tag :div, msg, class: name %>
-    <% end %>
+    <%= flash_messages %>
     <%= yield %>
   </body>
 </html>

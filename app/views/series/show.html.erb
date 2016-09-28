@@ -7,7 +7,7 @@
       <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Add to Dashboard<span class="caret"></span></a>
       <ul class="dropdown-menu">
         <%= simple_form_for @dashboard_item do |f| %>
-          <%= f.association :dashboard %>
+          <%= f.association :dashboard, collection: @dashboards %>
           <%= f.input :indicator_id, as: :hidden %>
           <%= f.input :series_id, as: :hidden %>
           <%= f.button :submit %>
@@ -19,7 +19,7 @@
   <% end %>
 </h1>
 
-<%= line_chart @series.display_data(current_user), library: {title: {text: @series.indicator.name} } %>
+<%= line_chart @data, library: {title: {text: @series.indicator.name} } %>
 
 <% unless current_user %>
   <h4>
@@ -36,7 +36,7 @@
 <ul>
   <% @series_related_by_geo.each do |series| %>
     <li class="related">
-      <%= line_chart series.display_data(current_user), width: "300px", library: {title: {text: series.indicator.name} } %>
+      <%= line_chart [series.display_data(current_user)], width: "300px", library: {title: {text: series.indicator.name} } %>
     </li>
   <% end %>
 </ul>

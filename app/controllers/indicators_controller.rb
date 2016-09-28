@@ -50,21 +50,15 @@ class IndicatorsController < ApplicationController
     end
 
     if current_user
-      @dashboards = Dashboard.where(user_id: current_user.id)
+      @dashboards = current_user.dashboards
       @dashboard_item = DashboardItem.new(indicator_id: @indicator.id)
       @values = Value.where(indicator_id: @indicator.id, series_id: @series.ids)
     else
       @values = Value.where(indicator_id: @indicator.id, series_id: @series.ids).where("date < '1/1/2000' ")
     end
 
-    unless @values.empty?
-      grouped_values = @values.group_by(&:series_id)
-      @data = @series.map do |serie|
-        {
-          :name => serie.display_name,
-          :data => Hash[grouped_values[serie.id].map{ |value| [value.date, value.value] }]
-        }
-      end
+    @data = @series.map do |series|
+      series.display_data(current_user)
     end
   end
 

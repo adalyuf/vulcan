@@ -66,20 +66,6 @@ class Indicator < ActiveRecord::Base
       end
     end
   end
-
-  def display_data
-    values = Value.where(indicator_id: self.id)
-    series = Series.where(indicator_id: self.id)
-
-    grouped_values = values.group_by(&:series_id)
-    data = series.map do |serie|
-      {
-        :name => serie.display_name,
-        :data => Hash[grouped_values[serie.id].map{ |value| [value.date, value.value] }]
-      }
-    end
-  end
-
 end
 
 

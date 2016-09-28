@@ -13,14 +13,12 @@ class DashboardsController < ApplicationController
 
   def show
     @dashboard = Dashboard.find(params[:id])
-    @dashboard_items = DashboardItem.where(dashboard_id: @dashboard.id)
-
-    @indicators = @dashboard_items.reject(&:series_id)
-    @series = @dashboard_items.select(&:series_id)
+    @indicators = @dashboard.dashboard_items.reject(&:series_id)
+    @series = @dashboard.dashboard_items.select(&:series_id)
   end
 
   def index
-    @dashboards = Dashboard.where(user_id: current_user.id)
+    @dashboards = current_user.dashboards
   end
 
 private

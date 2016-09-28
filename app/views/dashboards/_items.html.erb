@@ -1,7 +1,7 @@
 <ul>
   <% items.each do |item| %>
     <li class="related">
-        <%= line_chart item.display_data, width: "300px", library: { title: { text: item.indicator.name } } %>
+        <%= line_chart item.display_data(current_user), width: "300px", library: { title: { text: item.indicator.name } } %>
     </li>
   <% end %>
 </ul>

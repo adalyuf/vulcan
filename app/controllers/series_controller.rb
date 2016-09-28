@@ -13,6 +13,8 @@ class SeriesController < ApplicationController
     else
       @series_related_by_geo = Series.where(geo_code_id: @series.geo_code_id ).where('min_date < ?','1/1/2000').limit(4)
     end
+
+    @data = [@series.display_data(current_user)]
   end
 
 end
