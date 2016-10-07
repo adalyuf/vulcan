@@ -1,12 +1,39 @@
+<% breadcrumb :dashboard, @dashboard %>
+
 <h1>
   <%= @dashboard.name %>
 </h1>
-
-<h4>
-  <%= link_to("Categories", categories_path)%>
-</h4>
-
-<h4>Indicators</h4>
-<%= render partial: "items", locals: { items: @indicators } %>
-<h4>Series</h4>
-<%= render partial: "items", locals: { items: @series } %>
+<br>
+<ul class="nav nav-pills" role="tablist">
+  <li role="presentation" class="active">
+    <a href="#indicators" aria-controls="indicators" role="tab" data-toggle="tab">
+      Indicators
+    </a>
+  </li>
+  <li role="presentation">
+    <a href="#series" aria-controls="series" role="tab" data-toggle="tab">
+      Series
+    </a>
+  </li>
+</ul>
+<br>
+<div class="tab-content">
+  <div role="tabpanel" class="tab-pane active" id="indicators">
+    <ul>
+      <% @indicators.each do |item| %>
+        <li class="related">
+            <%= line_chart item.display_data(current_user), width: "300px", library: { title: {text: item.indicator.name}, yAxis: {title: {text: item.indicator.series.first.unit.name}}  } %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  <div role="tabpanel" class="tab-pane" id="series">
+    <ul>
+      <% @series.each do |item| %>
+        <li class="related">
+            <%= line_chart item.display_data(current_user), width: "300px", library: { title: {text: item.indicator.name}, yAxis: {title: {text: item.series.unit.name}}  } %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

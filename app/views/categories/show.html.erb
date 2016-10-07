@@ -1,13 +1,17 @@
 <% breadcrumb :category, @category %>
 
 <h1>
-  <%= @category.name %> datasets
+  <%= @category.name %>
 </h1>
 
-<ul>
-  <% @datasets.each do |dataset| %>
-    <li>
-      <%= link_to(dataset.name, dataset_path(dataset.internal_name))%>
-    </li>
-  <% end %>
-</ul>
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+  Datasets (<%= @datasets.count %>)
+  </div>
+  <div class="list-group">
+    <% @datasets.each do |dataset| %>
+      <%= link_to(dataset.name, dataset_path(dataset.internal_name), class: 'list-group-item')%>
+    <% end %>
+  </div>
+</div>

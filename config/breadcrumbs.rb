@@ -31,6 +31,16 @@ crumb :series do |series|
   parent series.indicator
 end
 
+crumb :dashboards do
+  link "Dashboards", dashboards_path
+end
+
+crumb :dashboard do |dashboard|
+  link dashboard.name, dashboard_path(dashboard.id)
+  parent :dashboards
+end
+
+
 # crumb :projects do
 #   link "Projects", projects_path
 # end

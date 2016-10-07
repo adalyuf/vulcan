@@ -1,7 +1,9 @@
 class IndicatorsController < ApplicationController
 
   def index
-    @indicators = Indicator.search(search_params[:query])
+    @query = search_params[:query]
+    @indicators = Indicator.search(@query)
+    @toggle = @query ? nil : "in"
 
     @geo_codes = GeoCode.all
     @frequencies = Frequency.all
