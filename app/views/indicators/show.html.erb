@@ -18,33 +18,27 @@
   <% end %>
 </h1>
 
-<% unless @values.empty? %>
-  <h4>Filter Series</h4>
-  <div>
-  <%= simple_form_for :filter,  url: indicator_path , :method => :get do |f| %>
-    <%= f.select :geo_code_id, @geo_codes.map { |gc| [gc.name, gc.id] }, selected: @filters[:geo_code_id], prompt: "Area", include_blank: true %>
-    <%= f.select :frequency_id, @frequencies.map { |fr| [fr.name, fr.id] }, selected: @filters[:frequency_id], prompt: "Frequency", include_blank: true %>
-    <%= f.select :unit_id, @units.map { |unit| [unit.name, unit.id] }, selected: @filters[:unit_id], prompt: "Unit", include_blank: true %>
-    <%= f.select :gender_id, @genders.map { |gender| [gender.name, gender.id] }, selected: @filters[:gender_id], prompt: "Gender", include_blank: true %>
-    <%= f.select :race_id, @races.map { |race| [race.name, race.id] }, selected: @filters[:race_id], prompt: "Race", include_blank: true %>
-    <%= f.select :age_bracket_id, @age_brackets.map { |ab| [ab.name, ab.id] }, selected: @filters[:age_bracket_id], prompt: "Age Brackets", include_blank: true, input_html: { multiple: true } %>
-    <%= f.select :employment_status_id, @employment_statuses.map { |es| [es.name, es.id] }, selected: @filters[:employment_status_id], prompt: "Employment", include_blank: true %>
-    <%= f.select :education_level_id, @education_levels.map { |edu| [edu.name, edu.id] }, selected: @filters[:education_level_id],prompt: "Education", include_blank: true %>
-    <%= f.select :child_status_id, @child_statuses.map { |child| [child.name, child.id] }, selected: @filters[:child_status_id], prompt: "Children", include_blank: true %>
-    <%= f.select :income_level_id, @income_levels.map { |income| [income.name, income.id] }, selected: @filters[:income_level_id],prompt: "Income", include_blank: true %>
-    <%= f.select :occuption_code_id, @occupation_codes.map { |occ| [occ.name, occ.id] }, selected: @filters[:occupation_code_id], prompt: "Occupation", include_blank: true %>
-    <%= f.select :industry_code_id, @industry_codes.map { |ind| [ind.name, ind.id] }, selected: @filters[:industry_code_id], prompt: "Industry", include_blank: true %>
+<h4>Filter Series</h4>
+<div>
+<%= simple_form_for :filter,  url: indicator_path , :method => :get do |f| %>
+  <%= f.select :geo_code_id, @geo_codes.map { |gc| [gc.name, gc.id] }, selected: @filters[:geo_code_id], prompt: "Area", include_blank: true %>
+  <%= f.select :frequency_id, @frequencies.map { |fr| [fr.name, fr.id] }, selected: @filters[:frequency_id], prompt: "Frequency", include_blank: true %>
+  <%= f.select :unit_id, @units.map { |unit| [unit.name, unit.id] }, selected: @filters[:unit_id], prompt: "Unit", include_blank: true %>
+  <%= f.select :gender_id, @genders.map { |gender| [gender.name, gender.id] }, selected: @filters[:gender_id], prompt: "Gender", include_blank: true %>
+  <%= f.select :race_id, @races.map { |race| [race.name, race.id] }, selected: @filters[:race_id], prompt: "Race", include_blank: true %>
+  <%= f.select :age_bracket_id, @age_brackets.map { |ab| [ab.name, ab.id] }, selected: @filters[:age_bracket_id], prompt: "Age Brackets", include_blank: true, input_html: { multiple: true } %>
+  <%= f.select :employment_status_id, @employment_statuses.map { |es| [es.name, es.id] }, selected: @filters[:employment_status_id], prompt: "Employment", include_blank: true %>
+  <%= f.select :education_level_id, @education_levels.map { |edu| [edu.name, edu.id] }, selected: @filters[:education_level_id],prompt: "Education", include_blank: true %>
+  <%= f.select :child_status_id, @child_statuses.map { |child| [child.name, child.id] }, selected: @filters[:child_status_id], prompt: "Children", include_blank: true %>
+  <%= f.select :income_level_id, @income_levels.map { |income| [income.name, income.id] }, selected: @filters[:income_level_id],prompt: "Income", include_blank: true %>
+  <%= f.select :occuption_code_id, @occupation_codes.map { |occ| [occ.name, occ.id] }, selected: @filters[:occupation_code_id], prompt: "Occupation", include_blank: true %>
+  <%= f.select :industry_code_id, @industry_codes.map { |ind| [ind.name, ind.id] }, selected: @filters[:industry_code_id], prompt: "Industry", include_blank: true %>
 
-    <%= f.submit "Filter" %>
-  <% end %>
-  </div>
-
-  <%= line_chart @data, library: {title: {text: @indicator.name} } %>
-<% else %>
-  <br>
-  <h4>Error: There is no data before 2000 for this indicator.</h4>
-  <br>
+  <%= f.submit "Filter" %>
 <% end %>
+</div>
+
+<%= line_chart @data, library: {title: {text: @indicator.name} } %>
 
 <% unless current_user %>
   <h4>
@@ -54,13 +48,11 @@
   <%= link_to "Get Access", new_user_registration_path, class: 'btn btn-primary' %>
 <% end %>
 
-<% unless @values.empty? %>
-  <h3>Explore a series in depth:</h3>
-  <ul>
-    <% @series.each do |series| %>
-      <li>
-        <%= link_to(series.display_name, series_path(series.id)) %>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
+<h3>Explore a series in depth:</h3>
+<ul>
+  <% @series.each do |series| %>
+    <li>
+      <%= link_to(series.display_name, series_path(series.id)) %>
+    </li>
+  <% end %>
+</ul>

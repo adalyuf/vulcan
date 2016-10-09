@@ -113,10 +113,10 @@ INDUSTRY =
       uniq_series << series_title.strip
     end
 
-    source_id = Source.find_by(internal_name: :"bureau-labor-statistics").id
+    source_id = Source.find_by(internal_name: "bureau-labor-statistics").id
     #These indicators reflect job creation and business establishments. Classifying this as Business
     category_id = Category.find_by(internal_name: :business).id
-    dataset_id = Dataset.find_by(internal_name: :"bls-business-employment-dynamics").id
+    dataset_id = Dataset.find_by(internal_name: "bls-business-employment-dynamics").id
 
     list = uniq_series.map do |series_title|
       description = series_title.strip

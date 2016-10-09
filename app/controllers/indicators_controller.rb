@@ -52,9 +52,6 @@ class IndicatorsController < ApplicationController
     if current_user
       @dashboards = current_user.dashboards
       @dashboard_item = DashboardItem.new(indicator_id: @indicator.id)
-      @values = Value.where(indicator_id: @indicator.id, series_id: @series.ids)
-    else
-      @values = Value.where(indicator_id: @indicator.id, series_id: @series.ids).where("date < '1/1/2000' ")
     end
 
     @data = @series.map do |series|

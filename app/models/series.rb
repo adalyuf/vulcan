@@ -114,8 +114,8 @@ class Series < ActiveRecord::Base
   end
 
   def display_data(user)
-    values = Value.where(indicator_id: self.indicator_id, series_id: self.id)
-    values = values.where('date < ?', SystemConfig.instance.trial.scope_end) unless user
+    values = Value.find_by_sql("select * from values_partitions.p#{self.indicator_id} where series_id = #{self.id}")
+    values.delete_if { |x| x.date >= SystemConfig.instance.trial.scope_end.to_date } unless user
 
     data =
       {

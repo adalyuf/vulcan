@@ -83,8 +83,11 @@ namespace :defaults do
     Unit.where(name: "Nominal US Dollars", internal_name: "nominal-us-dollars" ,description: "US Dollars, not adjusted for inflation" ).first_or_create
     Unit.where(name: "Real US Dollars", internal_name: "real-us-dollars", description: "US Dollars adjusted for inflation" ).first_or_create
     Unit.where(name: "Percent", internal_name: :percent, description: "Typically a percent difference from a prior period").first_or_create
-    Unit.where(name: "Jobs", internal_name: :jobs, description: "Number of jobs").first_or_create
+    Unit.where(name: "Jobs or Employees", internal_name: "jobs-or-employees", description: "Number of jobs or employees").first_or_create
     Unit.where(name: "Establishments", internal_name: :establishments, description: "Number of Establishments, primarily businesses.").first_or_create
+    Unit.where(name: "Hours", internal_name: "hours", description: "Number of hours").first_or_create
+    Unit.where(name: "Index", internal_name: "indexes", description: "Index to a reference value").first_or_create
+    Unit.where(name: "Ratio", internal_name: "ratios", description: "Ratio of value to another value").first_or_create
   end
 
   desc "create gender records"
@@ -235,13 +238,32 @@ namespace :defaults do
     IndustryCode.where(name: "No answer provided", internal_name: "no-answer-provided", description: "Industry is a series attribute however no value was recorded").first_or_create
     IndustryCode.where(name: "Not elsewhere classified", internal_name: "not-elsewhere-classified", description: "Industry is a series attribute but it does not map to our classification, see raw value for details").first_or_create
 
-    #This is a stub, we will need to define these more explicitly when we have more examples
+    #Alternative groupings of industries, not typically specified in NAICS
     IndustryCode.where(name: "All private industry", internal_name: "all-private-industry", description: "Includes all private industry, excludes government").first_or_create
     IndustryCode.where(name: "All government", internal_name: "all-government", description: "Includes all government functions, excludes private industry").first_or_create
+    IndustryCode.where(name: "Federal government", internal_name: "federal-government", description: "Includes federal government functions").first_or_create
+    IndustryCode.where(name: "Federal government except postal service", internal_name: "federal-government-except-postal-service", description: "Includes federal government functions except the USPS").first_or_create
+    IndustryCode.where(name: "Federal hospitals", internal_name: "federal-hospitals", description: "Includes federal hospitals").first_or_create
+    IndustryCode.where(name: "Department of Defense", internal_name: "department-of-defense", description: "Department of Defense").first_or_create
+    IndustryCode.where(name: "US Postal Service", internal_name: "us-postal-service", description: "Includes U.S. postal service").first_or_create
+    IndustryCode.where(name: "State government", internal_name: "state-government", description: "Includes all state government functions").first_or_create
+    IndustryCode.where(name: "State education", internal_name: "state-education", description: "Includes state government funded education programs").first_or_create
+    IndustryCode.where(name: "State hospitals", internal_name: "state-hospitals", description: "Includes state government funded hospitals").first_or_create
+    IndustryCode.where(name: "State administration", internal_name: "state-administration", description: "Includes state government general administrative costs").first_or_create
+    IndustryCode.where(name: "Local government", internal_name: "local-government", description: "Includes all local government functions").first_or_create
+    IndustryCode.where(name: "Local education", internal_name: "local-education", description: "Includes local government education programs").first_or_create
+    IndustryCode.where(name: "Local utilities", internal_name: "local-utilities", description: "Includes local government utility programs").first_or_create
+    IndustryCode.where(name: "Local transportation", internal_name: "local-transportation", description: "Includes local government transportation programs").first_or_create
+    IndustryCode.where(name: "Local hospitals", internal_name: "local-hospitals", description: "Includes local government hospitals").first_or_create
+    IndustryCode.where(name: "Local administration", internal_name: "local-administration", description: "Includes local government general and administrative functions").first_or_create
 
     # Goods and Services
     IndustryCode.where(name: "All goods producers", internal_name: "all-goods-producers", description: "Companies that manufacture and sell physical goods").first_or_create
     IndustryCode.where(name: "All service providers", internal_name: "all-service-providers", description: "Service providing companies").first_or_create
+    IndustryCode.where(name: "Private service providers", internal_name: "private-service-providers", description: "Private service providing companies").first_or_create
+    IndustryCode.where(name: "Durable goods", internal_name: "durable-goods", description: "Companies that manufacture and sell durable goods").first_or_create
+    IndustryCode.where(name: "Nondurable goods", internal_name: "nondurable-goods", description: "Companies that manufacture and sell nondurable goods").first_or_create
+    IndustryCode.where(name: "Trade, Transportation, and Utilities", internal_name: "trade-transportation-and-utilities", description: "All industries in trade, transportation, and utilities.").first_or_create
 
 
     #NAICS sectors
