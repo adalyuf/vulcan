@@ -1,107 +1,8 @@
 class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
 
-INDUSTRY =
-{
-'100010' => '11',
-'100020' => '23',
-'100030' => '31',
-'200010' => '42',
-'200020' => '44',
-'200030' => '48',
-'200040' => '22',
-'200050' => '51',
-'200060' => '52',
-'200070' => '54',
-'200080' => '61',
-'200090' => '71',
-'200100' => '81',
-'300111' => '111',
-'300112' => '112',
-'300113' => '113',
-'300114' => '114',
-'300115' => '115',
-'300211' => '211',
-'300212' => '212',
-'300213' => '213',
-'300236' => '236',
-'300237' => '237',
-'300238' => '238',
-'300311' => '311',
-'300312' => '312',
-'300313' => '313',
-'300314' => '314',
-'300315' => '315',
-'300316' => '316',
-'300321' => '321',
-'300322' => '322',
-'300323' => '323',
-'300324' => '324',
-'300325' => '325',
-'300326' => '326',
-'300327' => '327',
-'300331' => '331',
-'300332' => '332',
-'300333' => '333',
-'300334' => '334',
-'300335' => '335',
-'300336' => '336',
-'300337' => '337',
-'300339' => '339',
-'300423' => '423',
-'300424' => '424',
-'300425' => '425',
-'300441' => '441',
-'300442' => '442',
-'300443' => '443',
-'300444' => '444',
-'300445' => '445',
-'300446' => '446',
-'300447' => '447',
-'300448' => '448',
-'300451' => '451',
-'300452' => '452',
-'300453' => '453',
-'300454' => '454',
-'300481' => '481',
-'300483' => '483',
-'300484' => '484',
-'300485' => '485',
-'300486' => '486',
-'300487' => '487',
-'300488' => '488',
-'300492' => '492',
-'300493' => '493',
-'300511' => '511',
-'300512' => '512',
-'300515' => '515',
-'300517' => '517',
-'300518' => '518',
-'300519' => '519',
-'300522' => '522',
-'300523' => '523',
-'300524' => '524',
-'300525' => '525',
-'300531' => '531',
-'300532' => '532',
-'300533' => '533',
-'300541' => '541',
-'300551' => '551',
-'300561' => '561',
-'300562' => '562',
-'300611' => '611',
-'300621' => '621',
-'300622' => '622',
-'300623' => '623',
-'300624' => '624',
-'300711' => '711',
-'300712' => '712',
-'300713' => '713',
-'300721' => '721',
-'300722' => '722',
-'300811' => '811',
-'300812' => '812',
-'300813' => '813'
-}
+BLS_BD = SystemConfig.load_config_file(Rails.root.join('config', 'bls', 'bd.yml'))
+
+INDUSTRY_CODE_TO_NAICS = BLS_BD['industry_code_to_naics']
 
   def import_indicators
     parsed_file = Bulkload::Bls::FileManager.new("indicators", "bd", "bd.series").parsed_file
@@ -146,15 +47,15 @@ INDUSTRY =
     annual_frequency_id = Frequency.find_by(internal_name: :annual).id
     quarterly_frequency_id = Frequency.find_by(internal_name: :quarterly).id
 
-    gender_id = Gender.find_by(internal_name: "not-specified").id
-    race_id = Race.find_by(internal_name: "not-specified").id
-    marital_status_id = MaritalStatus.find_by(internal_name: "not-specified").id
-    age_bracket_id = AgeBracket.find_by(internal_name: "not-specified").id
-    employment_status_id = EmploymentStatus.find_by(internal_name: "not-specified").id
-    education_level_id = EducationLevel.find_by(internal_name: "not-specified").id
-    child_status_id = ChildStatus.find_by(internal_name: "not-specified").id
-    income_level_id = IncomeLevel.find_by(internal_name: "not-specified").id
-    occupation_code_id = OccupationCode.find_by(internal_name: "not-specified").id
+    gender_id = Gender.not_specified.id
+    race_id = Race.not_specified.id
+    marital_status_id = MaritalStatus.not_specified.id
+    age_bracket_id = AgeBracket.not_specified.id
+    employment_status_id = EmploymentStatus.not_specified.id
+    education_level_id = EducationLevel.not_specified.id
+    child_status_id = ChildStatus.not_specified.id
+    income_level_id = IncomeLevel.not_specified.id
+    occupation_code_id = OccupationCode.not_specified.id
 
     list = parsed_file.map do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
       unit_id =
@@ -189,7 +90,7 @@ INDUSTRY =
         when '200000'
           IndustryCode.find_by(internal_name: "all-service-providers").id
         else
-          industry = IndustryCode.find_by(naics_code: INDUSTRY[industry_code_raw])
+          industry = IndustryCode.find_by(naics_code: INDUSTRY_CODE_TO_NAICS[industry_code_raw])
           industry ? industry.id : IndustryCode.find_by(internal_name: "not-elsewhere-classified").id
         end
 

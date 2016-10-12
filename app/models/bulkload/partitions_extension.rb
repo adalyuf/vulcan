@@ -62,14 +62,14 @@ module Bulkload::PartitionsExtension
         end
       end
 
-      ids.each do |indicator|
+      ids.each do |indicator_id|
         begin
-          Indicator.find(indicator).series.each do |series|
+          Indicator.find(indicator_id).series.each do |series|
             Series.delete(series.id)
           end
-          Indicator.delete(indicator.id)
+          Indicator.delete(indicator_id)
         rescue
-          puts "Error on Indicator: #{indicator}"
+          puts "Error deleting series for indicator: #{indicator_id}"
         end
       end
     end
