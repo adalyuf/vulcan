@@ -52,7 +52,7 @@
 <% if @query %>
   <div class="panel panel-primary">
     <div class="panel-heading">
-      Results (<%= @indicators.count %>)
+      Results (<%= @indicators.total_count %>)
     </div>
     <div class="list-group">
       <% @indicators.each do |indicator| %>
@@ -61,3 +61,7 @@
     </div>
   </div>
 <% end %>
+
+<div class="col-xs-12 text-center">
+  <%= paginate @indicators %>
+</div>
