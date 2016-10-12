@@ -20,6 +20,6 @@ class SystemConfig
   end
 
   def self.trial_scope_end_date
-    self.trial.scope_end.to_date
+    self.instance.trial.scope_end.to_date
   end
 end
