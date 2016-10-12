@@ -27,10 +27,13 @@
       </ul>
 
       <form class="navbar-form navbar-left" action=<%= indicators_path %> >
-        <%= simple_form_for :search, :method => :get do |f| %>
-          <%= f.input :query, label: false, placeholder: 'Search for indicators' %>
-          <%= f.submit "Search" %>
-        <% end %>
+        <div class="form-group string required search_query">
+          <input class="form-control string required search-box" placeholder="Search for indicators" type="text" name="search[query]" id="search_query">
+            <button type="submit" class="btn btn-default search-icon" style="background-color:#687f9f;color:white">
+              <i class="glyphicon glyphicon-search"></i>
+            </button>
+          </input>
+        </div>
       </form>
 
       <ul class="nav navbar-nav navbar-right">

@@ -1,43 +1,63 @@
 <% breadcrumb :indicators %>
 
-<h1>
-  Search for indicators
-</h1>
+<div class="promotion-box">
+  <h1>Search for an indicator</h1>
+  <form action=<%= indicators_path %> >
+    <div class="form-group string required search_query">
+      <input class="form-control string required search-box" placeholder="Search for indicators" type="text" name="search[query]" id="search_query">
+        <button type="submit" class="btn btn-default search-icon" style="background-color:#687f9f;color:white">
+          <i class="glyphicon glyphicon-search"></i>
+        </button>
+      </input>
+    </div>
+  </form>
+</div>
 
-<%= simple_form_for :search, :method => :get do |f| %>
-  <%= f.input :query, label: false, placeholder: 'Search for indicators' %>
-  <%= f.submit "Search" %>
-<% end %>
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="panel panel-default">
+    <div class="panel-heading" role="tab" id="headingOne">
+      <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+        <h4 class="panel-title">
+          Find indicators that have series for a given dimension:
+        </h4>
+      </a>
+    </div>
+    <div id="collapseOne" class="panel-collapse collapse <%= @toggle %>" role="tabpanel" aria-labelledby="headingOne">
+      <div class="panel-body">
+        <div class="row">
+          <%= simple_form_for :filter, wrapper: :inline_form, html: { class: 'form-inline' }, defaults: { wrapper_html: { class: 'col-xs-12 col-md-6 col-lg-4'}, input_html: { style: "width: 100%" } }, url: indicators_path , :method => :get do |f| %>
+            <%= f.input :geo_code_id, collection: @geo_codes.map { |gc| [gc.name, gc.id] }, selected: @filters[:geo_code_id], prompt: "Area", include_blank: true %>
+            <%= f.input :frequency_id, collection: @frequencies.map { |fr| [fr.name, fr.id] }, selected: @filters[:frequency_id], prompt: "Frequency", include_blank: true %>
+            <%= f.input :unit_id, collection: @units.map { |unit| [unit.name, unit.id] }, selected: @filters[:unit_id], prompt: "Unit", include_blank: true %>
+            <%= f.input :gender_id, collection: @genders.map { |gender| [gender.name, gender.id] }, selected: @filters[:gender_id], prompt: "Gender", include_blank: true %>
+            <%= f.input :race_id, collection: @races.map { |race| [race.name, race.id] }, selected: @filters[:race_id], prompt: "Race", include_blank: true %>
+            <%= f.input :age_bracket_id, collection: @age_brackets.map { |ab| [ab.name, ab.id] }, selected: @filters[:age_bracket_id], prompt: "Age Brackets", include_blank: true %>
+            <%= f.input :employment_status_id, collection: @employment_statuses.map { |es| [es.name, es.id] }, selected: @filters[:employment_status_id], prompt: "Employment", include_blank: true %>
+            <%= f.input :education_level_id, collection: @education_levels.map { |edu| [edu.name, edu.id] }, selected: @filters[:education_level_id],prompt: "Education", include_blank: true %>
+            <%= f.input :child_status_id, collection: @child_statuses.map { |child| [child.name, child.id] }, selected: @filters[:child_status_id], prompt: "Children", include_blank: true %>
+            <%= f.input :income_level_id, collection: @income_levels.map { |income| [income.name, income.id] }, selected: @filters[:income_level_id],prompt: "Income", include_blank: true %>
+            <%= f.input :occuption_code_id, collection: @occupation_codes.map { |occ| [occ.name, occ.id] }, selected: @filters[:occupation_code_id], prompt: "Occupation", include_blank: true %>
+            <%= f.input :industry_code_id, collection: @industry_codes.map { |ind| [ind.name, ind.id] }, selected: @filters[:industry_code_id], prompt: "Industry", include_blank: true %>
 
-<h4>Find indicators that have series for:</h4>
-<div>
-<%= simple_form_for :filter,  url: indicators_path , :method => :get do |f| %>
- <%= f.select :geo_code_id, @geo_codes.map { |gc| [gc.name, gc.id] }, selected: @filters[:geo_code_id], prompt: "Area", include_blank: true %>
-  <%= f.select :frequency_id, @frequencies.map { |fr| [fr.name, fr.id] }, selected: @filters[:frequency_id], prompt: "Frequency", include_blank: true %>
-  <%= f.select :unit_id, @units.map { |unit| [unit.name, unit.id] }, selected: @filters[:unit_id], prompt: "Unit", include_blank: true %>
-  <%= f.select :gender_id, @genders.map { |gender| [gender.name, gender.id] }, selected: @filters[:gender_id], prompt: "Gender", include_blank: true %>
-  <%= f.select :race_id, @races.map { |race| [race.name, race.id] }, selected: @filters[:race_id], prompt: "Race", include_blank: true %>
-  <%= f.select :age_bracket_id, @age_brackets.map { |ab| [ab.name, ab.id] }, selected: @filters[:age_bracket_id], prompt: "Age Brackets", include_blank: true, input_html: { multiple: true } %>
-  <%= f.select :employment_status_id, @employment_statuses.map { |es| [es.name, es.id] }, selected: @filters[:employment_status_id], prompt: "Employment", include_blank: true %>
-  <%= f.select :education_level_id, @education_levels.map { |edu| [edu.name, edu.id] }, selected: @filters[:education_level_id],prompt: "Education", include_blank: true %>
-  <%= f.select :child_status_id, @child_statuses.map { |child| [child.name, child.id] }, selected: @filters[:child_status_id], prompt: "Children", include_blank: true %>
-  <%= f.select :income_level_id, @income_levels.map { |income| [income.name, income.id] }, selected: @filters[:income_level_id],prompt: "Income", include_blank: true %>
-  <%= f.select :occuption_code_id, @occupation_codes.map { |occ| [occ.name, occ.id] }, selected: @filters[:occupation_code_id], prompt: "Occupation", include_blank: true %>
-  <%= f.select :industry_code_id, @industry_codes.map { |ind| [ind.name, ind.id] }, selected: @filters[:industry_code_id], prompt: "Industry", include_blank: true %>
-
-  <%= f.submit "Filter" %>
-<% end %>
+            <div class="col-xs-12 col-md-6 col-lg-4 text-right pull-right m-t-10">
+              <input type="submit" name="commit" value="Filter" class="btn btn-primary btn-lg" data-disable-with="Filter">
+            </div>
+            <% end %>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
-
-<h3>
-  <%= @indicators ? "Results:" : nil %>
-</h3>
-
-<ul>
-  <% @indicators.each do |indicator| %>
-    <li>
-      <%= link_to(indicator.name, indicator_path(indicator.dataset.internal_name,indicator.internal_name))%>
-    </li>
-  <% end %>
-</ul>
+<% if @query %>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      Results (<%= @indicators.count %>)
+    </div>
+    <div class="list-group">
+      <% @indicators.each do |indicator| %>
+        <%= link_to(indicator.name, indicator_path(indicator.dataset.internal_name,indicator.internal_name), class: 'list-group-item')%>
+      <% end %>
+    </div>
+  </div>
+<% end %>

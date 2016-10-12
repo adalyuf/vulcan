@@ -1,11 +1,26 @@
-<h1>
-  Browse by Category
-</h1>
+<% breadcrumb :categories %>
 
-<ul>
-  <% @categories.each do |category| %>
-    <li>
-      <%= link_to(category.name, category_path(category.internal_name)) %>
-    </li>
-  <% end %>
-</ul>
+<div class="promotion-box">
+  <h2>Access over <%= @series_count %> different series of statistics</h2>
+  <form action=<%= indicators_path %> >
+    <div class="form-group string required search_query">
+      <input class="form-control string required search-box" placeholder="Search for indicators" type="text" name="search[query]" id="search_query">
+        <button type="submit" class="btn btn-default search-icon" style="background-color:#687f9f;color:white">
+          <i class="glyphicon glyphicon-search"></i>
+        </button>
+      </input>
+    </div>
+  </form>
+</div>
+
+
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    Browse by Category
+  </div>
+  <div class="list-group">
+    <% @categories.each do |category| %>
+      <%= link_to(category.name, category_path(category.internal_name), class: 'list-group-item') %>
+    <% end %>
+  </div>
+</div>

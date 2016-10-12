@@ -1,13 +1,16 @@
 <% breadcrumb :dataset, @dataset %>
 
 <h1>
-  <%= @dataset.name %> indicators
+  <%= @dataset.name %>
 </h1>
 
-<ul>
-  <% @indicators.each do |indicator| %>
-    <li>
-      <%= link_to(indicator.name, indicator_path(@dataset.internal_name,indicator.internal_name))%>
-    </li>
-  <% end %>
-</ul>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    Indicators (<%= @indicators.count %>)
+  </div>
+  <div class="list-group">
+    <% @indicators.each do |indicator| %>
+      <%= link_to(indicator.name, indicator_path(@dataset.internal_name,indicator.internal_name), class: 'list-group-item')%>
+    <% end %>
+  </div>
+</div>

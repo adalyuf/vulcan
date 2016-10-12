@@ -1,9 +1,14 @@
+<% breadcrumb :dashboards %>
+
 <h1>Your Dashboards:</h1>
 
-<ul>
+<div class="panel panel-primary">
+  <div class="panel-heading">
+    Dashboards (<%= @dashboards.count %>)
+  </div>
+  <div class="list-group">
   <% @dashboards.each do |dashboard| %>
-    <li>
-      <%= link_to(dashboard.name, dashboard_path(dashboard.id)) %>
-    </li>
+    <%= link_to(dashboard.name, dashboard_path(dashboard.id), class: 'list-group-item') %>
   <% end %>
-</ul>
+  </div>
+</div>
