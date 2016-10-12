@@ -18,4 +18,8 @@ class SystemConfig
   def self.load_config_file(file)
     YAML::load ERB.new(IO.read(file)).result
   end
+
+  def self.trial_scope_end_date
+    self.instance.trial.scope_end.to_date
+  end
 end

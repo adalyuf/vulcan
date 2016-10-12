@@ -52,6 +52,28 @@ module Bulkload::PartitionsExtension
       end
     end
 
+    def drop_dataset(dataset_id)
+      ids = Dataset.find(dataset_id).indicators.ids
+      ids.each do |id|
+        begin
+          ActiveRecord::Base.connection.execute("drop table values_partitions.p#{ id }")
+        rescue ActiveRecord::StatementInvalid => e
+          puts "Error: #{ e }"
+        end
+      end
+
+      ids.each do |indicator_id|
+        begin
+          Indicator.find(indicator_id).series.each do |series|
+            Series.delete(series.id)
+          end
+          Indicator.delete(indicator_id)
+        rescue
+          puts "Error deleting series for indicator: #{indicator_id}"
+        end
+      end
+    end
+
     def truncate_indicators
       ActiveRecord::Base.connection.execute("TRUNCATE TABLE indicators CASCADE;")
       # Cascade option forcefully truncates all objects that have relationships with indicators (series, values)

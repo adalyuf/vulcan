@@ -114,8 +114,9 @@ class Series < ActiveRecord::Base
   end
 
   def display_data(user)
-    values = Value.where(indicator_id: self.indicator_id, series_id: self.id)
-    values = values.where('date < ?', SystemConfig.instance.trial.scope_end) unless user
+    values = Value.get_values(self.indicator_id, self.id)
+    values.reject! { |x| x.date.blank? }
+    values.select! { |x| x.date < SystemConfig.trial_scope_end_date } unless user
 
     data =
       {

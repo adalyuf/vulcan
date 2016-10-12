@@ -52,8 +52,20 @@ class Bulkload::Bls::ImportIndicators
     @indicators_by_source_identifier ||= Hash[Indicator.all.map { |i| [i.source_identifier, i] }]
   end
 
+  def industry_by_internal_name
+    @industry_by_internal_name ||= Hash[IndustryCode.all.map{ |i| [i.internal_name, i] } ]
+  end
+
+  def industry_by_naics_code
+    @industry_by_naics_code ||= Hash[IndustryCode.all.map{ |i| [i.naics_code, i] } ]
+  end
+
   def geo_by_internal_name
     @geo_by_internal_name ||= Hash[ GeoCode.all.map { |g| [g.internal_name, g] } ]
+  end
+
+  def unit_by_internal_name
+    @unit_by_internal_name ||= Hash[ Unit.all.map { |u| [u.internal_name, u] } ]
   end
 
   def csa_by_short_name
