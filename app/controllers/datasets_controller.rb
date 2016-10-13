@@ -4,7 +4,7 @@ class DatasetsController < ApplicationController
     @dataset = Dataset.find_by(internal_name: params[:internal_name])
     @indicators = Indicator.where( dataset_id: @dataset.id )
     if current_user
-      @indicators = @indicators.order(:name).page params[:page]
+      @indicators = @indicators.order(:name).page(params[:page])
     else
       @indicators = @indicators.select { |indicator| indicator.series.minimum(:min_date) < SystemConfig.trial_scope_end_date } unless current_user
       @indicators = Kaminari.paginate_array(@indicators).page(params[:page])

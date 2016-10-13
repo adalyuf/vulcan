@@ -17,8 +17,8 @@ class DashboardsController < ApplicationController
     @indicators = Kaminari.paginate_array(@indicators).page(params[:page]).per(2)
     @series = Dashboard.find(params[:id]).dashboard_items.select(&:series_id)
     @series = Kaminari.paginate_array(@series).page(params[:page]).per(2)
-    @indicators_active = (active_tab == 'indicators') ? 'active' : nil
-    @series_active = (active_tab == 'series') ? 'active' : nil
+    @indicators_active = 'active' if active_tab == 'indicators'
+    @series_active = 'active' if active_tab == 'series'
   end
 
   def index
@@ -32,7 +32,7 @@ private
   end
 
   def active_tab
-    params[:toggle] ? params[:toggle] : 'indicators'
+    params[:toggle] || 'indicators'
   end
 
 end
