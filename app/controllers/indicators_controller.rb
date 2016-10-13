@@ -25,6 +25,7 @@ class IndicatorsController < ApplicationController
       @indicators = Indicator.search(search_params[:query])
     end
     @indicators = @indicators.select { |indicator| indicator.series.minimum(:min_date) < SystemConfig.trial_scope_end_date } unless current_user
+    @indicators = @indicators.page(params[:page])
   end
 
   def show
@@ -51,6 +52,7 @@ class IndicatorsController < ApplicationController
     else
       @series = Series.where(indicator_id: @indicator.id)
     end
+    @series = @series.order(:name).page(params[:page])
 
     if current_user
       @dashboards = current_user.dashboards

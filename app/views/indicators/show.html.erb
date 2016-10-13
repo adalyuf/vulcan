@@ -66,11 +66,14 @@
 
 <div class="panel panel-primary">
   <div class="panel-heading">
-    Series (<%= @series.count %>)
+    Series (<%= @series.total_count %>)
   </div>
   <div class="list-group">
     <% @series.each do |series| %>
       <%= link_to(series.display_name, series_path(series.id), class: 'list-group-item') %>
     <% end %>
   </div>
+</div>
+<div class="col-xs-12 text-center">
+<%= paginate @series %>
 </div>

@@ -6,11 +6,15 @@
 
 <div class="panel panel-primary">
   <div class="panel-heading">
-    Indicators (<%= @indicators.count %>)
+    Indicators (<%= @indicators.total_count %>)
   </div>
   <div class="list-group">
     <% @indicators.each do |indicator| %>
       <%= link_to(indicator.name, indicator_path(@dataset.internal_name,indicator.internal_name), class: 'list-group-item')%>
     <% end %>
   </div>
+</div>
+
+<div class="col-xs-12 text-center">
+  <%= paginate @indicators %>
 </div>

@@ -5,20 +5,20 @@
 </h1>
 <br>
 <ul class="nav nav-pills" role="tablist">
-  <li role="presentation" class="active">
-    <a href="#indicators" aria-controls="indicators" role="tab" data-toggle="tab">
+  <li role="presentation" class="<%= @indicators_active %>">
+    <a href="<%= url_for(@dashboard) %>#indicators" aria-controls="indicators" role="tab" data-toggle="tab">
       Indicators
     </a>
   </li>
-  <li role="presentation">
-    <a href="#series" aria-controls="series" role="tab" data-toggle="tab">
+  <li role="presentation" class="<%= @series_active %>">
+    <a href="<%= url_for(@dashboard) %>#series" aria-controls="series" role="tab" data-toggle="tab">
       Series
     </a>
   </li>
 </ul>
 <br>
 <div class="tab-content">
-  <div role="tabpanel" class="tab-pane active" id="indicators">
+  <div role="tabpanel" class="tab-pane <%= @indicators_active %>" id="indicators">
     <ul>
       <% @indicators.each do |item| %>
         <li class="related">
@@ -26,8 +26,11 @@
         </li>
       <% end %>
     </ul>
+    <div class="col-xs-12 text-center">
+      <%= paginate @indicators, params: {toggle: 'indicators'} %>
+    </div>
   </div>
-  <div role="tabpanel" class="tab-pane" id="series">
+  <div role="tabpanel" class="tab-pane <%= @series_active %>" id="series">
     <ul>
       <% @series.each do |item| %>
         <li class="related">
@@ -35,5 +38,10 @@
         </li>
       <% end %>
     </ul>
+    <div class="col-xs-12 text-center">
+      <%= paginate @series, params: {toggle: 'series'} %>
+    </div>
   </div>
 </div>
+
+
