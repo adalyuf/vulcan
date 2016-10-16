@@ -51,6 +51,8 @@ gem 'pg_search'
 gem 'devise'
 gem 'gretel'
 gem 'kaminari'
+gem 'momentjs-rails'
+gem 'datetimepicker-rails', github: 'zpaulovics/datetimepicker-rails', branch: 'master', submodules: true
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

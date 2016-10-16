@@ -45,6 +45,8 @@ class IndicatorsController < ApplicationController
     @income_levels = IncomeLevel.all
     @occupation_codes = OccupationCode.all
     @industry_codes = IndustryCode.all
+    @start_date = start_date || 'Start Date'
+    @end_date = end_date || 'End Date'
 
     @filters = filters.reject { |_,f| f.blank? }
     if @filters.any?
@@ -60,7 +62,7 @@ class IndicatorsController < ApplicationController
     end
 
     @data = @series.limit(10).map do |series|
-      series.display_data(current_user)
+      series.display_data(current_user, start_date, end_date)
     end
   end
 
@@ -73,6 +75,18 @@ class IndicatorsController < ApplicationController
 
   def search_params
     params.fetch(:search, {}).permit(:query)
+  end
+
+  def dates
+    params.fetch(:dates, {}).permit(:start_date, :end_date)
+  end
+
+  def start_date
+    dates['start_date'] ? dates['start_date'].to_date : nil
+  end
+
+  def end_date
+    dates['end_date'] ? dates['end_date'].to_date : nil
   end
 
 end
