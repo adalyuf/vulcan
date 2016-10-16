@@ -18,7 +18,7 @@ class DashboardItem < ApplicationRecord
     if self.series_id
       [self.series.display_data(user)]
     else
-      self.indicator.series.limit(10).map do |series| series.display_data(user) end
+      self.indicator.series.limit(5).map do |series| series.display_data(user) end
     end
   end
 end

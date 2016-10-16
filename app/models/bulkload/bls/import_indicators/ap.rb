@@ -12,7 +12,7 @@ AREA_CODE_TO_CSA_SHORT_NAME = BLS_AP['area_code_to_csa_short_name']
     else
       case area_code
       when "0000"
-        geo_by_internal_name['united-states'].id
+        geo_by_internal_name['united_states'].id
       when "0100"
         geo_by_internal_name['northeast'].id
       when "0200"
@@ -22,17 +22,17 @@ AREA_CODE_TO_CSA_SHORT_NAME = BLS_AP['area_code_to_csa_short_name']
       when "0400"
         geo_by_internal_name['westcoast'].id
       else
-        geo_by_internal_name['not-elsewhere-classified'].id
+        geo_by_internal_name['not_elsewhere_classified'].id
       end
     end
   end
 
   def import_indicators
     parsed_file = Bulkload::Bls::FileManager.new("indicators", "ap", "ap.item").parsed_file
-    source_id = Source.find_by(internal_name: "bureau-labor-statistics").id
+    source_id = Source.find_by(internal_name: "bureau_labor_statistics").id
     # These indicators reflect the average price of goods in various cities. Classifying this as Business
     category_id = Category.find_by(internal_name: :business).id
-    dataset_id = Dataset.find_by(internal_name: "bls-average-prices").id
+    dataset_id = Dataset.find_by(internal_name: "bls_average_prices").id
 
     list = parsed_file.map do |code, description|
       description = description.strip
@@ -55,19 +55,19 @@ AREA_CODE_TO_CSA_SHORT_NAME = BLS_AP['area_code_to_csa_short_name']
   def import_series
     parsed_file = Bulkload::Bls::FileManager.new("series", "ap", "ap.series").parsed_file
 
-    unit_id = Unit.find_by(internal_name: "nominal-us-dollars").id
+    unit_id = Unit.find_by(internal_name: "nominal_us_dollars").id
     frequency_id = Frequency.find_by(internal_name: :"monthly").id
 
-    gender_id = Gender.find_by(internal_name: "not-specified").id
-    race_id = Race.find_by(internal_name: "not-specified").id
-    marital_status_id = MaritalStatus.find_by(internal_name: "not-specified").id
-    age_bracket_id = AgeBracket.find_by(internal_name: "not-specified").id
-    employment_status_id = EmploymentStatus.find_by(internal_name: "not-specified").id
-    education_level_id = EducationLevel.find_by(internal_name: "not-specified").id
-    child_status_id = ChildStatus.find_by(internal_name: "not-specified").id
-    income_level_id = IncomeLevel.find_by(internal_name: "not-specified").id
-    industry_code_id = IndustryCode.find_by(internal_name: "not-specified").id
-    occupation_code_id = OccupationCode.find_by(internal_name: "not-specified").id
+    gender_id = Gender.not_specified.id
+    race_id = Race.not_specified.id
+    marital_status_id = MaritalStatus.not_specified.id
+    age_bracket_id = AgeBracket.not_specified.id
+    employment_status_id = EmploymentStatus.not_specified.id
+    education_level_id = EducationLevel.not_specified.id
+    child_status_id = ChildStatus.not_specified.id
+    income_level_id = IncomeLevel.not_specified.id
+    industry_code_id = IndustryCode.not_specified.id
+    occupation_code_id = OccupationCode.not_specified.id
 
     list = parsed_file.map do |series_id, area_code, item_code, footnote_codes, begin_year, begin_period, end_year, end_period|
       footnote_codes = footnote_codes.strip

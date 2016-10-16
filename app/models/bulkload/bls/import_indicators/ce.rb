@@ -20,9 +20,9 @@ DATATYPE_TO_INTERNAL_NAME = BLS_CE['datatype_to_internal_name']
     else
       naics = INDUSTRY_CODE_TO_NAICS[industrycode]
       if naics
-        industry_by_naics_code[naics.to_i] ? industry_by_naics_code[naics.to_i].id : industry_by_internal_name['not-elsewhere-classified'].id
+        industry_by_naics_code[naics.to_i] ? industry_by_naics_code[naics.to_i].id : IndustryCode.not_specified.id
       else
-        industry_by_internal_name['not-elsewhere-classified'].id
+        IndustryCode.not_specified.id
       end
     end
   end
@@ -40,10 +40,10 @@ DATATYPE_TO_INTERNAL_NAME = BLS_CE['datatype_to_internal_name']
       uniq_series << series_title[0..comma-1]
     end
 
-    source_id = Source.find_by(internal_name: "bureau-labor-statistics").id
+    source_id = Source.find_by(internal_name: "bureau_labor_statistics").id
     # These indicators reflect Current Employment Statistics and covers employment, hours, and earnings. Classifying as business.
     category_id = Category.find_by(internal_name: :business).id
-    dataset_id = Dataset.where(name: "Current Employment Statistics", category_id: Category.find_by(name: "Business").id, internal_name: "bls-current-employment-statistics", source_id: Source.find_by(internal_name: "bureau-labor-statistics").id , description: "The Current Employment Statistics Program provides
+    dataset_id = Dataset.where(name: "Current Employment Statistics", category_id: Category.find_by(name: "Business").id, internal_name: "bls_current_employment_statistics", source_id: Source.find_by(internal_name: "bureau_labor_statistics").id , description: "The Current Employment Statistics Program provides
 employment, paid hours, and earnings information").first_or_create.id
 
 
@@ -80,7 +80,7 @@ employment, paid hours, and earnings information").first_or_create.id
     child_status_id = ChildStatus.not_specified.id
     income_level_id = IncomeLevel.not_specified.id
     occupation_code_id = OccupationCode.not_specified.id
-    geo_code_id = GeoCode::Country.find_by(internal_name: 'united-states').id
+    geo_code_id = GeoCode::Country.find_by(internal_name: 'united_states').id
 
 
     list = parsed_file.map do |series_id,  supersector_code,  industry_code, data_type_code,  seasonal,  series_title,  footnote_codes,  begin_year,  begin_period,  end_year,  end_period|

@@ -14,10 +14,10 @@ INDUSTRY_CODE_TO_NAICS = BLS_BD['industry_code_to_naics']
       uniq_series << series_title.strip
     end
 
-    source_id = Source.find_by(internal_name: "bureau-labor-statistics").id
+    source_id = Source.find_by(internal_name: "bureau_labor_statistics").id
     #These indicators reflect job creation and business establishments. Classifying this as Business
     category_id = Category.find_by(internal_name: :business).id
-    dataset_id = Dataset.find_by(internal_name: "bls-business-employment-dynamics").id
+    dataset_id = Dataset.find_by(internal_name: "bls_business_employment_dynamics").id
 
     list = uniq_series.map do |series_title|
       description = series_title.strip
@@ -84,14 +84,14 @@ INDUSTRY_CODE_TO_NAICS = BLS_BD['industry_code_to_naics']
         industry_code_id =
         case industry_code_raw
         when '0'
-          IndustryCode.find_by(internal_name: "all-private-industry").id
+          IndustryCode.find_by(internal_name: "all_private_industry").id
         when '100000'
-          IndustryCode.find_by(internal_name: "all-goods-producers").id
+          IndustryCode.find_by(internal_name: "all_goods_producers").id
         when '200000'
-          IndustryCode.find_by(internal_name: "all-service-providers").id
+          IndustryCode.find_by(internal_name: "all_service_providers").id
         else
           industry = IndustryCode.find_by(naics_code: INDUSTRY_CODE_TO_NAICS[industry_code_raw])
-          industry ? industry.id : IndustryCode.find_by(internal_name: "not-elsewhere-classified").id
+          industry ? industry.id : IndustryCode.find_by(internal_name: "not_elsewhere_classified").id
         end
 
         name = series_id.strip
@@ -101,9 +101,9 @@ INDUSTRY_CODE_TO_NAICS = BLS_BD['industry_code_to_naics']
         indicator_id = indicators_by_source_identifier[series_title.strip].id
         state_code = state_code.to_i
         if state_code == 0
-          geo_code_id = geo_by_internal_name['united-states'].id
+          geo_code_id = geo_by_internal_name['united_states'].id
         else
-          geo_code_id = geo_by_fips_code[state_code].try(:id) || geo_by_internal_name['not-elsewhere-classified'].id
+          geo_code_id = geo_by_fips_code[state_code].try(:id) || geo_by_internal_name['not_elsewhere_classified'].id
         end
 
         Series::Data.new(name: name,

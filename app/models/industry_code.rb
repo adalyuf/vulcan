@@ -6,10 +6,10 @@ class IndustryCode < ActiveRecord::Base
   validates :internal_name, uniqueness: true
 
   def display_name
-    internal_name == "not-specified" ? nil : name
+    internal_name == "not_specified" ? nil : name
   end
 
   def self.not_specified
-    @not_specified ||= find_by(internal_name: 'not-specified')
+    @not_specified ||= find_by(internal_name: 'not_specified')
   end
 end

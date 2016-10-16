@@ -113,14 +113,15 @@ class Series < ActiveRecord::Base
     ].map(&:display_name).compact.join(',') + ( seasonally_adjusted ? ",SA" : '' )
   end
 
-  def display_data(user)
+  def display_data(user, start_date=nil, end_date=nil)
     values = Value.get_values(self.indicator_id, self.id)
     values.reject! { |x| x.date.blank? }
     values.select! { |x| x.date < SystemConfig.trial_scope_end_date } unless user
-
+    values.select! { |x| x.date >= start_date } if start_date
+    values.select! { |x| x.date <= end_date } if end_date
     data =
       {
-        :name => display_name,
+        :name => display_name.truncate(30),
         :data => Hash[values.map{ |value| [value.date, value.value] }]
       }
   end
