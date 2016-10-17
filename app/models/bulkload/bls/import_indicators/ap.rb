@@ -79,6 +79,7 @@ AREA_CODE_TO_CSA_SHORT_NAME = BLS_AP['area_code_to_csa_short_name']
       indicator_id = indicators_by_source_identifier[item_code.strip].id
       geo_code_id = region(area_code)
       geo_code_raw = AREA_CODE_TO_NAME[area_code]
+      geo_code_raw_id = area_code.strip
 
       Series::Data.new(name: name,
                        description: description,
@@ -100,9 +101,20 @@ AREA_CODE_TO_CSA_SHORT_NAME = BLS_AP['area_code_to_csa_short_name']
                        industry_code_id: industry_code_id,
                        occupation_code_id: occupation_code_id,
                        geo_code_raw: geo_code_raw,
-                       geo_code_id: geo_code_id
+                       geo_code_id: geo_code_id,
+                       geo_code_raw_id: geo_code_raw_id
                        )
     end
     Series.load(list)
   end
+
+  def update_series_raw_ids
+    parsed_file = Bulkload::Bls::FileManager.new("series", "ap", "ap.series").parsed_file
+    parsed_file.each do |series_id, area_code, item_code, footnote_codes, begin_year, begin_period, end_year, end_period|
+      serie = series_by_source_identifier[series_id.strip]
+      serie.geo_code_raw_id = area_code.strip
+      serie.save
+    end
+  end
+
 end

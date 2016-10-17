@@ -85,7 +85,8 @@ employment, paid hours, and earnings information").first_or_create.id
 
     list = parsed_file.map do |series_id,  supersector_code,  industry_code, data_type_code,  seasonal,  series_title,  footnote_codes,  begin_year,  begin_period,  end_year,  end_period|
       description = series_title
-      unit_id = unit(data_type_code.strip)
+      unit_raw_id = data_type_code.strip
+      unit_id = unit(unit_raw_id)
       name = series_id.strip
       internal_name = name
       source_identifier = name
@@ -93,8 +94,9 @@ employment, paid hours, and earnings information").first_or_create.id
       indicator_name = series_title[0..comma-1]
       indicator_id = indicators_by_name[indicator_name].id
       seasonally_adjusted = SEASONAL[seasonal]
-      industry_code_id = industry_id(industry_code)
-      industry_code_raw = INDUSTRY_CODE_TO_NAME[industry_code]
+      industry_code_raw_id = industry_code.strip
+      industry_code_id = industry_id(industry_code_raw_id)
+      industry_code_raw = INDUSTRY_CODE_TO_NAME[industry_code_raw_id]
 
       Series::Data.new(name: name,
                        description: description,
@@ -116,7 +118,9 @@ employment, paid hours, and earnings information").first_or_create.id
                        industry_code_id: industry_code_id,
                        industry_code_raw: industry_code_raw,
                        occupation_code_id: occupation_code_id,
-                       geo_code_id: geo_code_id
+                       geo_code_id: geo_code_id,
+                       unit_raw_id: unit_raw_id,
+                       industry_code_raw_id: industry_code_raw_id
                        )
     end
     Series.load(list)
@@ -135,7 +139,17 @@ employment, paid hours, and earnings information").first_or_create.id
         puts "No match found for #{series_id}"
       end
     end
-
   end
+
+  def update_series_raw_ids
+    parsed_file = Bulkload::Bls::FileManager.new("series", "ce", "ce.series").parsed_file
+    parsed_file.each do |series_id,  supersector_code,  industry_code, data_type_code,  seasonal,  series_title,  footnote_codes,  begin_year,  begin_period,  end_year,  end_period|
+      serie = series_by_source_identifier[series_id.strip]
+      serie.unit_raw_id = data_type_code.strip
+      serie.industry_code_raw_id = industry_code.strip
+      serie.save
+    end
+  end
+
 
 end

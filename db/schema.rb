@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160922013407) do
+ActiveRecord::Schema.define(version: 20161017214838) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -221,37 +221,50 @@ ActiveRecord::Schema.define(version: 20160922013407) do
     t.text     "description"
     t.integer  "multiplier"
     t.boolean  "seasonally_adjusted"
-    t.integer  "indicator_id",          null: false
-    t.integer  "frequency_id",          null: false
-    t.integer  "unit_id",               null: false
-    t.datetime "created_at",            null: false
-    t.datetime "updated_at",            null: false
+    t.integer  "indicator_id",             null: false
+    t.integer  "frequency_id",             null: false
+    t.integer  "unit_id",                  null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.text     "gender_raw"
-    t.integer  "gender_id",             null: false
+    t.integer  "gender_id",                null: false
     t.text     "race_raw"
-    t.integer  "race_id",               null: false
+    t.integer  "race_id",                  null: false
     t.text     "marital_status_raw"
-    t.integer  "marital_status_id",     null: false
+    t.integer  "marital_status_id",        null: false
     t.text     "age_bracket_raw"
-    t.integer  "age_bracket_id",        null: false
+    t.integer  "age_bracket_id",           null: false
     t.text     "employment_status_raw"
-    t.integer  "employment_status_id",  null: false
+    t.integer  "employment_status_id",     null: false
     t.text     "education_level_raw"
-    t.integer  "education_level_id",    null: false
+    t.integer  "education_level_id",       null: false
     t.text     "child_status_raw"
-    t.integer  "child_status_id",       null: false
+    t.integer  "child_status_id",          null: false
     t.text     "income_level_raw"
-    t.integer  "income_level_id",       null: false
+    t.integer  "income_level_id",          null: false
     t.text     "industry_code_raw"
-    t.integer  "industry_code_id",      null: false
+    t.integer  "industry_code_id",         null: false
     t.text     "occupation_code_raw"
-    t.integer  "occupation_code_id",    null: false
+    t.integer  "occupation_code_id",       null: false
     t.text     "geo_code_raw"
-    t.integer  "geo_code_id",           null: false
-    t.text     "internal_name",         null: false
-    t.text     "source_identifier",     null: false
+    t.integer  "geo_code_id",              null: false
+    t.text     "internal_name",            null: false
+    t.text     "source_identifier",        null: false
     t.date     "min_date"
     t.date     "max_date"
+    t.text     "gender_raw_id"
+    t.text     "race_raw_id"
+    t.text     "marital_status_raw_id"
+    t.text     "age_bracket_raw_id"
+    t.text     "employment_status_raw_id"
+    t.text     "education_level_raw_id"
+    t.text     "child_status_raw_id"
+    t.text     "income_level_raw_id"
+    t.text     "industry_code_raw_id"
+    t.text     "occupation_code_raw_id"
+    t.text     "geo_code_raw_id"
+    t.text     "unit_raw_id"
+    t.text     "unit_raw"
     t.index ["age_bracket_id"], name: "index_series_on_age_bracket_id", using: :btree
     t.index ["child_status_id"], name: "index_series_on_child_status_id", using: :btree
     t.index ["education_level_id"], name: "index_series_on_education_level_id", using: :btree

@@ -58,6 +58,7 @@ INDUSTRY_CODE_TO_NAICS = BLS_BD['industry_code_to_naics']
     occupation_code_id = OccupationCode.not_specified.id
 
     list = parsed_file.map do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
+      unit_raw_id = ratelevel_code.strip
       unit_id =
         case ratelevel_code.strip
         when 'R'
@@ -79,6 +80,7 @@ INDUSTRY_CODE_TO_NAICS = BLS_BD['industry_code_to_naics']
             quarterly_frequency_id
           end
 
+        industry_code_raw_id = industry_code.strip
         industry_code_raw  = industry_code.strip
 
         industry_code_id =
@@ -100,6 +102,7 @@ INDUSTRY_CODE_TO_NAICS = BLS_BD['industry_code_to_naics']
         geo_code_raw = state_code
         indicator_id = indicators_by_source_identifier[series_title.strip].id
         state_code = state_code.to_i
+        geo_code_raw_id = state_code
         if state_code == 0
           geo_code_id = geo_by_internal_name['united_states'].id
         else
@@ -127,10 +130,26 @@ INDUSTRY_CODE_TO_NAICS = BLS_BD['industry_code_to_naics']
                          industry_code_id: industry_code_id,
                          occupation_code_id: occupation_code_id,
                          geo_code_raw: geo_code_raw,
-                         geo_code_id: geo_code_id
+                         geo_code_id: geo_code_id,
+                         unit_raw_id: unit_raw_id,
+                         industry_code_raw_id: industry_code_raw_id,
+                         geo_code_raw_id: geo_code_raw_id
+
                          )
     end
     Series.load(list)
   end
+
+  def update_series_raw_ids
+    parsed_file = Bulkload::Bls::FileManager.new("series", "bd", "bd.series").parsed_file
+    parsed_file.each do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
+      serie = series_by_source_identifier[series_id.strip]
+      serie.unit_raw_id = ratelevel_code.strip
+      serie.industry_code_raw_id = industry_code.strip
+      serie.geo_code_raw_id = state_code.strip
+      serie.save
+    end
+  end
+
 
 end
