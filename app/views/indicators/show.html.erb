@@ -70,6 +70,19 @@
   <%= link_to "Get Access", new_user_registration_path, class: 'btn btn-primary' %>
 <% end %>
 
+<% if @industries %>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      Browse by Industry
+    </div>
+    <div class="list-group">
+      <% @industries.each do |industry| %>
+        <%= link_to(industry.name, filtered_indicators_path(@dataset.internal_name, @indicator.internal_name, 'industry', industry.internal_name), class: 'list-group-item')%>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
 <div class="panel panel-primary">
   <div class="panel-heading">
     Series (<%= @series.total_count %>)
@@ -80,6 +93,7 @@
     <% end %>
   </div>
 </div>
+
 <div class="col-xs-12 text-center">
 <%= paginate @series %>
 </div>

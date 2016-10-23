@@ -99,6 +99,8 @@ class Series < ActiveRecord::Base
   def display_name
     [
       geo_code,
+      industry_code,
+      occupation_code,
       frequency,
       gender,
       race,
@@ -107,9 +109,7 @@ class Series < ActiveRecord::Base
       employment_status,
       education_level,
       child_status,
-      income_level,
-      industry_code,
-      occupation_code
+      income_level
     ].map(&:display_name).compact.join(',') + ( seasonally_adjusted ? ",SA" : '' )
   end
 

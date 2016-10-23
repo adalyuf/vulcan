@@ -32,7 +32,6 @@ class IndicatorsController < ApplicationController
     @dataset = Dataset.find_by(internal_name: params[:dataset_internal_name])
     @indicator = Indicator.find_by(dataset_id: @dataset.id, internal_name: params[:internal_name])
     @category = Category.find(@dataset.category_id)
-
     @geo_codes = GeoCode.all
     @frequencies = Frequency.all
     @units = Unit.all #Unit is always the same for a given indicator, that is how we have defined it...
@@ -54,6 +53,19 @@ class IndicatorsController < ApplicationController
     else
       @series = Series.where(indicator_id: @indicator.id)
     end
+
+    if params[:attribute] == 'industry'
+      industry_parent = IndustryCode.find_by(internal_name: params[:value])
+      industry_children_ids = industry_parent.children.ids
+      @series = @series.where(industry_code_id: industry_children_ids) if industry_children_ids
+      @industries = industry_parent.children
+    end
+
+    if @series.group(:industry_code_id).count.size > 100
+      @industries = IndustryCode.where(industry_type: 'sector')
+      @series = @series.where(industry_code_id: @industries.ids)
+    end
+
     @series = @series.order(:name).page(params[:page])
 
     if current_user
