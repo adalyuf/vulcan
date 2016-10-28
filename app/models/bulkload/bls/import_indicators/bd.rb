@@ -3,39 +3,58 @@ class Bulkload::Bls::ImportIndicators::Bd < Bulkload::Bls::ImportIndicators
 BLS_BD = SystemConfig.load_config_file(Rails.root.join('config', 'bls', 'bd.yml'))
 
 INDUSTRY_CODE_TO_NAICS = BLS_BD['industry_code_to_naics']
+SIZE_CLASS_ID_TO_DESCRIPTION = BLS_BD['size_class_id_to_description']
 
   def import_indicators
-    parsed_file = Bulkload::Bls::FileManager.new("indicators", "bd", "bd.series").parsed_file
+    # parsed_file = Bulkload::Bls::FileManager.new("indicators", "bd", "bd.series").parsed_file
 
-    uniq_series = Set.new
+    # uniq_series = Set.new
 
     # ensure all series titles are unique
-    parsed_file.each do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
-      uniq_series << series_title.strip
-    end
+    # parsed_file.each do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
+    #   uniq_series << series_title.strip
+    # end
 
     source_id = Source.find_by(internal_name: "bureau_labor_statistics").id
     #These indicators reflect job creation and business establishments. Classifying this as Business
     category_id = Category.find_by(internal_name: :business).id
     dataset_id = Dataset.find_by(internal_name: "bls_business_employment_dynamics").id
 
-    list = uniq_series.map do |series_title|
-      description = series_title.strip
-      name = normalize_name(description)
-      internal_name = normalize_internal_name(description)
-      source_identifier = series_title.strip
+    Indicator.where(name: "Gross job gains", internal_name: 'gross_job_gains', description: "Gross job gains rounded to nearest thousand.", source_identifier: '1L', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Percent of gross job gains", internal_name: 'percent_of_gross_job_gains', description: "Percentage of jobs gained as a percent of total employment in the sector.", source_identifier: '1R', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Employment gained from expansions", internal_name: 'employment_gained_from_expansions', description: "Employment gained from expanding businesses rounded to nearest thousand.", source_identifier: '2L', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Percent of employment gained from expansions", internal_name: 'percent_of_employment_gained_from_expansions', description: "Percentage of employment gained from expanding businesses as a percentage of total employment in the sector", source_identifier: '2R', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Employment gained from openings", internal_name: 'employment_gained_from_openings', description: "Employment gained from new businesses rounded to nearest thousand. Openings include temporarily shut businesses that add staff.", source_identifier: '3L', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Percent of employment gained from openings", internal_name: 'percent_of_employment_gained_from_openings', description: "Percentage of employment gained from new businesses as a percentage of total employment in the sector. Openings include temporarily shut businesses that add staff.", source_identifier: '3R', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Gross job losses", internal_name: 'gross_job_losses', description: "Gross job losses rounded to nearest thousand.", source_identifier: '4L', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Percent of gross job losses", internal_name: 'percent_of_gross_job_losses', description: "Percentage of jobs lost as a percent of total employment in the sector.", source_identifier: '4R', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Employment lost from contractions", internal_name: 'employment_lost_from_contractions', description: "Employment lost from contracting businesses rounded to nearest thousand.", source_identifier: '5L', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Percent of employment lost from contractions", internal_name: 'percent_of_employment_lost_from_contractions', description: "Percent of employment lost from contracting businesses as a percentage of total employment in the sector", source_identifier: '5R', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Employment lost from closings", internal_name: 'employment_lost_from_closings', description: "Employment lost from closing businesses rounded to nearest thousand. Closings include temporarily shut businesses that report zero staff.", source_identifier: '6L', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Percent of employment lost from closings", internal_name: 'percent_of_employment_lost_from_closings', description: "Percent of employment lost from closing businesses as a percentage of total employment in the sector. Closings include temporarily shut businesses that report zero staff.", source_identifier: '6R', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Employment gained by establishment births", internal_name: 'employment_gained_by_establishment_births', description: "Employment gained by establishment births rounded to nearest thousand. Births exclude temporarily shut businesses that add staff.", source_identifier: '7L', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Percent of employment gained by establishment births", internal_name: 'percent_of_employment_gained_by_establishment_births', description: "Percentage of employment gained by establishment births as a percentage of total employment in the sector. Births exclude temporarily shut businesses that add staff.", source_identifier: '7R', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Employment lost by establishment deaths", internal_name: 'employment_lost_by_establishment_deaths', description: "Employment lost by establishment deaths rounded to nearest thousand. Deaths exclude temporarily shut businesses that continue to report but have zero staff.", source_identifier: '8L', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
+    Indicator.where(name: "Percent of employment lost by establishment deaths", internal_name: 'percent_of_employment_lost_by_establishment_deaths', description: "Percentage of employment lost by establishment deaths as a percentage of total employment in the sector. Deaths exclude temporarily shut businesses that continue to report but have zero staff.", source_identifier: '8R', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
 
-      Indicator::Data.new(name: name,
-                          internal_name: internal_name,
-                          source_identifier: source_identifier,
-                          description: description,
-                          source_id: source_id,
-                          category_id: category_id,
-                          dataset_id: dataset_id
-                          )
-    end
 
-    Indicator.load(list)
+    # list = uniq_series.map do |series_title|
+    #   description = series_title.strip
+    #   name = normalize_name(description)
+    #   internal_name = normalize_internal_name(description)
+    #   source_identifier = series_title.strip
+
+    #   Indicator::Data.new(name: name,
+    #                       internal_name: internal_name,
+    #                       source_identifier: source_identifier,
+    #                       description: description,
+    #                       source_id: source_id,
+    #                       category_id: category_id,
+    #                       dataset_id: dataset_id
+    #                       )
+    # end
+
+    # Indicator.load(list)
   end
 
   def import_series
@@ -60,7 +79,7 @@ INDUSTRY_CODE_TO_NAICS = BLS_BD['industry_code_to_naics']
     list = parsed_file.map do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
       unit_raw_id = ratelevel_code.strip
       unit_id =
-        case ratelevel_code.strip
+        case unit_raw_id
         when 'R'
           percent_unit_id
         when 'L'
@@ -71,6 +90,14 @@ INDUSTRY_CODE_TO_NAICS = BLS_BD['industry_code_to_naics']
             establishments_unit_id
           end
         end
+
+        multiplier =
+          case unit_raw_id
+          when 'R'
+            0
+          when 'L'
+            3
+          end
 
         frequency_id =
           case periodicity_code.strip
@@ -100,7 +127,9 @@ INDUSTRY_CODE_TO_NAICS = BLS_BD['industry_code_to_naics']
         internal_name = name
         source_identifier = name
         geo_code_raw = state_code
-        indicator_id = indicators_by_source_identifier[series_title.strip].id
+        indicator_raw_id = dataclass_code.to_i.to_s + ratelevel_code
+        indicator_id = indicators_by_source_identifier[indicator_raw_id].id
+        description = SIZE_CLASS_ID_TO_DESCRIPTION[sizeclass_code.strip]
         state_code = state_code.to_i
         geo_code_raw_id = state_code
         if state_code == 0
@@ -110,14 +139,15 @@ INDUSTRY_CODE_TO_NAICS = BLS_BD['industry_code_to_naics']
         end
 
         Series::Data.new(name: name,
-                         description: nil,
+                         description: description,
                          internal_name: internal_name,
                          source_identifier: source_identifier,
-                         multiplier: 0,
+                         multiplier: multiplier,
                          seasonally_adjusted: SEASONAL[seasonal.strip],
                          unit_id: unit_id,
                          frequency_id: frequency_id,
                          indicator_id: indicator_id,
+                         indicator_raw_id: indicator_raw_id,
                          gender_id: gender_id,
                          race_id: race_id,
                          marital_status_id: marital_status_id,

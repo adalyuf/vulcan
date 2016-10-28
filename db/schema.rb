@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161018003801) do
+ActiveRecord::Schema.define(version: 20161028201921) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -266,6 +266,8 @@ ActiveRecord::Schema.define(version: 20161018003801) do
     t.text     "geo_code_raw_id"
     t.text     "unit_raw_id"
     t.text     "unit_raw"
+    t.text     "indicator_raw_id"
+    t.text     "indicator_raw"
     t.index ["age_bracket_id"], name: "index_series_on_age_bracket_id", using: :btree
     t.index ["child_status_id"], name: "index_series_on_child_status_id", using: :btree
     t.index ["education_level_id"], name: "index_series_on_education_level_id", using: :btree
