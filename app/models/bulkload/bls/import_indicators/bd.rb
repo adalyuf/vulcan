@@ -6,15 +6,6 @@ INDUSTRY_CODE_TO_NAICS = BLS_BD['industry_code_to_naics']
 SIZE_CLASS_ID_TO_DESCRIPTION = BLS_BD['size_class_id_to_description']
 
   def import_indicators
-    # parsed_file = Bulkload::Bls::FileManager.new("indicators", "bd", "bd.series").parsed_file
-
-    # uniq_series = Set.new
-
-    # ensure all series titles are unique
-    # parsed_file.each do |series_id, seasonal, msa_code, state_code, county_code,  industry_code,  unitanalysis_code,  dataelement_code, sizeclass_code, dataclass_code, ratelevel_code, periodicity_code, ownership_code, series_title, footnote_codes, begin_year, begin_period, end_year, end_period|
-    #   uniq_series << series_title.strip
-    # end
-
     source_id = Source.find_by(internal_name: "bureau_labor_statistics").id
     #These indicators reflect job creation and business establishments. Classifying this as Business
     category_id = Category.find_by(internal_name: :business).id
@@ -53,25 +44,6 @@ SIZE_CLASS_ID_TO_DESCRIPTION = BLS_BD['size_class_id_to_description']
     Indicator.where(name: "Percent of establishment births", internal_name: 'percent_of_establishment_births', description: "Percentage of establishment births as a percentage of the sector. Births exclude temporarily shut businesses that add staff.", source_identifier: '27R', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
     Indicator.where(name: "Establishment deaths", internal_name: 'establishment_deaths', description: "Number of establishment deaths. Deaths exclude temporarily shut businesses that continue to report but have zero staff.", source_identifier: '28L', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
     Indicator.where(name: "Percent of establishment deaths", internal_name: 'percent_of_establishment_deaths', description: "Percentage of establishment deaths as a percentage of the sector. Deaths exclude temporarily shut businesses that continue to report but have zero staff.", source_identifier: '28R', source_id: source_id, category_id: category_id, dataset_id: dataset_id).first_or_create
-
-
-    # list = uniq_series.map do |series_title|
-    #   description = series_title.strip
-    #   name = normalize_name(description)
-    #   internal_name = normalize_internal_name(description)
-    #   source_identifier = series_title.strip
-
-    #   Indicator::Data.new(name: name,
-    #                       internal_name: internal_name,
-    #                       source_identifier: source_identifier,
-    #                       description: description,
-    #                       source_id: source_id,
-    #                       category_id: category_id,
-    #                       dataset_id: dataset_id
-    #                       )
-    # end
-
-    # Indicator.load(list)
   end
 
   def import_series
@@ -113,7 +85,7 @@ SIZE_CLASS_ID_TO_DESCRIPTION = BLS_BD['size_class_id_to_description']
           when 'R'
             0
           when 'L'
-            3
+            dataelement_code == 2 ? 0 : 3
           end
 
         frequency_id =

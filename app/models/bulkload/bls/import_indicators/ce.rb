@@ -27,6 +27,24 @@ DATATYPE_TO_INTERNAL_NAME = BLS_CE['datatype_to_internal_name']
     end
   end
 
+  def multiplier(indicator_internal_name)
+    case indicator_internal_name
+    when "all_employees"
+      3
+    when "women_employees"
+      3
+    when "production_and_nonsupervisory_employees"
+      3
+    when "aggregate_weekly_payrolls_of_all_employees"
+      3
+    when "aggregate_weekly_payrolls_of_production_and_nonsupervisory_employees"
+      3
+    else
+      0
+    end
+  end
+
+
 
   def import_indicators
     parsed_file = Bulkload::Bls::FileManager.new("indicators", "ce", "ce.series").parsed_file
@@ -84,13 +102,14 @@ employment, paid hours, and earnings information").first_or_create.id
 
 
     list = parsed_file.map do |series_id,  supersector_code,  industry_code, data_type_code,  seasonal,  series_title,  footnote_codes,  begin_year,  begin_period,  end_year,  end_period|
-      description = series_title
+      description = series_title.strip
       unit_raw_id = data_type_code.strip
       unit_id = unit(unit_raw_id)
       name = series_id.strip
       internal_name = name
       source_identifier = name
       comma = series_title.index(",")
+      multiplier = multiplier(series_title.strip)
       indicator_name = series_title[0..comma-1]
       indicator_id = indicators_by_name[indicator_name].id
       seasonally_adjusted = SEASONAL[seasonal]

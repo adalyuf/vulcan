@@ -132,3 +132,10 @@ industry_code_to_naics:
   '300811': '811'
   '300812': '812'
   '300813': '813'
+
+descriptions:
+  'employment': 'The Business Employment Dynamics statistics measure the net change in employment at the establishment level. These changes come about in one of four ways. A net increase in employment can come from either opening establishments or expanding establishments. A net decrease in employment can come from either closing establishments or contracting establishments. Gross job gains include the sum of all jobs added at either opening or expanding establishments. Gross job losses include the sum of all jobs lost in either closing or contracting establishments. The net change in employment is the difference between gross job gains and gross job losses.'
+
+  'establishment_births': 'Openings include both new startups (births) and reopenings of the existing seasonal establishments that reported zero employment in the previous quarter. Closings include establishments that go out of business permanently (deaths), as well as seasonal businesses that shut down temporarily.'
+
+  'openings': 'Openings are defined as those establishments that had positive employment for the first time in the third month of the current quarter with no link to the previous quarter, or had positive employment in the current quarter and zero or no employment in the previous quarter. "Zero employment” means that an employment level of zero was reported, whereas “no employment” means that there were not any employment numbers reported at all.'
