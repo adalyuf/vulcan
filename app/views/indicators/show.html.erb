@@ -1,4 +1,5 @@
 <% breadcrumb :indicator, @indicator %>
+
 <div class="row">
   <h1 class="col-xs-12 col-md-6">
     <%= @indicator.name %>
@@ -68,6 +69,21 @@
     Trial users are limited to data before 2000. </span>
   </h4>
   <%= link_to "Get Access", new_user_registration_path, class: 'btn btn-primary' %>
+<% end %>
+
+<strong>Suggested Citation</strong>
+<p>
+  <%= @indicator.dataset.source.name %>,
+  <%= @indicator.dataset.name %>,
+  <%= @indicator.name %>
+  <br>
+  <%= request.original_url %> - <%= Time.now.to_date %>
+</p>
+
+<% if @indicator.description_long %>
+  <div class="well">
+    <%= @indicator.description_long.html_safe %>
+  </div>
 <% end %>
 
 <% if @industries %>
