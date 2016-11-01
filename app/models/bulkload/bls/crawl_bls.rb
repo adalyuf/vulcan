@@ -1,7 +1,7 @@
 class Bulkload::Bls::CrawlBls
 
   #Crawl the BLS folder structure and extract files
-  require 'Nokogiri'
+  require 'nokogiri'
   require 'open-uri'
   require 'fileutils'
 
