@@ -7,8 +7,8 @@ AREA_CODE_TO_CSA_SHORT_NAME = BLS_AP['area_code_to_csa_short_name']
 
   def region(area_code)
     short_name = AREA_CODE_TO_CSA_SHORT_NAME[area_code]
-    if geo_by_short_name[short_name]
-      geo_by_short_name[short_name].id
+    if csa_by_short_name[short_name]
+      csa_by_short_name[short_name].id
     else
       case area_code
       when "0000"

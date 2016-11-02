@@ -40,7 +40,8 @@
           <%= simple_form_for :filter, wrapper: :inline_form, html: { class: 'form-inline' }, defaults: { wrapper_html: { class: 'col-xs-12 col-md-6 col-lg-4'}, input_html: { style: "width: 100%" } }, url: indicator_path , :method => :get do |f| %>
             <%= f.input :geo_code_id, collection: @geo_codes.map { |gc| [gc.name, gc.id] }, selected: @filters[:geo_code_id], prompt: "Area", include_blank: true %>
             <%= f.input :frequency_id, collection: @frequencies.map { |fr| [fr.name, fr.id] }, selected: @filters[:frequency_id], prompt: "Frequency", include_blank: true %>
-            <%= f.input :unit_id, collection: @units.map { |unit| [unit.name, unit.id] }, selected: @filters[:unit_id], prompt: "Unit", include_blank: true %>
+            <%= f.input :seasonally_adjusted, collection: [['Yes', true] ,['No', false]] , prompt: "Seasonally Adjusted", selected: @filters[:seasonally_adjusted], include_blank: true %>
+            <% f.input :unit_id, collection: @units.map { |unit| [unit.name, unit.id] }, selected: @filters[:unit_id], prompt: "Unit", include_blank: true %>
             <%= f.input :gender_id, collection: @genders.map { |gender| [gender.name, gender.id] }, selected: @filters[:gender_id], prompt: "Gender", include_blank: true %>
             <%= f.input :race_id, collection: @races.map { |race| [race.name, race.id] }, selected: @filters[:race_id], prompt: "Race", include_blank: true %>
             <%= f.input :age_bracket_id, collection: @age_brackets.map { |ab| [ab.name, ab.id] }, selected: @filters[:age_bracket_id], prompt: "Age Brackets", include_blank: true %>
@@ -61,7 +62,7 @@
   </div>
 </div>
 
-<%= line_chart( @data, library: { title: {text: @indicator.name}, yAxis: {title: {text: @indicator.series.first.unit.name}} } )%>
+<%= line_chart( @data, library: { title: {text: @indicator.name}, plotOptions: {series: {marker: {enabled: false}}} ,yAxis: {title: {text: @indicator.series.first.unit.name}} } )%>
 
 <% unless current_user %>
   <h4>

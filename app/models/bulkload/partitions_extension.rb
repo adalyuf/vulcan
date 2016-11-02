@@ -32,9 +32,9 @@ module Bulkload::PartitionsExtension
       ActiveRecord::Base.connection.execute("DROP FUNCTION IF EXISTS values_insert_trigger();")
     end
 
-    def create_value_partitions
-      ids = Indicator.ids
-      ids.each do |id|
+    def create_value_partitions(dataset_id)
+      indicator_ids = Dataset.find(dataset_id).indicators.ids
+      indicator_ids.each do |id|
         unless (ActiveRecord::Base.connection.data_source_exists?("values_partitions.p#{ id }"))
           ActiveRecord::Base.connection.execute("create table values_partitions.p#{ id } (CHECK ( indicator_id = #{ id } )) inherits (values)")
         end
