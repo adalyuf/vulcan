@@ -5,6 +5,9 @@ class GeoCode < ActiveRecord::Base
   validates :internal_name, presence: true
   validates :internal_name, uniqueness: true
 
+  has_many :children, class_name: "GeoCode", foreign_key: "parent_id"
+  belongs_to :parent, class_name: "GeoCode"
+
   def display_name
     if internal_name == "not_specified"
       nil

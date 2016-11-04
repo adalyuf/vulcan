@@ -54,6 +54,25 @@ class IndicatorsController < ApplicationController
       @series = Series.where(indicator_id: @indicator.id)
     end
 
+    #This is a horrible way of doing this. We display all the possible values regardless of whether they have series below them
+    if @series.group(:industry_code_id).count.size > 100
+      @industries = IndustryCode.where(industry_type: 'sector')
+      @series = @series.where(industry_code_id: @industries.ids)
+    end
+
+    if @series.group(:geo_code_id).count.size > 20
+      @geos = GeoCode::State.all
+      if @series.where(geo_code_id: @geos.ids).count > 10
+        @series = @series.where(geo_code_id: @geos.ids) #If both conditions met, geo will override industry.
+      else
+        @geos = GeoCode::Csa.all
+        @series = @series.where(geo_code_id: @geos.ids)
+      end
+      @industries = nil
+    end
+
+    #I want to find a way so that these two are in tabs and not forcing themselves onto the user.
+
     if params[:attribute] == 'industry'
       industry_parent = IndustryCode.find_by(internal_name: params[:value])
       industry_children_ids = industry_parent.children.ids
@@ -61,9 +80,11 @@ class IndicatorsController < ApplicationController
       @industries = industry_parent.children
     end
 
-    if @series.group(:industry_code_id).count.size > 100
-      @industries = IndustryCode.where(industry_type: 'sector')
-      @series = @series.where(industry_code_id: @industries.ids)
+    if params[:attribute] == 'geo'
+      geo_parent = GeoCode.find_by(internal_name: params[:value])
+      geo_children_ids = geo_parent.children.ids
+      @series = @series.where(geo_code_id: geo_children_ids) if geo_children_ids
+      @geos = geo_parent.children
     end
 
     @series = @series.order(:name).page(params[:page])

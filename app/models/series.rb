@@ -124,8 +124,8 @@ class Series < ActiveRecord::Base
       employment_status,
       education_level,
       child_status,
-      income_level,
-    ].map(&:display_name).compact.join(',') + ( seasonally_adjusted ? ",SA" : '' ) + ( description ? " - #{description}" : '')
+      income_level
+    ].map(&:display_name).compact.join(',') + ( seasonally_adjusted ? ",SA" : '' ) + ( description ? " - #{description}" : '') + ( geo_code.internal_name == "not_elsewhere_classified" ? " - #{geo_code_raw}" : '' )
   end
 
   def display_data(user, start_date=nil, end_date=nil)

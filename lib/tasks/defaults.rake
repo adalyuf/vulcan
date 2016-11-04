@@ -1840,7 +1840,7 @@ namespace :defaults do
     GeoCode::State.where(name: 'Oklahoma', fips_code: 40, gnis_code: 1102857, short_name: 'OK', internal_name: :'oklahoma').first_or_create
     GeoCode::State.where(name: 'Oregon', fips_code: 41, gnis_code: 1155107, short_name: 'OR', internal_name: :'oregon').first_or_create
     GeoCode::State.where(name: 'Pennsylvania', fips_code: 42, gnis_code: 1779798, short_name: 'PA', internal_name: :'pennsylvania').first_or_create
-    GeoCode::State.where(name: 'Rhode Island', fips_code: 44, gnis_code: 1219835, short_name: 'RI', internal_name: :'rhode island').first_or_create
+    GeoCode::State.where(name: 'Rhode Island', fips_code: 44, gnis_code: 1219835, short_name: 'RI', internal_name: :'rhode_island').first_or_create
     GeoCode::State.where(name: 'South Carolina', fips_code: 45, gnis_code: 1779799, short_name: 'SC', internal_name: :'south_carolina').first_or_create
     GeoCode::State.where(name: 'South Dakota', fips_code: 46, gnis_code: 1785534, short_name: 'SD', internal_name: :'south_dakota').first_or_create
     GeoCode::State.where(name: 'Tennessee', fips_code: 47, gnis_code: 1325873, short_name: 'TN', internal_name: :'tennessee').first_or_create
@@ -2017,91 +2017,111 @@ namespace :defaults do
     GeoCode::Csa.where(name: 'Youngstown_Warren, OH_PA', short_name: 'Youngstown, OH', internal_name: 'youngstown_warren_oh_pa').first_or_create
   end
 
+  desc "create geo hierarchy"
+  task :geo_hierarchy => :environment do
+    parent = GeoCode.find_by(internal_name: 'united_states')
+    states_and_region_internal_names = ["northeast","southeast","midwest","westcoast","alabama","alaska","arizona","arkansas","california","colorado","connecticut",
+      "delaware","district_of_columbia","florida","georgia","hawaii","idaho","illinois","indiana","iowa","kansas","kentucky",
+      "louisiana","maine","maryland","massachusetts","michigan","minnesota","mississippi","missouri","montana","nebraska",
+      "nevada","new_hampshire","new_jersey","new_mexico","new_york","north_carolina","north_dakota","ohio","oklahoma","oregon",
+      "pennsylvania","rhode_island","south_carolina","south_dakota","tennessee","texas","utah","vermont","virginia",
+      "washington","west_virginia","wisconsin","wyoming","american_samoa","guam","northern_mariana_islands","puerto_rico",
+      "us_minor_outlying_islands","us_virgin_islands"]
+    states_and_region_internal_names.each do |state_and_region_internal_name|
+      child = GeoCode.find_by(internal_name: state_and_region_internal_name)
+      child.update(parent_id: parent.id)
+    end
+
+    csas = GeoCode::Csa.all
+    csas.each do |csa|
+      csa.update(parent_id: GeoCode::State.find_by(short_name: csa.short_name[-2,2]).id)
+    end
+  end
+
   desc "create industry hierarchy"
   task :industry_hierarchy => :environment do
     parent = IndustryCode.find_by(internal_name: 'agriculture_forestry_fishing_and_hunting')
     children = IndustryCode.where(naics_code: 110..120)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'mining_quarrying_and_oil_and_gas_extraction')
     children = IndustryCode.where(naics_code: 210..219)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'utilities')
     children = IndustryCode.where(naics_code: 220..229)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'construction')
     children = IndustryCode.where(naics_code: 230..239)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'manufacturing')
     children = IndustryCode.where(naics_code: 310..339)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'wholesale_trade')
     children = IndustryCode.where(naics_code: 420..429)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'retail_trade')
     children = IndustryCode.where(naics_code: 440..459)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'information')
     children = IndustryCode.where(naics_code: 510..519)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'finance_and_insurance')
     children = IndustryCode.where(naics_code: 520..529)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'real_estate_and_rental_and_leasing')
     children = IndustryCode.where(naics_code: 530..539)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'professional_scientific_and_technical_services')
     children = IndustryCode.where(naics_code: 540..549)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'management_of_companies_and_enterprises')
     children = IndustryCode.where(naics_code: 550..559)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'administrative_and_support_and_waste_management_and_remediation_services')
     children = IndustryCode.where(naics_code: 560..569)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'educational_services')
     children = IndustryCode.where(naics_code: 610..619)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'health_care_and_social_assistance')
     children = IndustryCode.where(naics_code: 620..629)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'arts_entertainment_and_recreation')
     children = IndustryCode.where(naics_code: 710..719)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'accommodation_and_food_services')
     children = IndustryCode.where(naics_code: 720..729)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'other_services_except_public_administration')
     children = IndustryCode.where(naics_code: 810..819)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     parent = IndustryCode.find_by(internal_name: 'public_administration')
     children = IndustryCode.where(naics_code: 920..929)
-    children.each do |child| child.update(parent_id: parent.id); child.save end
+    children.each do |child| child.update(parent_id: parent.id) end
 
     IndustryCode.where(industry_type: 'subsector').each do |parent|
       start = parent.naics_code*10
       finish = (parent.naics_code+1)*10 - 1
       children = IndustryCode.where(naics_code: start..finish)
       children.each do |child|
-        child.parent_id = parent.id
-        child.save
+        child.update(parent_id: parent.id)
       end
     end
 
@@ -2110,8 +2130,7 @@ namespace :defaults do
       finish = (parent.naics_code+1)*10 - 1
       children = IndustryCode.where(naics_code: start..finish)
       children.each do |child|
-        child.parent_id = parent.id
-        child.save
+        child.update(parent_id: parent.id)
       end
     end
 

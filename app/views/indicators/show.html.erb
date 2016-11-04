@@ -100,6 +100,19 @@
   </div>
 <% end %>
 
+<% if @geos %>
+  <div class="panel panel-primary">
+    <div class="panel-heading">
+      Browse by Area
+    </div>
+    <div class="list-group">
+      <% @geos.each do |geo| %>
+        <%= link_to(geo.name, filtered_indicators_path(@dataset.internal_name, @indicator.internal_name, 'geo', geo.internal_name), class: 'list-group-item')%>
+      <% end %>
+    </div>
+  </div>
+<% end %>
+
 <div class="panel panel-primary">
   <div class="panel-heading">
     Series (<%= @series.total_count %>)

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161030154248) do
+ActiveRecord::Schema.define(version: 20161103221636) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -141,6 +141,7 @@ ActiveRecord::Schema.define(version: 20161030154248) do
     t.integer  "fips_code"
     t.text     "short_name"
     t.integer  "gnis_code"
+    t.integer  "parent_id"
     t.index ["internal_name"], name: "index_geo_codes_on_internal_name", unique: true, using: :btree
     t.index ["type", "internal_name"], name: "index_geo_codes_on_type_and_internal_name", unique: true, using: :btree
   end
