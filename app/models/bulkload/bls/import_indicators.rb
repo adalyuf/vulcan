@@ -76,4 +76,8 @@ class Bulkload::Bls::ImportIndicators
     @geo_by_fips_code ||= Hash[ GeoCode.all.map { |g| [g.fips_code, g] } ]
   end
 
+  def series_by_source_identifier
+    @series_by_source_identifier ||= Hash[ Series.all.map { |s| [s.source_identifier, s] } ]
+  end
+
 end

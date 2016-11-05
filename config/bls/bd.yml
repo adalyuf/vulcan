@@ -1,3 +1,37 @@
+size_class_id_to_description:
+  '00':  'All size classes'
+  '01':  '1 to 4 employees'
+  '02':  '5 to 9 employees'
+  '03':  '10 to 19 employees'
+  '04':  '20 to 49 employees'
+  '05':  '50 to 99 employees'
+  '06':  '100 to 249 employees'
+  '07':  '250 to 499 employees'
+  '08':  '500 to 999 employees'
+  '09':  '1,000 or more employees'
+  '10':  '1 job'
+  '11':  '2 jobs'
+  '12':  '3 jobs'
+  '13':  '4 jobs'
+  '14':  '5 jobs'
+  '15':  '6 jobs'
+  '16':  '7 jobs'
+  '17':  '8 jobs'
+  '18':  '9 jobs'
+  '19':  '10 jobs'
+  '20':  '11-14 jobs'
+  '21':  '15-19 jobs'
+  '22':  '20-24 jobs'
+  '23':  '25-29 jobs'
+  '24':  '30-39 jobs'
+  '25':  '40-49 jobs'
+  '26':  '50-74 jobs'
+  '27':  '75-99 jobs'
+  '28':  '100 or more jobs'
+  '31':  '1 to 4 jobs'
+  '32':  '5 to 19 jobs'
+  '33':  '20 or more jobs'
+
 industry_code_to_naics:
   '100010': '11'
   '100020': '23'
@@ -98,3 +132,12 @@ industry_code_to_naics:
   '300811': '811'
   '300812': '812'
   '300813': '813'
+
+descriptions:
+  'employment': 'The Business Employment Dynamics statistics measure the net change in employment at the establishment level. These changes come about in one of four ways. A net increase in employment can come from either opening establishments or expanding establishments. A net decrease in employment can come from either closing establishments or contracting establishments. Gross job gains include the sum of all jobs added at either opening or expanding establishments. Gross job losses include the sum of all jobs lost in either closing or contracting establishments. The net change in employment is the difference between gross job gains and gross job losses.'
+
+  'openings_short': 'Openings include both new startups (births) and reopenings of the existing seasonal establishments that reported zero employment in the previous quarter. Closings include establishments that go out of business permanently (deaths), as well as seasonal businesses that shut down temporarily.'
+
+  'openings_long': 'Openings are defined as those establishments that had positive employment for the first time in the third month of the current quarter with no link to the previous quarter, or had positive employment in the current quarter and zero or no employment in the previous quarter. "Zero employment” means that an employment level of zero was reported, whereas “no employment” means that there were not any employment numbers reported at all.'
+
+  'establishments_long': 'An establishment represents an economic unit that produces goods and services, usually at a single location, and engages in only one or predominantly one activity. A firm, on the other hand, may consist of several establishments. When an establishment opens for business for the first time, it is counted as an establishment birth, a State-level firm birth, and a national-level firm birth. If the firm in question opens another establishment, this will be counted as another establishment birth and as a firm-level expansion. If that establishment is in another State, it also will be a counted as a State-level firm birth. '

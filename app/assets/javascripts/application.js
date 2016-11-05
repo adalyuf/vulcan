@@ -18,5 +18,9 @@
 //= require highcharts
 //= require chartkick
 
+//= require moment
+//= require bootstrap-datetimepicker
+//= require pickers
+
 //= require turbolinks
 //= require_tree .

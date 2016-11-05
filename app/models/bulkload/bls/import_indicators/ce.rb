@@ -20,12 +20,30 @@ DATATYPE_TO_INTERNAL_NAME = BLS_CE['datatype_to_internal_name']
     else
       naics = INDUSTRY_CODE_TO_NAICS[industrycode]
       if naics
-        industry_by_naics_code[naics.to_i] ? industry_by_naics_code[naics.to_i].id : industry_by_internal_name['not-elsewhere-classified'].id
+        industry_by_naics_code[naics.to_i] ? industry_by_naics_code[naics.to_i].id : IndustryCode.not_specified.id
       else
-        industry_by_internal_name['not-elsewhere-classified'].id
+        IndustryCode.not_specified.id
       end
     end
   end
+
+  def multiplier(indicator_internal_name)
+    case indicator_internal_name
+    when "all_employees"
+      3
+    when "women_employees"
+      3
+    when "production_and_nonsupervisory_employees"
+      3
+    when "aggregate_weekly_payrolls_of_all_employees"
+      3
+    when "aggregate_weekly_payrolls_of_production_and_nonsupervisory_employees"
+      3
+    else
+      0
+    end
+  end
+
 
 
   def import_indicators
@@ -40,10 +58,10 @@ DATATYPE_TO_INTERNAL_NAME = BLS_CE['datatype_to_internal_name']
       uniq_series << series_title[0..comma-1]
     end
 
-    source_id = Source.find_by(internal_name: "bureau-labor-statistics").id
+    source_id = Source.find_by(internal_name: "bureau_labor_statistics").id
     # These indicators reflect Current Employment Statistics and covers employment, hours, and earnings. Classifying as business.
     category_id = Category.find_by(internal_name: :business).id
-    dataset_id = Dataset.where(name: "Current Employment Statistics", category_id: Category.find_by(name: "Business").id, internal_name: "bls-current-employment-statistics", source_id: Source.find_by(internal_name: "bureau-labor-statistics").id , description: "The Current Employment Statistics Program provides
+    dataset_id = Dataset.where(name: "Current Employment Statistics", category_id: Category.find_by(name: "Business").id, internal_name: "bls_current_employment_statistics", source_id: Source.find_by(internal_name: "bureau_labor_statistics").id , description: "The Current Employment Statistics Program provides
 employment, paid hours, and earnings information").first_or_create.id
 
 
@@ -80,21 +98,24 @@ employment, paid hours, and earnings information").first_or_create.id
     child_status_id = ChildStatus.not_specified.id
     income_level_id = IncomeLevel.not_specified.id
     occupation_code_id = OccupationCode.not_specified.id
-    geo_code_id = GeoCode::Country.find_by(internal_name: 'united-states').id
+    geo_code_id = GeoCode::Country.find_by(internal_name: 'united_states').id
 
 
     list = parsed_file.map do |series_id,  supersector_code,  industry_code, data_type_code,  seasonal,  series_title,  footnote_codes,  begin_year,  begin_period,  end_year,  end_period|
-      description = series_title
-      unit_id = unit(data_type_code.strip)
+      description = series_title.strip
+      unit_raw_id = data_type_code.strip
+      unit_id = unit(unit_raw_id)
       name = series_id.strip
       internal_name = name
       source_identifier = name
       comma = series_title.index(",")
+      multiplier = multiplier(series_title.strip)
       indicator_name = series_title[0..comma-1]
       indicator_id = indicators_by_name[indicator_name].id
       seasonally_adjusted = SEASONAL[seasonal]
-      industry_code_id = industry_id(industry_code)
-      industry_code_raw = INDUSTRY_CODE_TO_NAME[industry_code]
+      industry_code_raw_id = industry_code.strip
+      industry_code_id = industry_id(industry_code_raw_id)
+      industry_code_raw = INDUSTRY_CODE_TO_NAME[industry_code_raw_id]
 
       Series::Data.new(name: name,
                        description: description,
@@ -116,7 +137,9 @@ employment, paid hours, and earnings information").first_or_create.id
                        industry_code_id: industry_code_id,
                        industry_code_raw: industry_code_raw,
                        occupation_code_id: occupation_code_id,
-                       geo_code_id: geo_code_id
+                       geo_code_id: geo_code_id,
+                       unit_raw_id: unit_raw_id,
+                       industry_code_raw_id: industry_code_raw_id
                        )
     end
     Series.load(list)
@@ -135,7 +158,17 @@ employment, paid hours, and earnings information").first_or_create.id
         puts "No match found for #{series_id}"
       end
     end
-
   end
+
+  def update_series_raw_ids
+    parsed_file = Bulkload::Bls::FileManager.new("series", "ce", "ce.series").parsed_file
+    parsed_file.each do |series_id,  supersector_code,  industry_code, data_type_code,  seasonal,  series_title,  footnote_codes,  begin_year,  begin_period,  end_year,  end_period|
+      serie = series_by_source_identifier[series_id.strip]
+      serie.unit_raw_id = data_type_code.strip
+      serie.industry_code_raw_id = industry_code.strip
+      serie.save
+    end
+  end
+
 
 end
