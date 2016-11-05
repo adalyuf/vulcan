@@ -50,7 +50,7 @@ DESCRIPTIONS = BLS_BD['descriptions']
   def import_series
     parsed_file = Bulkload::Bls::FileManager.new("series", "bd", "bd.series").parsed_file
 
-    jobs_unit_id = Unit.find_by(internal_name: :jobs).id
+    jobs_unit_id = Unit.find_by(internal_name: :jobs_or_employees).id
     percent_unit_id = Unit.find_by(internal_name: :percent).id
     establishments_unit_id = Unit.find_by(internal_name: :establishments).id
     annual_frequency_id = Frequency.find_by(internal_name: :annual).id
