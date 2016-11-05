@@ -131,7 +131,7 @@ class Series < ActiveRecord::Base
   def display_data(user, start_date=nil, end_date=nil)
     values = Value.get_values(self.indicator_id, self.id)
     values.reject! { |x| x.date.blank? }
-    values.select! { |x| x.date < SystemConfig.trial_scope_end_date } unless user
+    values.select! { |x| x.date < SystemConfig.settings_paywall_date } unless user
     values.select! { |x| x.date >= start_date } if start_date
     values.select! { |x| x.date <= end_date } if end_date
     data =

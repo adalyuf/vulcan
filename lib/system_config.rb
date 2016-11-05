@@ -19,7 +19,7 @@ class SystemConfig
     YAML::load ERB.new(IO.read(file)).result
   end
 
-  def self.trial_scope_end_date
-    self.instance.trial.scope_end.to_date
+  def self.settings_paywall_date
+    self.instance.settings.paywall_date.to_date
   end
 end

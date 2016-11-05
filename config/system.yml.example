@@ -7,6 +7,6 @@ services:
     storage: path_to_storage
 mailer:
   password: mailer_password
-trial:
-  scope_end: only_values_before_this_date
+settings:
+  paywall_date: only_values_before_this_date
 
